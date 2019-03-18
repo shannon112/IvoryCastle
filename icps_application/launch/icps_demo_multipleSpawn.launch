@@ -7,6 +7,20 @@
       <arg name="world_name" default="$(arg world_name)"/>
     </include>
 
+    <!--group ns="n1">
+      <include file="$(find neuronbot_description)/launch/neuronbot_spawn.launch">
+        <arg name="namespace" value="n1" />
+        <arg name="initail_pose" value="-x 0.7 -y 0 -z 0.1 -R 0 -P 0 -Y 0" />
+      </include>
+    </group>
+
+    <group ns="n2">
+      <include file="$(find neuronbot_description)/launch/neuronbot_spawn.launch">
+        <arg name="namespace" value="n2" />
+        <arg name="initail_pose" value="-x 0 -y 0 -z 0.1 -R 0 -P 0 -Y 0" />
+      </include>
+    </group-->
+
     <group ns="c1">
         <include file="$(find camera_description)/launch/camera_spawn.launch" >
           <arg name="namespace" value="c1" />
@@ -21,20 +35,4 @@
         </include>
     </group>
 
-<!--
-    <group ns="n1">
-      <include file="$(find neuronbot_description)/launch/neuronbot_spawn.launch">
-        <arg name="namespace" value="n1" />
-        <arg name="initail_pose" value="-x 5 -y 5 -z 0.1 -R 0 -P 0 -Y 0" />
-
-      </include>
-    </group>
-
-    <group ns="n2">
-      <include file="$(find neuronbot_description)/launch/neuronbot_spawn.launch">
-        <arg name="namespace" value="n2" />
-        <arg name="initail_pose" value="-x 0 -y 0 -z 0.1 -R 0 -P 0 -Y 0" />
-      </include>
-    </group>
--->
 </launch>
