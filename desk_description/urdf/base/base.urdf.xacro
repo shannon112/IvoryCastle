@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find camera_description)/urdf/base/base.gazebo.xacro" />
+  <xacro:include filename="$(find camera_description)/urdf/sensors/_d435.urdf.xacro" />
+  <xacro:property name="pi" value="3.1415926535897931" />
+
+  <xacro:macro name="camera_base">
+      <link name="desk_camera_base_link">
+        <inertial>
+          <origin
+            xyz="0.0 0.0 0.0"
+            rpy="0 0 0" />
+          <mass
+            value="99.63917377366023" />
+          <inertia
+            ixx="0.23820634587875"
+            ixy="0"
+            ixz="0"
+            iyy="0.23820634587875"
+            iyz="0"
+            izz="0.23820634587875" />
+        </inertial>
+        <visual>
+          <origin
+            xyz="0 0 0"
+            rpy="0 0 0" />
+          <geometry>
+            <!--box size="10 10 10"/-->
+          </geometry>
+          <material name="white"/>
+        </visual>
+        <collision>
+          <origin
+            xyz="0 0 0"
+            rpy="0 0 0" />
+          <geometry>
+            <!--box size="10 10 10"/-->
+          </geometry>
+        </collision>
+      </link>
+
+    <!-- Intel realsense-->
+    <sensor_d435 parent="desk_camera_base_link">
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    </sensor_d435>
+
+    <!-- Extensions -->
+    <xacro:camera_base_gazebo/>
+  </xacro:macro>
+</robot>

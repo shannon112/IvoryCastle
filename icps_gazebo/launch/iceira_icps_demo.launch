@@ -1,0 +1,10 @@
+<launch>
+    <arg name="world_name" default="$(find iceira_gazebo)/world/iceira_icps_demo3.world"/>
+
+    <!-- Launch gazebo world.
+    We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name" default="$(arg world_name)"/>
+    </include>
+
+</launch>

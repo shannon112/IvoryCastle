@@ -1,0 +1,15 @@
+material Artag_01/Diffuse
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture MarkerData_1.png
+        filtering anistropic
+        max_anisotropy 16
+      }
+    }
+  }
+}
