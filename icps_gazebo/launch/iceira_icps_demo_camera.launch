@@ -1,5 +1,5 @@
 <launch>
-    <arg name="world_name" default="$(find iceira_gazebo)/world/iceira_icps_demo.world"/>
+    <arg name="world_name" default="$(find icps_gazebo)/world/iceira_icps_demo.world"/>
 
     <!--Argument in this launch file-->
     <arg name="model" default="$(find camera_description)/robots/camera.urdf.xacro"/>

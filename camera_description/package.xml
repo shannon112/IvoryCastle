@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>desk_description</name>
+  <name>camera_description</name>
   <version>0.0.0</version>
-  <description>The desk_description package</description>
+  <description>The camera_description package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
