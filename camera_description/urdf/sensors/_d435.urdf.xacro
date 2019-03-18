@@ -7,9 +7,10 @@ Copyright(c) 2017 Intel Corporation. All Rights Reserved
 This is the URDF model for the Intel RealSense 430 camera, in it's
 aluminum peripherial evaluation case.
 -->
-<robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find camera_description)/urdf/sensors/_d435.gazebo.xacro"/>
-  <xacro:macro name="sensor_d435" params="parent *origin">
+
+<robot name="sensor_d435" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find camera_description)/urdf/sensors/_d435.gazebo.xacro" />
+  <xacro:macro name="sensor_d435" params="parent *origin name nsp tfpre">
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
     <!-- The following values are approximate, and the camera node
@@ -38,18 +39,18 @@ aluminum peripherial evaluation case.
 
 
     <!-- camera body, with origin at bottom screw mount -->
-    <joint name="desk_camera_joint" type="fixed">
+    <joint name="camera_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent}"/>
-      <child link="desk_camera_link" />
+      <child link="camera_link" />
     </joint>
 
-    <link name="desk_camera_link">
+    <link name="camera_link">
       <visual>
       <origin xyz="${d435_cam_mount_from_center_offset} 0.0 ${d435_cam_height/2}" rpy="${M_PI/2} 0 ${M_PI/2}"/>
         <geometry>
           <!-- <box size="${d435_cam_width} ${d435_cam_height} ${d435_cam_depth}"/> -->
-	  <mesh filename="package://camera_description/meshes/intel_realsense_d435/d435.dae" />
+	  <mesh filename="package://realsense2_camera/meshes/d435.dae" />
           <!--<mesh filename="package://realsense2_camera/meshes/d435/d435.dae" />-->
 
         </geometry>
@@ -70,66 +71,65 @@ aluminum peripherial evaluation case.
     </link>
 
     <!-- camera depth joints and links -->
-    <joint name="desk_camera_depth_joint" type="fixed">
+    <joint name="camera_depth_joint" type="fixed">
       <origin xyz="${d435_cam_depth_px} ${d435_cam_depth_py} ${d435_cam_depth_pz}" rpy="0 0 0"/>
-      <parent link="desk_camera_link"/>
-      <child link="desk_camera_depth_frame" />
+      <parent link="camera_link"/>
+      <child link="camera_depth_frame" />
     </joint>
-    <link name="desk_camera_depth_frame"/>
+    <link name="camera_depth_frame"/>
 
-    <joint name="desk_camera_depth_optical_joint" type="fixed">
+    <joint name="camera_depth_optical_joint" type="fixed">
       <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-      <parent link="desk_camera_depth_frame" />
-      <child link="desk_camera_depth_optical_frame" />
+      <parent link="camera_depth_frame" />
+      <child link="camera_depth_optical_frame" />
     </joint>
-    <link name="desk_camera_depth_optical_frame"/>
+    <link name="camera_depth_optical_frame"/>
 
     <!-- camera left IR joints and links -->
-    <joint name="desk_camera_left_ir_joint" type="fixed">
+    <joint name="camera_left_ir_joint" type="fixed">
       <origin xyz="0 ${d435_cam_depth_to_left_ir_offset} 0" rpy="0 0 0" />
-      <parent link="desk_camera_depth_frame" />
-      <child link="desk_camera_left_ir_frame" />
+      <parent link="camera_depth_frame" />
+      <child link="camera_left_ir_frame" />
     </joint>
-    <link name="desk_camera_left_ir_frame"/>
+    <link name="camera_left_ir_frame"/>
 
-    <joint name="desk_camera_left_ir_optical_joint" type="fixed">
+    <joint name="camera_left_ir_optical_joint" type="fixed">
       <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-      <parent link="desk_camera_left_ir_frame" />
-      <child link="desk_camera_left_ir_optical_frame" />
+      <parent link="camera_left_ir_frame" />
+      <child link="camera_left_ir_optical_frame" />
     </joint>
-    <link name="desk_camera_left_ir_optical_frame"/>
+    <link name="camera_left_ir_optical_frame"/>
 
-    <!-- desk_camera right IR joints and links -->
-    <joint name="desk_camera_right_ir_joint" type="fixed">
+    <!-- camera right IR joints and links -->
+    <joint name="camera_right_ir_joint" type="fixed">
       <origin xyz="0 ${d435_cam_depth_to_right_ir_offset} 0" rpy="0 0 0" />
-      <parent link="desk_camera_depth_frame" />
-      <child link="desk_camera_right_ir_frame" />
+      <parent link="camera_depth_frame" />
+      <child link="camera_right_ir_frame" />
     </joint>
-    <link name="desk_camera_right_ir_frame"/>
+    <link name="camera_right_ir_frame"/>
 
-    <joint name="desk_camera_right_ir_optical_joint" type="fixed">
+    <joint name="camera_right_ir_optical_joint" type="fixed">
       <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-      <parent link="desk_camera_right_ir_frame" />
-      <child link="desk_camera_right_ir_optical_frame" />
+      <parent link="camera_right_ir_frame" />
+      <child link="camera_right_ir_optical_frame" />
     </joint>
-    <link name="desk_camera_right_ir_optical_frame"/>
+    <link name="camera_right_ir_optical_frame"/>
 
-    <!-- desk_camera color joints and links -->
-    <joint name="desk_camera_color_joint" type="fixed">
+    <!-- camera color joints and links -->
+    <joint name="camera_color_joint" type="fixed">
       <origin xyz="0 ${d435_cam_depth_to_color_offset} 0" rpy="0 0 0" />
-      <parent link="desk_camera_depth_frame" />
-      <child link="desk_camera_color_frame" />
+      <parent link="camera_depth_frame" />
+      <child link="camera_color_frame" />
     </joint>
-    <link name="desk_camera_color_frame"/>
+    <link name="camera_color_frame"/>
 
-    <joint name="desk_camera_color_optical_joint" type="fixed">
+    <joint name="camera_color_optical_joint" type="fixed">
       <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-      <parent link="desk_camera_color_frame" />
-      <child link="desk_camera_color_optical_frame" />
+      <parent link="camera_color_frame" />
+      <child link="camera_color_optical_frame" />
     </joint>
-    <link name="desk_camera_color_optical_frame"/>
-
+    <link name="camera_color_optical_frame"/>
     <!-- extensions -->
-    <xacro:_d435_gazebo name="desk_camera"/>
+    <xacro:_d435_gazebo name="${name}" nsp="${nsp}" tfpre="${tfpre}"/>
   </xacro:macro>
 </robot>

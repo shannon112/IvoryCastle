@@ -3,7 +3,9 @@
   <xacro:property name="M_PI" value="3.1415926535897931" />
 
   <!-- d435 camera for simulation -->
-  <xacro:macro name="_d435_gazebo" params="name">
+  <!--note that the namespace and tfpre are already processed behind-->
+  <!--DONT manually add the nsp or tfpre before each topics and frames-->
+  <xacro:macro name="_d435_gazebo" params="name nsp tfpre">
     <gazebo reference="${name}_depth_frame">
       <sensor type="depth" name="${name}">
         <update_rate>20</update_rate>
@@ -19,7 +21,7 @@
             <far>9</far>
           </clip>
         </camera>
-        <plugin name="${name}_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+        <plugin name="camera_controller" filename="libgazebo_ros_openni_kinect.so">
           <alwaysOn>true</alwaysOn>
           <updateRate>20</updateRate>
           <imageTopicName>${name}/rgb/image_raw</imageTopicName>

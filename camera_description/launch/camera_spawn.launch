@@ -1,21 +1,20 @@
 <launch>
     <!--Argument in this launch file-->
-    <arg name="model" default="$(find camera_description)/robots/camera.urdf.xacro"/>
+    <arg name="namespace" default="c0" />
+    <!-- Generate the tf_prefix from the namespace -->
+    <arg name="tfpre" default="$(arg namespace)_tf" />
+    <!-- Put value on the parameter server in the group's namespace -->
+    <param name="tf_prefix" value="$(arg namespace)_tf" />
+    <!-- Initial pose - see "rosrun gazebo_ros spawn_model -h" for syntax -->
     <arg name="initail_pose" default="-x 0 -y 0 -z 0.1 -R 0 -P 0 -Y 0"/>
-    <arg name="x" default="0.738141"/>
-    <arg name="y" default="1.07112"/>
-    <arg name="z" default="2.275"/>
-    <arg name="R" default="0"/>
-    <arg name="P" default="1.57"/>
-    <arg name="Y" default="1.57"/>
 
     <!-- Convert an xacro and put on parameter server-->
-    <param name="robot_description" command="python $(find xacro)/xacro.py $(arg model)" />
+    <param name="robot_description" command="python $(find xacro)/xacro.py $(find camera_description)/robots/camera.urdf.xacro
+    nsp:=$(arg namespace) tfpre:=$(arg tfpre)" />
 
     <!-- Spawn a robot into Gazebo -->
     <node name="spawn_desk_camera" pkg="gazebo_ros" type="spawn_model"
-      args="-x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)
-       -unpause -urdf -param robot_description -model camera "
+      args="$(arg initail_pose) -unpause -urdf -param robot_description -model desk_camera_$(arg namespace)"
       respawn="false" output="screen"/>
 
     <!--Publish robot state-->

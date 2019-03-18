@@ -3,8 +3,8 @@
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <!-- Base -->
-  <xacro:macro name="camera_base_gazebo">
-    <gazebo reference="desk_camera_base_link">
+  <xacro:macro name="camera_base_gazebo" params="name nsp tfpre">
+    <gazebo reference="${tfpre}/${name}_base_link">
       <material>Gazebo/White</material>
       <mu1 value="0.0"/>
       <mu2 value="0.0"/>
