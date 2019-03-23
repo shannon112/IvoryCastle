@@ -1,0 +1,40 @@
+#downright[- -] downleft[- +] upleft[+ +] upright[+ -]
+footprint: [[-0.21,-0.07],[-0.21,0.07],[-0.05,0.19],[0.16,0.19],[0.16,-0.19],[-0.05,-0.19]] #fitting mode
+footprint_padding: 0.00
+#robot_radius: 0.25
+
+robot_base_frame: /base_footprint
+
+transform_tolerance: 1.5
+#Specifies the delay in transform (tf) data that is tolerable in seconds. This parameter serves as a safeguard to losing a link in the tf tree while still allowing an amount of latency the user is comfortable with to exist in the system. For example, a transform being 0.2 seconds out-of-date may be tolerable, but a transform being 8 seconds out of date is not. If the tf transform between the coordinate frames specified by the global_frame and robot_base_frame parameters is transform_tolerance seconds older than ros::Time::now(), then the navigation stack will stop the robot.
+
+obstacle_range: 4.0 #localcostmap 8.0/2
+#determines the maximum range sensor reading that will result in an obstacle being put into the costmap.
+raytrace_range: 4.0 #localcostmap 8.0/2
+# means that the robot will attempt to clear out space in front of it up to 4.0 meters away given a sensor reading.
+
+
+#layer plugins definitions
+obstacles_laser:
+    observation_sources: laser laser2
+    laser: {data_type: LaserScan, clearing: true, marking: true, topic: /scan, inf_is_valid: true}
+    laser2: {data_type: LaserScan, clearing: true, marking: true, topic: /scan2, inf_is_valid: true}
+    track_unknown_space: true #must have
+    #If false, each pixel has one of 2 states: lethal obstacle or free.
+    #If true, each pixel has one of 3 states: lethal obstacle, free, or unknown.
+
+inflation:
+    inflation_radius: 1.30 #According to corridor 2.538/2 m
+    #The radius in meters to which the map inflates obstacle cost values.
+    cost_scaling_factor: 2.58
+    #A scaling factor to apply to cost values during inflation.
+    #The cost function is computed as follows for all cells in the costmap
+    #further than the inscribed radius distance and closer than the inflation radius distance away from an actual obstacle:
+    #exp(-1.0 * cost_scaling_factor * (distance_from_obstacle - inscribed_radius)) * (costmap_2d::INSCRIBED_INFLATED_OBSTACLE - 1),
+    #where costmap_2d::INSCRIBED_INFLATED_OBSTACLE is currently 254.
+    #NOTE: since the cost_scaling_factor is multiplied by a negative in the formula,
+    #increasing the factor will decrease the resulting cost values.
+
+static:
+    map_topic: /map
+    subscribe_to_updates: true

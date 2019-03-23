@@ -1,0 +1,24 @@
+global_costmap:
+  global_frame: /map
+  #robot_base_frame: base_footprint
+
+  update_frequency: 0.1 #must>0
+  publish_frequency: 0.0
+
+  width: 60.0
+  height: 60.0
+  resolution: 0.025
+  # parameters set the width (meters), height (meters), and resolution (meters/cell) of the costmap.
+  # Note that its fine for the resolution of this grid to be different than the resolution of your static map,
+  # but most of the time we tend to set them equally.
+
+  static_map: true
+  # If you aren't using an existing map or map server,
+  # set the static_map parameter to false.
+
+  rolling_window: false
+  # parameter to true means that the costmap will remain centered around the robot as the robot moves through the world.
+
+  plugins:
+    - {name: static,           type: "costmap_2d::StaticLayer"}
+    - {name: inflation,        type: "costmap_2d::InflationLayer"}
