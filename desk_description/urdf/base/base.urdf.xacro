@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-  <xacro:include filename="$(find camera_description)/urdf/base/base.gazebo.xacro" />
+  <xacro:include filename="$(find desk_description)/urdf/base/base.gazebo.xacro" />
   <xacro:property name="pi" value="3.1415926535897931" />
 
   <xacro:macro name="camera_base" params="name nsp tfpre">

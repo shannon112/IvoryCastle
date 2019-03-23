@@ -1,5 +1,7 @@
 <launch>
     <arg name="world_name" default="$(find icps_gazebo)/world/iceira_icps_demo.world"/>
+    <arg name="rviz" default="1"/>
+    <arg name="rqt_steering" default="1" />
 
     <!-- Launch gazebo world.
     We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
@@ -7,32 +9,44 @@
       <arg name="world_name" default="$(arg world_name)"/>
     </include>
 
-    <!--group ns="n1">
+    <group ns="n1">
       <include file="$(find neuronbot_description)/launch/neuronbot_spawn.launch">
         <arg name="namespace" value="n1" />
-        <arg name="initail_pose" value="-x 0.7 -y 0 -z 0.1 -R 0 -P 0 -Y 0" />
+        <arg name="gazebo_pose" value="-x 0.7 -y 0 -z 0.1 -R 0 -P 0 -Y 0" />
+        <arg name="rviz_pose_xyz" value="'0.7 0 0.1'" />
+        <arg name="rviz_pose_rpy" value="'0 0 0'" />
+        <arg name="rqt_steering" value="$(arg rqt_steering)" />
       </include>
     </group>
 
     <group ns="n2">
       <include file="$(find neuronbot_description)/launch/neuronbot_spawn.launch">
         <arg name="namespace" value="n2" />
-        <arg name="initail_pose" value="-x 0 -y 0 -z 0.1 -R 0 -P 0 -Y 0" />
+        <arg name="gazebo_pose" value="-x 0 -y 0 -z 0.1 -R 0 -P 0 -Y 0" />
+        <arg name="rviz_pose_xyz" value="'0 0 0.1'" />
+        <arg name="rviz_pose_rpy" value="'0 0 0'" />
+        <arg name="rqt_steering" value="$(arg rqt_steering)" />
       </include>
-    </group-->
+    </group>
 
-    <group ns="c1">
-        <include file="$(find camera_description)/launch/camera_spawn.launch" >
+    <!--group ns="c1">
+        <include file="$(find desk_description)/launch/camera_spawn.launch" >
           <arg name="namespace" value="c1" />
           <arg name="initail_pose" value="-x 0.738141 -y 1.07112 -z 2.275 -R 0 -P 1.57 -Y 1.57" />
         </include>
     </group>
 
     <group ns="c2">
-        <include file="$(find camera_description)/launch/camera_spawn.launch" >
+        <include file="$(find desk_description)/launch/camera_spawn.launch" >
           <arg name="namespace" value="c2" />
           <arg name="initail_pose" value="-x 0.738141 -y 1.07112 -z 2.775 -R 0 -P 1.57 -Y 1.57" />
         </include>
+    </group-->
+
+    <!--setting RobotModel:Robot_Description(add namespace)
+    and RobotModel:TF_Prefix(add tfpre)-->
+    <group if="$(arg rviz)">
+      <node name="rviz" pkg="rviz" type="rviz" args="-d $(find icps_application)/rviz_config/multiRobot.rviz" />
     </group>
 
 </launch>

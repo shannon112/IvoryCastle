@@ -9,7 +9,7 @@
     <arg name="initail_pose" default="-x 0 -y 0 -z 0.1 -R 0 -P 0 -Y 0"/>
 
     <!-- Convert an xacro and put on parameter server-->
-    <param name="robot_description" command="python $(find xacro)/xacro.py $(find camera_description)/robots/camera.urdf.xacro
+    <param name="robot_description" command="python $(find xacro)/xacro.py $(find desk_description)/robots/camera.urdf.xacro
     nsp:=$(arg namespace) tfpre:=$(arg tfpre)" />
 
     <!-- Spawn a robot into Gazebo -->

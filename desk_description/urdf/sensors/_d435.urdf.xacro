@@ -9,7 +9,7 @@ aluminum peripherial evaluation case.
 -->
 
 <robot name="sensor_d435" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find camera_description)/urdf/sensors/_d435.gazebo.xacro" />
+  <xacro:include filename="$(find desk_description)/urdf/sensors/_d435.gazebo.xacro" />
   <xacro:macro name="sensor_d435" params="parent *origin name nsp tfpre">
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
