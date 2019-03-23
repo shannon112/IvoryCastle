@@ -3,7 +3,7 @@ footprint: [[-0.21,-0.07],[-0.21,0.07],[-0.05,0.19],[0.16,0.19],[0.16,-0.19],[-0
 footprint_padding: 0.00
 #robot_radius: 0.25
 
-robot_base_frame: /base_footprint
+robot_base_frame: n0/base_footprint
 
 transform_tolerance: 1.5
 #Specifies the delay in transform (tf) data that is tolerable in seconds. This parameter serves as a safeguard to losing a link in the tf tree while still allowing an amount of latency the user is comfortable with to exist in the system. For example, a transform being 0.2 seconds out-of-date may be tolerable, but a transform being 8 seconds out of date is not. If the tf transform between the coordinate frames specified by the global_frame and robot_base_frame parameters is transform_tolerance seconds older than ros::Time::now(), then the navigation stack will stop the robot.
@@ -17,8 +17,8 @@ raytrace_range: 4.0 #localcostmap 8.0/2
 #layer plugins definitions
 obstacles_laser:
     observation_sources: laser laser2
-    laser: {data_type: LaserScan, clearing: true, marking: true, topic: /scan, inf_is_valid: true}
-    laser2: {data_type: LaserScan, clearing: true, marking: true, topic: /scan2, inf_is_valid: true}
+    laser: {data_type: LaserScan, clearing: true, marking: true, topic: /back_scan, inf_is_valid: true}
+    laser2: {data_type: LaserScan, clearing: true, marking: true, topic: /front_scan, inf_is_valid: true}
     track_unknown_space: true #must have
     #If false, each pixel has one of 2 states: lethal obstacle or free.
     #If true, each pixel has one of 3 states: lethal obstacle, free, or unknown.

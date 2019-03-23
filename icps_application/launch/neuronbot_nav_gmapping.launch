@@ -2,41 +2,49 @@
   <!--common args-->
   <arg name="env" default="false"/><!--real=true sim=false-->
   <arg name="dual_scan" default="true"/>
-  <arg name="rvizconfig" default="$(find ironfish_navigation)/rviz/ironfish.rviz"/>
   <arg name="rviz" default="true"/>
   <arg name="rqt_steering" default="true"/>
   <arg name="no_static_map" default="true"/>
-  <!--sim args-->
-  <arg name="world_name" default="$(find ironfish_gazebo)/world/iceira302.world"/>
-  <!--arg name="world_name" default="$(find iceira_gazebo)/world/iceira_v3.world"/-->
+  <!--sim--><arg name="world_name" default="$(find icps_gazebo)/world/iceira_icps_demo.world"/>
+  <!--sim--><!--arg name="world_name" default="$(find iceira_gazebo)/world/iceira_v3.world"/-->
 
-  <group if="$(arg env)"><!--true, real-->
-    <include file="$(find ironfish_ros_control)/launch/ironfish_ros_control.launch">
+  <!--true, real-->
+  <!--<group if="$(arg env)">
+    <include file="$(find neuronbot_ros_control)/launch/neuronbot_ros_control.launch">
       <arg name="rvizconfig" value="$(arg rvizconfig)"/>
       <arg name="rviz" value="$(arg rviz)"/>
       <arg name="rqt_steering" value="$(arg rqt_steering)"/>
     </include>
     <group if="$(arg dual_scan)">
-      <include file="$(find ironfish_sensors)/launch/urg_dual.launch"/>
+      <include file="$(find neuronbot_sensors)/launch/urg_dual.launch"/>
     </group>
     <group unless="$(arg dual_scan)">
-      <include file="$(find ironfish_sensors)/launch/urg.launch"/>
+      <include file="$(find neuronbot_sensors)/launch/urg.launch"/>
     </group>
-  </group>
+  </group-->
 
   <group unless="$(arg env)"><!--false, sim-->
-    <include file="$(find ironfish_gazebo)/launch/ironfish_gazebo.launch">
-      <arg name="rvizconfig" value="$(arg rvizconfig)"/>
-      <arg name="world_name" value="$(arg world_name)"/>
-      <arg name="rviz" value="$(arg rviz)"/>
-      <arg name="rqt_steering" value="$(arg rqt_steering)"/>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name" default="$(arg world_name)"/>
+    </include>
+    <include file="$(find neuronbot_description)/launch/neuronbot_spawn.launch">
+      <arg name="namespace" value="n1" />
+      <arg name="gazebo_pose" value="-x 0.7 -y 0 -z 0.1 -R 0 -P 0 -Y 0" />
+      <arg name="rviz_pose_xyz" value="'0 0 0'" />
+      <arg name="rviz_pose_rpy" value="'0 0 0'" />
+      <arg name="rqt_steering" value="$(arg rqt_steering)" />
     </include>
   </group>
 
-  <include file="$(find ironfish_navigation)/launch/move_base.launch">
+  <include file="$(find neuronbot_navigation)/launch/move_base.launch">
     <arg name="no_static_map" value="$(arg no_static_map)"/>
     <arg name="dual_scan" value="$(arg dual_scan)"/>
+    <arg name="namespace" value="n1"/>
   </include>
 
-  <include file="$(find ironfish_navigation)/launch/slam_gmapping.launch"/>
+  <include file="$(find neuronbot_navigation)/launch/slam_gmapping.launch"/>
+
+  <group if="$(arg rviz)">
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find icps_application)/rviz_config/slam.rviz" />
+  </group>
 </launch>
