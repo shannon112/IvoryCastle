@@ -12,7 +12,7 @@ void poseCallback(const tf2_msgs::TFMessage& msg){
   tf::Quaternion q;
   q.setRPY(0, 1.57, 1.57);
   transform.setRotation(q);
-  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "odom", target_tf_name));
+  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "artag", target_tf_name));
 }
 
 int main(int argc, char** argv){
