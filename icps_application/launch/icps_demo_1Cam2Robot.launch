@@ -37,7 +37,7 @@
     <!--setting RobotModel:Robot_Description(add namespace)
     and RobotModel:TF_Prefix(add tfpre)-->
     <group if="$(arg rviz)">
-      <node name="rviz" pkg="rviz" type="rviz" args="-d $(find icps_application)/rviz_config/multiRobot.rviz" />
+      <node name="rviz" pkg="rviz" type="rviz" args="-d $(find icps_application)/rviz_config/1Cam2Robot.rviz" />
     </group>
 
 </launch>
