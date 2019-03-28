@@ -1,6 +1,7 @@
 <launch>
   <arg name="use_map_topic"   default="true"/>
   <arg name="scan_topic"      default="/scan"/>
+  <arg name="map_topic"      default="/map"/>
   <arg name="initial_pose_x"  default="0.0"/>
   <arg name="initial_pose_y"  default="0.0"/>
   <arg name="initial_pose_a"  default="0.0"/>
@@ -53,6 +54,6 @@
     <param name="initial_cov_yy"            value="15"/>
     <param name="initial_cov_aa"            value="0.5"/>
     <remap from="scan"                      to="$(arg scan_topic)"/>
-    <remap from="map"			    to="map_origin"/>
+    <remap from="map"			                  to="$(arg map_topic)"/>
   </node>
 </launch>

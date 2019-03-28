@@ -1,4 +1,4 @@
-image: /home/shannon/Documents/ros-kinetic/src/IronFish/ironfish_navigation/map/iceira_v3.pgm
+image: iceira_v3.pgm
 resolution: 0.020000
 origin: [-100.000000, -100.000000, 0.000000]
 negate: 0
