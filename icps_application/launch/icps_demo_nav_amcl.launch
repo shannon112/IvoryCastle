@@ -23,7 +23,7 @@
     </node>
 
     <group ns="n1">
-      <include file="$(find neuronbot_description)/launch/neuronbot_spawn_car.launch">
+      <include file="$(find neuronbot_description)/launch/neuronbot_spawn_armcar.launch">
         <arg name="namespace" value="n1" />
         <arg name="gazebo_pose" value="-x 0.7 -y 0 -z 0.1 -R 0 -P 0 -Y 0" />
         <arg name="rqt_steering" value="$(arg rqt_steering)" />
@@ -31,7 +31,7 @@
     </group>
 
     <group ns="n2">
-      <include file="$(find neuronbot_description)/launch/neuronbot_spawn_car.launch">
+      <include file="$(find neuronbot_description)/launch/neuronbot_spawn_armcar.launch">
         <arg name="namespace" value="n2" />
         <arg name="gazebo_pose" value="-x 0 -y 0 -z 0.1 -R 0 -P 0 -Y 0" />
         <arg name="rqt_steering" value="$(arg rqt_steering)" />
