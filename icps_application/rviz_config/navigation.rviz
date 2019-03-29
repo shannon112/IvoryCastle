@@ -6,8 +6,9 @@ Panels:
       Expanded:
         - /Global Options1
         - /TF1/Frames1
+        - /Map1/Status1
       Splitter Ratio: 0.5
-    Tree Height: 271
+    Tree Height: 486
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -53,8 +54,6 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        artag:
-          Value: true
         c1_tf/camera_color_frame:
           Value: true
         c1_tf/camera_color_optical_frame:
@@ -74,6 +73,24 @@ Visualization Manager:
         c1_tf/camera_right_ir_optical_frame:
           Value: true
         c1_tf/deskCam_base_link:
+          Value: true
+        map:
+          Value: true
+        n1_tf/arm_arm_1_link:
+          Value: true
+        n1_tf/arm_arm_2_link:
+          Value: true
+        n1_tf/arm_base:
+          Value: true
+        n1_tf/arm_base_link:
+          Value: true
+        n1_tf/arm_shoulder_1_link:
+          Value: true
+        n1_tf/arm_wrist_1_link:
+          Value: true
+        n1_tf/arm_wrist_2_link:
+          Value: true
+        n1_tf/arm_wrist_3_link:
           Value: true
         n1_tf/back_hokuyo_link:
           Value: true
@@ -113,6 +130,42 @@ Visualization Manager:
           Value: true
         n1_tf/front_xtion_rgb_optical_frame:
           Value: true
+        n1_tf/left_finger_link:
+          Value: true
+        n1_tf/left_inner_knuckle_link:
+          Value: true
+        n1_tf/left_outer_knuckle_link:
+          Value: true
+        n1_tf/left_wheel:
+          Value: true
+        n1_tf/odom:
+          Value: true
+        n1_tf/right_finger_link:
+          Value: true
+        n1_tf/right_inner_knuckle_link:
+          Value: true
+        n1_tf/right_outer_knuckle_link:
+          Value: true
+        n1_tf/right_wheel:
+          Value: true
+        n1_tf/toyo_base_link:
+          Value: true
+        n2_tf/arm_arm_1_link:
+          Value: true
+        n2_tf/arm_arm_2_link:
+          Value: true
+        n2_tf/arm_base:
+          Value: true
+        n2_tf/arm_base_link:
+          Value: true
+        n2_tf/arm_shoulder_1_link:
+          Value: true
+        n2_tf/arm_wrist_1_link:
+          Value: true
+        n2_tf/arm_wrist_2_link:
+          Value: true
+        n2_tf/arm_wrist_3_link:
+          Value: true
         n2_tf/back_hokuyo_link:
           Value: true
         n2_tf/back_left_wheel:
@@ -151,7 +204,25 @@ Visualization Manager:
           Value: true
         n2_tf/front_xtion_rgb_optical_frame:
           Value: true
-        odom:
+        n2_tf/left_finger_link:
+          Value: true
+        n2_tf/left_inner_knuckle_link:
+          Value: true
+        n2_tf/left_outer_knuckle_link:
+          Value: true
+        n2_tf/left_wheel:
+          Value: true
+        n2_tf/odom:
+          Value: true
+        n2_tf/right_finger_link:
+          Value: true
+        n2_tf/right_inner_knuckle_link:
+          Value: true
+        n2_tf/right_outer_knuckle_link:
+          Value: true
+        n2_tf/right_wheel:
+          Value: true
+        n2_tf/toyo_base_link:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -159,64 +230,127 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        odom:
-          n1_tf/base_footprint:
-            n1_tf/base_link:
-              n1_tf/back_hokuyo_link:
-                {}
-              n1_tf/back_left_wheel:
-                {}
-              n1_tf/back_right_wheel:
-                {}
-              n1_tf/back_xtion_link:
-                n1_tf/back_xtion_depth_frame:
-                  n1_tf/back_xtion_depth_optical_frame:
+        map:
+          c1_tf/deskCam_base_link:
+            c1_tf/camera_link:
+              c1_tf/camera_depth_frame:
+                c1_tf/camera_color_frame:
+                  c1_tf/camera_color_optical_frame:
                     {}
-                n1_tf/back_xtion_rgb_frame:
-                  n1_tf/back_xtion_rgb_optical_frame:
+                c1_tf/camera_depth_optical_frame:
+                  {}
+                c1_tf/camera_left_ir_frame:
+                  c1_tf/camera_left_ir_optical_frame:
                     {}
-              n1_tf/control_box_link:
-                {}
-              n1_tf/front_hokuyo_link:
-                {}
-              n1_tf/front_left_wheel:
-                {}
-              n1_tf/front_right_wheel:
-                {}
-              n1_tf/front_xtion_link:
-                n1_tf/front_xtion_depth_frame:
-                  n1_tf/front_xtion_depth_optical_frame:
+                c1_tf/camera_right_ir_frame:
+                  c1_tf/camera_right_ir_optical_frame:
                     {}
-                n1_tf/front_xtion_rgb_frame:
-                  n1_tf/front_xtion_rgb_optical_frame:
-                    {}
-          n2_tf/base_footprint:
-            n2_tf/base_link:
-              n2_tf/back_hokuyo_link:
-                {}
-              n2_tf/back_left_wheel:
-                {}
-              n2_tf/back_right_wheel:
-                {}
-              n2_tf/back_xtion_link:
-                n2_tf/back_xtion_rgb_frame:
-                  n2_tf/back_xtion_rgb_optical_frame:
-                    {}
-              n2_tf/control_box_link:
-                {}
-              n2_tf/front_hokuyo_link:
-                {}
-              n2_tf/front_left_wheel:
-                {}
-              n2_tf/front_right_wheel:
-                {}
-              n2_tf/front_xtion_link:
-                n2_tf/front_xtion_depth_frame:
-                  n2_tf/front_xtion_depth_optical_frame:
-                    {}
-                n2_tf/front_xtion_rgb_frame:
-                  n2_tf/front_xtion_rgb_optical_frame:
-                    {}
+          n1_tf/odom:
+            n1_tf/base_footprint:
+              n1_tf/base_link:
+                n1_tf/back_hokuyo_link:
+                  {}
+                n1_tf/back_left_wheel:
+                  {}
+                n1_tf/back_right_wheel:
+                  {}
+                n1_tf/back_xtion_link:
+                  n1_tf/back_xtion_depth_frame:
+                    n1_tf/back_xtion_depth_optical_frame:
+                      {}
+                  n1_tf/back_xtion_rgb_frame:
+                    n1_tf/back_xtion_rgb_optical_frame:
+                      {}
+                n1_tf/control_box_link:
+                  n1_tf/arm_base:
+                    n1_tf/arm_base_link:
+                      n1_tf/arm_shoulder_1_link:
+                        n1_tf/arm_arm_1_link:
+                          n1_tf/arm_arm_2_link:
+                            n1_tf/arm_wrist_1_link:
+                              n1_tf/arm_wrist_2_link:
+                                n1_tf/arm_wrist_3_link:
+                                  n1_tf/toyo_base_link:
+                                    n1_tf/left_inner_knuckle_link:
+                                      {}
+                                    n1_tf/left_outer_knuckle_link:
+                                      n1_tf/left_finger_link:
+                                        {}
+                                    n1_tf/right_inner_knuckle_link:
+                                      {}
+                                    n1_tf/right_outer_knuckle_link:
+                                      n1_tf/right_finger_link:
+                                        {}
+                n1_tf/front_hokuyo_link:
+                  {}
+                n1_tf/front_left_wheel:
+                  {}
+                n1_tf/front_right_wheel:
+                  {}
+                n1_tf/front_xtion_link:
+                  n1_tf/front_xtion_depth_frame:
+                    n1_tf/front_xtion_depth_optical_frame:
+                      {}
+                  n1_tf/front_xtion_rgb_frame:
+                    n1_tf/front_xtion_rgb_optical_frame:
+                      {}
+                n1_tf/left_wheel:
+                  {}
+                n1_tf/right_wheel:
+                  {}
+          n2_tf/odom:
+            n2_tf/base_footprint:
+              n2_tf/base_link:
+                n2_tf/back_hokuyo_link:
+                  {}
+                n2_tf/back_left_wheel:
+                  {}
+                n2_tf/back_right_wheel:
+                  {}
+                n2_tf/back_xtion_link:
+                  n2_tf/back_xtion_depth_frame:
+                    n2_tf/back_xtion_depth_optical_frame:
+                      {}
+                  n2_tf/back_xtion_rgb_frame:
+                    n2_tf/back_xtion_rgb_optical_frame:
+                      {}
+                n2_tf/control_box_link:
+                  n2_tf/arm_base:
+                    n2_tf/arm_base_link:
+                      n2_tf/arm_shoulder_1_link:
+                        n2_tf/arm_arm_1_link:
+                          n2_tf/arm_arm_2_link:
+                            n2_tf/arm_wrist_1_link:
+                              n2_tf/arm_wrist_2_link:
+                                n2_tf/arm_wrist_3_link:
+                                  n2_tf/toyo_base_link:
+                                    n2_tf/left_inner_knuckle_link:
+                                      {}
+                                    n2_tf/left_outer_knuckle_link:
+                                      n2_tf/left_finger_link:
+                                        {}
+                                    n2_tf/right_inner_knuckle_link:
+                                      {}
+                                    n2_tf/right_outer_knuckle_link:
+                                      n2_tf/right_finger_link:
+                                        {}
+                n2_tf/front_hokuyo_link:
+                  {}
+                n2_tf/front_left_wheel:
+                  {}
+                n2_tf/front_right_wheel:
+                  {}
+                n2_tf/front_xtion_link:
+                  n2_tf/front_xtion_depth_frame:
+                    n2_tf/front_xtion_depth_optical_frame:
+                      {}
+                  n2_tf/front_xtion_rgb_frame:
+                    n2_tf/front_xtion_rgb_optical_frame:
+                      {}
+                n2_tf/left_wheel:
+                  {}
+                n2_tf/right_wheel:
+                  {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -229,6 +363,45 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        arm_arm_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_arm_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        arm_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_shoulder_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_wrist_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_wrist_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_wrist_3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         back_hokuyo_link:
           Alpha: 1
           Show Axes: false
@@ -316,12 +489,47 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        left_finger_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_inner_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_outer_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
+        right_finger_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_inner_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_outer_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        toyo_base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -342,6 +550,45 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        arm_arm_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_arm_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        arm_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_shoulder_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_wrist_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_wrist_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_wrist_3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         back_hokuyo_link:
           Alpha: 1
           Show Axes: false
@@ -429,12 +676,47 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        left_finger_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_inner_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_outer_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_wheel:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
+        right_finger_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_inner_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_outer_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        toyo_base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -504,7 +786,7 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Class: rviz/Image
-      Enabled: false
+      Enabled: true
       Image Topic: /c1/camera/rgb/image_raw
       Max Value: 1
       Median window: 5
@@ -514,7 +796,7 @@ Visualization Manager:
       Queue Size: 2
       Transport Hint: raw
       Unreliable: false
-      Value: false
+      Value: true
     - Class: rviz/Image
       Enabled: false
       Image Topic: /n1/front_xtion/rgb/image_raw
@@ -528,7 +810,7 @@ Visualization Manager:
       Unreliable: false
       Value: false
     - Class: rviz/Image
-      Enabled: true
+      Enabled: false
       Image Topic: /n2/front_xtion/rgb/image_raw
       Max Value: 1
       Median window: 5
@@ -538,7 +820,7 @@ Visualization Manager:
       Queue Size: 2
       Transport Hint: raw
       Unreliable: false
-      Value: true
+      Value: false
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -569,11 +851,21 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Alpha: 0.699999988
+      Class: rviz/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic: /map
+      Unreliable: false
+      Use Timestamp: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: odom
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
@@ -594,7 +886,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 4.76670456
+      Distance: 7.04225349
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -609,20 +901,20 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.340397894
+      Pitch: 0.410397977
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.17539358
+      Yaw: 2.50039291
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 744
+  Height: 1056
   Hide Left Dock: false
   Hide Right Dock: false
   Image:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000016a0000025efc0200000011fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c00610079007301000000280000019e000000dd00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000c00430061006d00650072006100000001a0000000890000000000000000fb0000000a0049006d006100670065000000010b000000910000001600fffffffb0000000a0049006d0061006700650000000156000000a50000001600fffffffb0000000a0049006d00610067006501000001cc000000ba0000001600fffffffb0000000c00430061006d00650072006101000002c3000000160000000000000000fb0000000a0049006d00610067006501000002d9000000c90000000000000000fb0000000a0049006d00610067006501000001970000009d0000000000000000fb0000000a0049006d006100670065010000023a0000009a0000000000000000fb0000000a0049006d00610067006501000002da000000c80000000000000000000000010000010f0000025efc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007301000000280000025e000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000005150000003efc0100000002fb0000000800540069006d00650100000000000005150000030000fffffffb0000000800540069006d00650100000000000004500000000000000000000002900000025e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000016a00000396fc0200000011fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000002800000275000000dd00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000c00430061006d00650072006100000001a0000000890000000000000000fb0000000a0049006d006100670065000000010b000000910000001600fffffffb0000000a0049006d0061006700650000000156000000a50000001600fffffffb0000000a0049006d00610067006501000002a30000011b0000001600fffffffb0000000c00430061006d00650072006101000002c3000000160000000000000000fb0000000a0049006d00610067006501000002d9000000c90000000000000000fb0000000a0049006d00610067006501000001970000009d0000000000000000fb0000000a0049006d006100670065010000023a0000009a0000000000000000fb0000000a0049006d00610067006501000002da000000c80000000000000000000000010000010f00000396fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000002800000396000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000073f0000003efc0100000002fb0000000800540069006d006501000000000000073f0000030000fffffffb0000000800540069006d00650100000000000004500000000000000000000004ba0000039600000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -631,6 +923,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1301
-  X: 364
+  Width: 1855
+  X: 65
   Y: 24
