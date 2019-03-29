@@ -2,16 +2,16 @@
 #odom_frame: h1_tf/odom
 #base_link_frame: h1_tf/base_link
 odom_frame: odom
-base_link_frame: base_link
+base_link_frame: base_footprint
 world_frame: odom
-map_frame: map_real
+#map_frame: map
 
 two_d_mode: true
 frequency: 50
 
 #odom0: husky_velocity_controller/odom
 odom0: neuronbot_diff_drive_controller/odom
-odom0_config: [false, false, false,
+odom0_config: [true, true, true,
                false, false, false,
                true, true, false,
                false, false, true,

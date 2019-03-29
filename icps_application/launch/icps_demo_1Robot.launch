@@ -17,13 +17,6 @@
       </include>
     </group>
 
-    <group ns="c1">
-        <include file="$(find desk_description)/launch/camera_spawn.launch" >
-          <arg name="namespace" value="c1" />
-          <arg name="gazebo_pose" value="-x 0.738141 -y 1.07112 -z 2.275 -R 0 -P 1.57 -Y 1.57" />
-        </include>
-    </group>
-
     <!--setting RobotModel:Robot_Description(add namespace)
     and RobotModel:TF_Prefix(add tfpre)-->
     <group if="$(arg rviz)">

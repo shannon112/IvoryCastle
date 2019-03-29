@@ -21,6 +21,18 @@
         <arg name="gazebo_pose" value="-x 0.7 -y 0 -z 0.1 -R 0 -P 0 -Y 0" />
         <arg name="rqt_steering" value="$(arg rqt_steering)" />
       </include>
+      <!--include file="$(find neuronbot_navigation)/launch/move_base.launch">
+        <arg name="no_static_map" value="false"/>
+        <arg name="dual_scan" value="true"/>
+      </include-->
+
+      <!--include file="$(find neuronbot_navigation)/launch/amcl.launch">
+        <arg name="scan_topic" value="front_scan"/>
+        <arg name="map_topic" value="map"/>
+        <arg name="odom_frame_id" value="/$(arg tfpre)/odom"/>
+        <arg name="base_frame_id" value="/$(arg tfpre)/base_footprint"/>
+        <arg name="global_frame_id" value="map"/>
+      </include-->
     </group>
 
     <group ns="n2">
