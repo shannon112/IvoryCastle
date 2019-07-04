@@ -1,5 +1,5 @@
 <launch>
-    <arg name="world_name" default="$(find icps_gazebo)/world/iceira_icps_demo.world"/>
+    <arg name="world_name" default="$(find pmc_gazebo)/world/iceira_pmc_demo.world"/>
     <arg name="gazebo_gui" default="true"/>
     <!-- Launch gazebo world.
     We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
