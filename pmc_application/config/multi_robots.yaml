@@ -1,0 +1,18 @@
+neuronbot:
+  robot_description: ['neuronbot_description', 'robots', 'neuronbot.urdf.xacro']
+  rqt_robot_steering: true
+  robot_name_prefix: 'ironman'
+  enable_odom: true
+  enable_amcl: true # If true, enable_odom must be true
+  scan_base_name: 'front_scan' # Without namespace, used for amcl
+  pose:
+    - [-5, 0, 3.14]
+
+d435:
+  robot_description: ['d435_description', 'robots', 'camera.urdf.xacro']
+  rqt_robot_steering: false
+  robot_name_prefix: 'camera'
+  enable_odom: false
+  enable_amcl: false # If true, enable_odom must be true
+  pose:
+- [-7.3, 0, 1.5, 0, 1.3, 0]
