@@ -1,6 +1,6 @@
 <launch>
-  <arg name="map_file" default="$(find neuronbot_mapping)/map/sim/icps_20190406.yaml"/>
-  <arg name="multi_robots_config" default="$(find ira_factory_robot_generator)/config/multi_robots.yaml"/>
+  <arg name="map_file" default="$(find pmc_gazebo)/map/map.yaml"/>
+  <arg name="multi_robots_config" default="$(find pmc_application)/config/robots.yaml"/>
   <arg name="rvizconfig" default="$(find neuronbot_state_machine)/rviz/neuronbot_icps_multibots.rviz"/>
   <arg name="world_name" default="$(find pmc_gazebo)/world/iceira_pmc_demo.world"/>
   <arg name="remap_cmd_vel" default="true"/>
