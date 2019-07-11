@@ -1,4 +1,3 @@
-<?xml version="1.0" ?>
 <sdf version='1.6'>
   <world name='default'>
     <light name='sun' type='directional'>
@@ -140,10 +139,10 @@
       <static>0</static>
     </model>
     <state world_name='default'>
-      <sim_time>4565 78000000</sim_time>
-      <real_time>92 148911792</real_time>
-      <wall_time>1562229778 612909227</wall_time>
-      <iterations>91594</iterations>
+      <sim_time>4675 606000000</sim_time>
+      <real_time>27 75793943</real_time>
+      <wall_time>1562848084 239804229</wall_time>
+      <iterations>26923</iterations>
       <model name='ground_plane'>
         <pose frame=''>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -160,18 +159,18 @@
         <link name='iceira302'>
           <pose frame=''>-2 -2 -2e-06 0 -1e-06 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>-0.833408 -0.230638 -1.22171 -2.50971 -0.858292 -3.14159</acceleration>
-          <wrench>-3372.88 -933.414 -4944.39 0 -0 0</wrench>
+          <acceleration>-0.865446 -0.264769 -1.02484 -2.4162 -0.770516 -3.14159</acceleration>
+          <wrench>-3502.55 -1071.55 -4147.65 0 -0 0</wrench>
         </link>
       </model>
       <model name='person_standing'>
-        <pose frame=''>1.85729 0.46595 0.000186 0.000678 -1e-06 -1.57052</pose>
+        <pose frame=''>1.90504 0.426536 0 -1e-06 1e-06 -1.63013</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>1.85729 0.46595 0.000186 0.000678 -1e-06 -1.57052</pose>
+          <pose frame=''>1.90504 0.426536 0 -1e-06 1e-06 -1.63013</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>1.23849 1.76942 -0.694392 -1.79096 1.3634 0.067117</acceleration>
-          <wrench>99.0788 141.553 -55.5514 0 -0 0</wrench>
+          <acceleration>-1.437 2.34155 1.76668 0.783485 -1.52276 -3.11554</acceleration>
+          <wrench>-114.96 187.324 141.335 0 -0 0</wrench>
         </link>
       </model>
       <model name='table'>
@@ -205,10 +204,10 @@
         </link>
       </model>
       <model name='unit_box_10'>
-        <pose frame=''>-0.4 1.84 0.45 0 -0 0</pose>
+        <pose frame=''>-0.84 1.4 0.45 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-0.4 1.84 0.45 0 -0 0</pose>
+          <pose frame=''>-0.84 1.4 0.45 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -275,13 +274,13 @@
         </link>
       </model>
       <model name='unit_box_9'>
-        <pose frame=''>-0.493482 -0.764909 0.45 0 -0 1e-05</pose>
+        <pose frame=''>-0.764874 -0.494923 0.45 1e-06 -2e-06 -0.000248</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-0.493482 -0.764909 0.45 0 -0 1e-05</pose>
+          <pose frame=''>-0.764874 -0.494923 0.45 1e-06 -2e-06 -0.000248</pose>
           <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 1e-06 0 -2e-06 0 0</acceleration>
-          <wrench>0 1e-06 0 0 -0 0</wrench>
+          <acceleration>-4e-06 1e-05 -5e-06 -2.2e-05 -1.1e-05 -1e-06</acceleration>
+          <wrench>-4e-06 1e-05 -5e-06 0 -0 0</wrench>
         </link>
       </model>
       <light name='sun'>
@@ -290,7 +289,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>2.03521 -3.53446 3.1309 0 0.623531 1.95215</pose>
+        <pose frame=''>2.05946 -3.50398 3.58643 0 0.623531 1.95215</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
@@ -723,7 +722,7 @@
       </link>
     </model>
     <model name='unit_box_9'>
-      <pose frame=''>-0.5 -0.77 0.45 0 -0 0</pose>
+      <pose frame=''>-0.77 -0.5 0.45 0 -0 0</pose>
       <link name='link'>
         <inertial>
           <mass>1</mass>
@@ -739,7 +738,7 @@
         <collision name='collision'>
           <geometry>
             <box>
-              <size>1 0.46 0.9</size>
+              <size>0.46 1 0.9</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -759,7 +758,7 @@
         <visual name='visual'>
           <geometry>
             <box>
-              <size>1 0.46 0.9</size>
+              <size>0.46 1 0.9</size>
             </box>
           </geometry>
           <material>
@@ -776,7 +775,7 @@
     </model>
     <model name='unit_box_10'>
       <static>1</static>
-      <pose frame=''>-0.4 1.84 0.45 0 -0 0</pose>
+      <pose frame=''>-0.84 1.4 0.45 0 -0 0</pose>
       <link name='link'>
         <inertial>
           <mass>1</mass>
@@ -792,7 +791,7 @@
         <collision name='collision'>
           <geometry>
             <box>
-              <size>1.2 0.32 0.9</size>
+              <size>0.32 1.2 0.9</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -812,7 +811,7 @@
         <visual name='visual'>
           <geometry>
             <box>
-              <size>1.2 0.32 0.9</size>
+              <size>0.32 1.2 0.9</size>
             </box>
           </geometry>
           <material>
@@ -834,7 +833,7 @@
           <pose frame=''>0 0 1 0 -0 0</pose>
           <geometry>
             <box>
-              <size>1.5 0.4 0.03</size>
+              <size>1 0.6 0.03</size>
             </box>
           </geometry>
           <surface>
@@ -858,7 +857,7 @@
           <pose frame=''>0 0 1 0 -0 0</pose>
           <geometry>
             <box>
-              <size>1.4 0.4 0.04</size>
+              <size>1 0.6 0.03</size>
             </box>
           </geometry>
           <material>
@@ -869,7 +868,7 @@
           </material>
         </visual>
         <collision name='front_left_leg'>
-          <pose frame=''>0.68 0.18 0.5 0 -0 0</pose>
+          <pose frame=''>0.43 0.28 0.5 0 -0 0</pose>
           <geometry>
             <cylinder>
               <radius>0.02</radius>
@@ -891,7 +890,7 @@
           </surface>
         </collision>
         <visual name='front_left_leg'>
-          <pose frame=''>0.68 0.18 0.5 0 -0 0</pose>
+          <pose frame=''>0.43 0.28 0.5 0 -0 0</pose>
           <geometry>
             <cylinder>
               <radius>0.02</radius>
@@ -906,7 +905,7 @@
           </material>
         </visual>
         <collision name='front_right_leg'>
-          <pose frame=''>0.68 -0.18 0.5 0 -0 0</pose>
+          <pose frame=''>0.43 -0.28 0.5 0 -0 0</pose>
           <geometry>
             <cylinder>
               <radius>0.02</radius>
@@ -928,7 +927,7 @@
           </surface>
         </collision>
         <visual name='front_right_leg'>
-          <pose frame=''>0.68 -0.18 0.5 0 -0 0</pose>
+          <pose frame=''>0.43 -0.28 0.5 0 -0 0</pose>
           <geometry>
             <cylinder>
               <radius>0.02</radius>
@@ -943,7 +942,7 @@
           </material>
         </visual>
         <collision name='back_right_leg'>
-          <pose frame=''>-0.68 -0.18 0.5 0 -0 0</pose>
+          <pose frame=''>-0.43 -0.28 0.5 0 -0 0</pose>
           <geometry>
             <cylinder>
               <radius>0.02</radius>
@@ -965,7 +964,7 @@
           </surface>
         </collision>
         <visual name='back_right_leg'>
-          <pose frame=''>-0.68 -0.18 0.5 0 -0 0</pose>
+          <pose frame=''>-0.43 -0.28 0.5 0 -0 0</pose>
           <geometry>
             <cylinder>
               <radius>0.02</radius>
@@ -980,7 +979,7 @@
           </material>
         </visual>
         <collision name='back_left_leg'>
-          <pose frame=''>-0.68 0.18 0.5 0 -0 0</pose>
+          <pose frame=''>-0.43 0.28 0.5 0 -0 0</pose>
           <geometry>
             <cylinder>
               <radius>0.02</radius>
@@ -1002,7 +1001,7 @@
           </surface>
         </collision>
         <visual name='back_left_leg'>
-          <pose frame=''>-0.68 0.18 0.5 0 -0 0</pose>
+          <pose frame=''>-0.43 0.28 0.5 0 -0 0</pose>
           <geometry>
             <cylinder>
               <radius>0.02</radius>
