@@ -1,0 +1,429 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 78
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+      Splitter Ratio: 0.706278026
+    Tree Height: 257
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Tool Properties
+    Expanded:
+      - /2D Pose Estimate1
+      - /2D Nav Goal1
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.588679016
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: rviz/Time
+    Experimental: false
+    Name: Time
+    SyncMode: 0
+    SyncSource: South_camera
+Toolbars:
+  toolButtonStyle: 2
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.0299999993
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 10
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Alpha: 1
+      Class: rviz/RobotModel
+      Collision Enabled: false
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        Link Tree Style: Links in Alphabetic Order
+      Name: RobotModel
+      Robot Description: neuronbot/mmp0/robot_description
+      TF Prefix: neuronbot/mmp0
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: false
+        ar_marker_1:
+          Value: true
+        d435/camera_north/camera_link:
+          Value: true
+        d435/camera_north0/camera_color_frame:
+          Value: true
+        d435/camera_north0/camera_color_optical_frame:
+          Value: true
+        d435/camera_north0/camera_depth_frame:
+          Value: true
+        d435/camera_north0/camera_depth_optical_frame:
+          Value: true
+        d435/camera_north0/camera_left_ir_frame:
+          Value: true
+        d435/camera_north0/camera_left_ir_optical_frame:
+          Value: true
+        d435/camera_north0/camera_link:
+          Value: true
+        d435/camera_north0/camera_right_ir_frame:
+          Value: true
+        d435/camera_north0/camera_right_ir_optical_frame:
+          Value: true
+        d435/camera_south/camera_link:
+          Value: true
+        d4352/camera_south0/camera_color_frame:
+          Value: true
+        d4352/camera_south0/camera_color_optical_frame:
+          Value: true
+        d4352/camera_south0/camera_depth_frame:
+          Value: true
+        d4352/camera_south0/camera_depth_optical_frame:
+          Value: true
+        d4352/camera_south0/camera_left_ir_frame:
+          Value: true
+        d4352/camera_south0/camera_left_ir_optical_frame:
+          Value: true
+        d4352/camera_south0/camera_link:
+          Value: true
+        d4352/camera_south0/camera_right_ir_frame:
+          Value: true
+        d4352/camera_south0/camera_right_ir_optical_frame:
+          Value: true
+        desk_north:
+          Value: true
+        desk_south:
+          Value: true
+        localizer_marker_1:
+          Value: true
+        map:
+          Value: true
+        neuronbot/ironman0/arm_arm_1_link:
+          Value: true
+        neuronbot/ironman0/arm_arm_2_link:
+          Value: true
+        neuronbot/ironman0/arm_base:
+          Value: true
+        neuronbot/ironman0/arm_base_link:
+          Value: true
+        neuronbot/ironman0/arm_shoulder_1_link:
+          Value: true
+        neuronbot/ironman0/arm_wrist_1_link:
+          Value: true
+        neuronbot/ironman0/arm_wrist_2_link:
+          Value: true
+        neuronbot/ironman0/arm_wrist_3_link:
+          Value: true
+        neuronbot/ironman0/back_hokuyo_link:
+          Value: true
+        neuronbot/ironman0/back_left_wheel:
+          Value: true
+        neuronbot/ironman0/back_right_wheel:
+          Value: true
+        neuronbot/ironman0/back_xtion_depth_frame:
+          Value: true
+        neuronbot/ironman0/back_xtion_depth_optical_frame:
+          Value: true
+        neuronbot/ironman0/back_xtion_link:
+          Value: true
+        neuronbot/ironman0/back_xtion_rgb_frame:
+          Value: true
+        neuronbot/ironman0/back_xtion_rgb_optical_frame:
+          Value: true
+        neuronbot/ironman0/base_footprint:
+          Value: true
+        neuronbot/ironman0/base_link:
+          Value: true
+        neuronbot/ironman0/control_box_link:
+          Value: true
+        neuronbot/ironman0/front_hokuyo_link:
+          Value: true
+        neuronbot/ironman0/front_left_wheel:
+          Value: true
+        neuronbot/ironman0/front_right_wheel:
+          Value: true
+        neuronbot/ironman0/front_xtion_depth_frame:
+          Value: true
+        neuronbot/ironman0/front_xtion_depth_optical_frame:
+          Value: true
+        neuronbot/ironman0/front_xtion_link:
+          Value: true
+        neuronbot/ironman0/front_xtion_rgb_frame:
+          Value: true
+        neuronbot/ironman0/front_xtion_rgb_optical_frame:
+          Value: true
+        neuronbot/ironman0/left_artag_link:
+          Value: true
+        neuronbot/ironman0/left_finger_link:
+          Value: true
+        neuronbot/ironman0/left_inner_knuckle_link:
+          Value: true
+        neuronbot/ironman0/left_outer_knuckle_link:
+          Value: true
+        neuronbot/ironman0/left_wheel:
+          Value: true
+        neuronbot/ironman0/odom:
+          Value: true
+        neuronbot/ironman0/right_finger_link:
+          Value: true
+        neuronbot/ironman0/right_inner_knuckle_link:
+          Value: true
+        neuronbot/ironman0/right_outer_knuckle_link:
+          Value: true
+        neuronbot/ironman0/right_wheel:
+          Value: true
+        neuronbot/ironman0/toyo_base_link:
+          Value: true
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: false
+      Tree:
+        map:
+          desk_north:
+            d435/camera_north/camera_link:
+              {}
+          desk_south:
+            d435/camera_south/camera_link:
+              {}
+          neuronbot/ironman0/odom:
+            neuronbot/ironman0/base_footprint:
+              neuronbot/ironman0/base_link:
+                neuronbot/ironman0/back_hokuyo_link:
+                  {}
+                neuronbot/ironman0/back_left_wheel:
+                  {}
+                neuronbot/ironman0/back_right_wheel:
+                  {}
+                neuronbot/ironman0/back_xtion_link:
+                  neuronbot/ironman0/back_xtion_depth_frame:
+                    neuronbot/ironman0/back_xtion_depth_optical_frame:
+                      {}
+                  neuronbot/ironman0/back_xtion_rgb_frame:
+                    neuronbot/ironman0/back_xtion_rgb_optical_frame:
+                      {}
+                neuronbot/ironman0/control_box_link:
+                  neuronbot/ironman0/arm_base:
+                    neuronbot/ironman0/arm_base_link:
+                      neuronbot/ironman0/arm_shoulder_1_link:
+                        neuronbot/ironman0/arm_arm_1_link:
+                          neuronbot/ironman0/arm_arm_2_link:
+                            neuronbot/ironman0/arm_wrist_1_link:
+                              neuronbot/ironman0/arm_wrist_2_link:
+                                neuronbot/ironman0/arm_wrist_3_link:
+                                  neuronbot/ironman0/toyo_base_link:
+                                    neuronbot/ironman0/left_inner_knuckle_link:
+                                      {}
+                                    neuronbot/ironman0/left_outer_knuckle_link:
+                                      neuronbot/ironman0/left_finger_link:
+                                        {}
+                                    neuronbot/ironman0/right_inner_knuckle_link:
+                                      {}
+                                    neuronbot/ironman0/right_outer_knuckle_link:
+                                      neuronbot/ironman0/right_finger_link:
+                                        {}
+                neuronbot/ironman0/front_hokuyo_link:
+                  {}
+                neuronbot/ironman0/front_left_wheel:
+                  {}
+                neuronbot/ironman0/front_right_wheel:
+                  {}
+                neuronbot/ironman0/front_xtion_link:
+                  neuronbot/ironman0/front_xtion_depth_frame:
+                    neuronbot/ironman0/front_xtion_depth_optical_frame:
+                      {}
+                  neuronbot/ironman0/front_xtion_rgb_frame:
+                    neuronbot/ironman0/front_xtion_rgb_optical_frame:
+                      {}
+                neuronbot/ironman0/left_artag_link:
+                  {}
+                neuronbot/ironman0/left_wheel:
+                  {}
+                neuronbot/ironman0/right_wheel:
+                  {}
+      Update Interval: 0
+      Value: true
+    - Alpha: 0.699999988
+      Class: rviz/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic: /map
+      Unreliable: false
+      Use Timestamp: false
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 85; 0; 255
+      Enabled: true
+      Head Diameter: 0.300000012
+      Head Length: 0.200000003
+      Length: 0.300000012
+      Line Style: Lines
+      Line Width: 0.0299999993
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.0299999993
+      Shaft Diameter: 0.100000001
+      Shaft Length: 0.100000001
+      Topic: /neuronbot/mmp0/move_base_flex/GlobalPlanner/plan
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 85; 0; 0
+      Enabled: true
+      Head Diameter: 0.300000012
+      Head Length: 0.200000003
+      Length: 0.300000012
+      Line Style: Lines
+      Line Width: 0.0299999993
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.0299999993
+      Shaft Diameter: 0.100000001
+      Shaft Length: 0.100000001
+      Topic: /neuronbot/mmp0/move_base_flex/teb/local_plan
+      Unreliable: false
+      Value: true
+    - Class: rviz/Image
+      Enabled: true
+      Image Topic: /neuronbot/ironman0/front_xtion/rgb/image_raw
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: MMP
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: true
+    - Class: rviz/Image
+      Enabled: true
+      Image Topic: /d4352/camera_south0/camera/rgb/image_raw
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: South_camera
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: true
+    - Class: rviz/Image
+      Enabled: true
+      Image Topic: /d435/camera_north0/camera/rgb/image_raw
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: North_camera
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Default Light: true
+    Fixed Frame: map
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
+    - Class: rviz/SetInitialPose
+      Topic: /initialpose
+    - Class: rviz/SetGoal
+      Topic: /move_base_simple/goal
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
+  Value: true
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Distance: 10.0116215
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.0599999987
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: -0.123138443
+        Y: 3.18527031
+        Z: -2.83307672
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.0500000007
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.00999999978
+      Pitch: 0.829796255
+      Target Frame: <Fixed Frame>
+      Value: Orbit (rviz)
+      Yaw: 5.0640378
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 1028
+  Hide Left Dock: false
+  Hide Right Dock: false
+  MMP:
+    collapsed: false
+  North_camera:
+    collapsed: false
+  QMainWindow State: 000000ff00000000fd00000004000000000000020800000372fc020000000bfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000002800000190000000dd00fffffffb00000006004d004d005001000001be0000010e0000001600fffffffb000000060041004d005201000002b4000000e60000000000000000fb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb00000018004e006f007200740068005f00630061006d00650072006101000002d2000000c80000001600ffffff000000010000014c00000372fc0200000006fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fc00000028000002a4000000b000fffffffa000000010100000002fb0000000a0049006d0061006700650000000000ffffffff0000000000000000fb0000000a0056006900650077007301000005e30000014c0000010f00fffffffb000000180053006f007500740068005f00630061006d00650072006101000002d2000000c80000001600fffffffb0000000800440034003300350100000276000001240000000000000000fb0000000a0049006d00610067006501000002cb000000c40000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000072f00000046fc0100000002fb0000000800540069006d006501000000000000072f0000030000fffffffb0000000800540069006d00650100000000000004500000000000000000000003cf0000037200000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Selection:
+    collapsed: false
+  South_camera:
+    collapsed: false
+  Time:
+    collapsed: false
+  Tool Properties:
+    collapsed: false
+  Views:
+    collapsed: false
+  Width: 1839
+  X: 2001
+  Y: 30
