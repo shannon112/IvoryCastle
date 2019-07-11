@@ -763,7 +763,7 @@
           </geometry>
           <material>
             <script>
-              <name>Gazebo/Grey</name>
+              <name>Gazebo/Indigo</name>
               <uri>file://media/materials/scripts/gazebo.material</uri>
             </script>
           </material>
@@ -816,7 +816,7 @@
           </geometry>
           <material>
             <script>
-              <name>Gazebo/Grey</name>
+              <name>Gazebo/Indigo</name>
               <uri>file://media/materials/scripts/gazebo.material</uri>
             </script>
           </material>

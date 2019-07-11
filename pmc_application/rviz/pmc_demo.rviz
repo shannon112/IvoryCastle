@@ -74,43 +74,43 @@ Visualization Manager:
           Value: true
         d435/camera_north/camera_link:
           Value: true
-        d435/camera_north0/camera_color_frame:
-          Value: true
-        d435/camera_north0/camera_color_optical_frame:
-          Value: true
-        d435/camera_north0/camera_depth_frame:
-          Value: true
-        d435/camera_north0/camera_depth_optical_frame:
-          Value: true
-        d435/camera_north0/camera_left_ir_frame:
-          Value: true
-        d435/camera_north0/camera_left_ir_optical_frame:
-          Value: true
-        d435/camera_north0/camera_link:
-          Value: true
-        d435/camera_north0/camera_right_ir_frame:
-          Value: true
-        d435/camera_north0/camera_right_ir_optical_frame:
-          Value: true
         d435/camera_south/camera_link:
           Value: true
-        d4352/camera_south0/camera_color_frame:
+        d435_n/camera_north0/camera_color_frame:
           Value: true
-        d4352/camera_south0/camera_color_optical_frame:
+        d435_n/camera_north0/camera_color_optical_frame:
           Value: true
-        d4352/camera_south0/camera_depth_frame:
+        d435_n/camera_north0/camera_depth_frame:
           Value: true
-        d4352/camera_south0/camera_depth_optical_frame:
+        d435_n/camera_north0/camera_depth_optical_frame:
           Value: true
-        d4352/camera_south0/camera_left_ir_frame:
+        d435_n/camera_north0/camera_left_ir_frame:
           Value: true
-        d4352/camera_south0/camera_left_ir_optical_frame:
+        d435_n/camera_north0/camera_left_ir_optical_frame:
           Value: true
-        d4352/camera_south0/camera_link:
+        d435_n/camera_north0/camera_link:
           Value: true
-        d4352/camera_south0/camera_right_ir_frame:
+        d435_n/camera_north0/camera_right_ir_frame:
           Value: true
-        d4352/camera_south0/camera_right_ir_optical_frame:
+        d435_n/camera_north0/camera_right_ir_optical_frame:
+          Value: true
+        d435_s/camera_south0/camera_color_frame:
+          Value: true
+        d435_s/camera_south0/camera_color_optical_frame:
+          Value: true
+        d435_s/camera_south0/camera_depth_frame:
+          Value: true
+        d435_s/camera_south0/camera_depth_optical_frame:
+          Value: true
+        d435_s/camera_south0/camera_left_ir_frame:
+          Value: true
+        d435_s/camera_south0/camera_left_ir_optical_frame:
+          Value: true
+        d435_s/camera_south0/camera_link:
+          Value: true
+        d435_s/camera_south0/camera_right_ir_frame:
+          Value: true
+        d435_s/camera_south0/camera_right_ir_optical_frame:
           Value: true
         desk_north:
           Value: true
@@ -336,7 +336,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /d4352/camera_south0/camera/rgb/image_raw
+      Image Topic: /d435_s/camera_south0/camera/rgb/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -348,7 +348,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /d435/camera_north0/camera/rgb/image_raw
+      Image Topic: /d435_n/camera_north0/camera/rgb/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
