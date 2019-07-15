@@ -1,0 +1,5 @@
+<launch>
+    <node name="project_broadcaster" pkg="pmc_application" type="project_broadcaster.py"
+      args="T_movement">
+    </node>
+</launch>

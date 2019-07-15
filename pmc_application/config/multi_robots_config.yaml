@@ -1,7 +1,7 @@
 neuronbot:
   robot_description: ['neuronbot_description', 'robots', 'neuronbot.urdf.xacro']
   rqt_robot_steering: true
-  robot_name_prefix: 'ironman'
+  robot_name_prefix: 'mmp'
   enable_odom: true
   enable_amcl: true # If true, enable_odom must be true
   scan_base_name: 'front_scan' # Without namespace, used for amcl
