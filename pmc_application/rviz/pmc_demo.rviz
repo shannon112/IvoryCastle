@@ -25,7 +25,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: South_camera
+    SyncSource: LaserScan
 Toolbars:
   toolButtonStyle: 2
 Visualization Manager:
@@ -59,6 +59,182 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        arm_arm_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_arm_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        arm_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_shoulder_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_wrist_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_wrist_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        arm_wrist_3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        back_hokuyo_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        back_left_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        back_right_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        back_xtion_depth_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        back_xtion_depth_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        back_xtion_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        back_xtion_rgb_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        back_xtion_rgb_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_footprint:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        control_box_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_hokuyo_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_left_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_right_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_xtion_depth_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        front_xtion_depth_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        front_xtion_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        front_xtion_rgb_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        front_xtion_rgb_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        left_artag_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_finger_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_inner_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_outer_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_finger_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_inner_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_outer_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_wheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        toyo_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Name: RobotModel
       Robot Description: neuronbot/mmp0/robot_description
       TF Prefix: neuronbot/mmp0
@@ -70,131 +246,79 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        ar_marker_1:
+        neuronbot/mmp0/arm_arm_1_link:
           Value: true
-        d435/camera_north/camera_link:
+        neuronbot/mmp0/arm_arm_2_link:
           Value: true
-        d435/camera_south/camera_link:
+        neuronbot/mmp0/arm_base:
           Value: true
-        d435_n/camera_north0/camera_color_frame:
+        neuronbot/mmp0/arm_base_link:
           Value: true
-        d435_n/camera_north0/camera_color_optical_frame:
+        neuronbot/mmp0/arm_shoulder_1_link:
           Value: true
-        d435_n/camera_north0/camera_depth_frame:
+        neuronbot/mmp0/arm_wrist_1_link:
           Value: true
-        d435_n/camera_north0/camera_depth_optical_frame:
+        neuronbot/mmp0/arm_wrist_2_link:
           Value: true
-        d435_n/camera_north0/camera_left_ir_frame:
+        neuronbot/mmp0/arm_wrist_3_link:
           Value: true
-        d435_n/camera_north0/camera_left_ir_optical_frame:
+        neuronbot/mmp0/back_hokuyo_link:
           Value: true
-        d435_n/camera_north0/camera_link:
+        neuronbot/mmp0/back_left_wheel:
           Value: true
-        d435_n/camera_north0/camera_right_ir_frame:
+        neuronbot/mmp0/back_right_wheel:
           Value: true
-        d435_n/camera_north0/camera_right_ir_optical_frame:
+        neuronbot/mmp0/back_xtion_depth_frame:
           Value: true
-        d435_s/camera_south0/camera_color_frame:
+        neuronbot/mmp0/back_xtion_depth_optical_frame:
           Value: true
-        d435_s/camera_south0/camera_color_optical_frame:
+        neuronbot/mmp0/back_xtion_link:
           Value: true
-        d435_s/camera_south0/camera_depth_frame:
+        neuronbot/mmp0/back_xtion_rgb_frame:
           Value: true
-        d435_s/camera_south0/camera_depth_optical_frame:
+        neuronbot/mmp0/back_xtion_rgb_optical_frame:
           Value: true
-        d435_s/camera_south0/camera_left_ir_frame:
+        neuronbot/mmp0/base_footprint:
           Value: true
-        d435_s/camera_south0/camera_left_ir_optical_frame:
+        neuronbot/mmp0/base_link:
           Value: true
-        d435_s/camera_south0/camera_link:
+        neuronbot/mmp0/control_box_link:
           Value: true
-        d435_s/camera_south0/camera_right_ir_frame:
+        neuronbot/mmp0/front_hokuyo_link:
           Value: true
-        d435_s/camera_south0/camera_right_ir_optical_frame:
+        neuronbot/mmp0/front_left_wheel:
           Value: true
-        desk_north:
+        neuronbot/mmp0/front_right_wheel:
           Value: true
-        desk_south:
+        neuronbot/mmp0/front_xtion_depth_frame:
           Value: true
-        localizer_marker_1:
+        neuronbot/mmp0/front_xtion_depth_optical_frame:
           Value: true
-        map:
+        neuronbot/mmp0/front_xtion_link:
           Value: true
-        neuronbot/ironman0/arm_arm_1_link:
+        neuronbot/mmp0/front_xtion_rgb_frame:
           Value: true
-        neuronbot/ironman0/arm_arm_2_link:
+        neuronbot/mmp0/front_xtion_rgb_optical_frame:
           Value: true
-        neuronbot/ironman0/arm_base:
+        neuronbot/mmp0/left_artag_link:
           Value: true
-        neuronbot/ironman0/arm_base_link:
+        neuronbot/mmp0/left_finger_link:
           Value: true
-        neuronbot/ironman0/arm_shoulder_1_link:
+        neuronbot/mmp0/left_inner_knuckle_link:
           Value: true
-        neuronbot/ironman0/arm_wrist_1_link:
+        neuronbot/mmp0/left_outer_knuckle_link:
           Value: true
-        neuronbot/ironman0/arm_wrist_2_link:
+        neuronbot/mmp0/left_wheel:
           Value: true
-        neuronbot/ironman0/arm_wrist_3_link:
+        neuronbot/mmp0/right_finger_link:
           Value: true
-        neuronbot/ironman0/back_hokuyo_link:
+        neuronbot/mmp0/right_inner_knuckle_link:
           Value: true
-        neuronbot/ironman0/back_left_wheel:
+        neuronbot/mmp0/right_outer_knuckle_link:
           Value: true
-        neuronbot/ironman0/back_right_wheel:
+        neuronbot/mmp0/right_wheel:
           Value: true
-        neuronbot/ironman0/back_xtion_depth_frame:
-          Value: true
-        neuronbot/ironman0/back_xtion_depth_optical_frame:
-          Value: true
-        neuronbot/ironman0/back_xtion_link:
-          Value: true
-        neuronbot/ironman0/back_xtion_rgb_frame:
-          Value: true
-        neuronbot/ironman0/back_xtion_rgb_optical_frame:
-          Value: true
-        neuronbot/ironman0/base_footprint:
-          Value: true
-        neuronbot/ironman0/base_link:
-          Value: true
-        neuronbot/ironman0/control_box_link:
-          Value: true
-        neuronbot/ironman0/front_hokuyo_link:
-          Value: true
-        neuronbot/ironman0/front_left_wheel:
-          Value: true
-        neuronbot/ironman0/front_right_wheel:
-          Value: true
-        neuronbot/ironman0/front_xtion_depth_frame:
-          Value: true
-        neuronbot/ironman0/front_xtion_depth_optical_frame:
-          Value: true
-        neuronbot/ironman0/front_xtion_link:
-          Value: true
-        neuronbot/ironman0/front_xtion_rgb_frame:
-          Value: true
-        neuronbot/ironman0/front_xtion_rgb_optical_frame:
-          Value: true
-        neuronbot/ironman0/left_artag_link:
-          Value: true
-        neuronbot/ironman0/left_finger_link:
-          Value: true
-        neuronbot/ironman0/left_inner_knuckle_link:
-          Value: true
-        neuronbot/ironman0/left_outer_knuckle_link:
-          Value: true
-        neuronbot/ironman0/left_wheel:
-          Value: true
-        neuronbot/ironman0/odom:
-          Value: true
-        neuronbot/ironman0/right_finger_link:
-          Value: true
-        neuronbot/ironman0/right_inner_knuckle_link:
-          Value: true
-        neuronbot/ironman0/right_outer_knuckle_link:
-          Value: true
-        neuronbot/ironman0/right_wheel:
-          Value: true
-        neuronbot/ironman0/toyo_base_link:
+        neuronbot/mmp0/toyo_base_link:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -202,68 +326,60 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        map:
-          desk_north:
-            d435/camera_north/camera_link:
+        neuronbot/mmp0/base_footprint:
+          neuronbot/mmp0/base_link:
+            neuronbot/mmp0/back_hokuyo_link:
               {}
-          desk_south:
-            d435/camera_south/camera_link:
+            neuronbot/mmp0/back_left_wheel:
               {}
-          neuronbot/ironman0/odom:
-            neuronbot/ironman0/base_footprint:
-              neuronbot/ironman0/base_link:
-                neuronbot/ironman0/back_hokuyo_link:
+            neuronbot/mmp0/back_right_wheel:
+              {}
+            neuronbot/mmp0/back_xtion_link:
+              neuronbot/mmp0/back_xtion_depth_frame:
+                neuronbot/mmp0/back_xtion_depth_optical_frame:
                   {}
-                neuronbot/ironman0/back_left_wheel:
+              neuronbot/mmp0/back_xtion_rgb_frame:
+                neuronbot/mmp0/back_xtion_rgb_optical_frame:
                   {}
-                neuronbot/ironman0/back_right_wheel:
+            neuronbot/mmp0/control_box_link:
+              neuronbot/mmp0/arm_base:
+                neuronbot/mmp0/arm_base_link:
+                  neuronbot/mmp0/arm_shoulder_1_link:
+                    neuronbot/mmp0/arm_arm_1_link:
+                      neuronbot/mmp0/arm_arm_2_link:
+                        neuronbot/mmp0/arm_wrist_1_link:
+                          neuronbot/mmp0/arm_wrist_2_link:
+                            neuronbot/mmp0/arm_wrist_3_link:
+                              neuronbot/mmp0/toyo_base_link:
+                                neuronbot/mmp0/left_inner_knuckle_link:
+                                  {}
+                                neuronbot/mmp0/left_outer_knuckle_link:
+                                  neuronbot/mmp0/left_finger_link:
+                                    {}
+                                neuronbot/mmp0/right_inner_knuckle_link:
+                                  {}
+                                neuronbot/mmp0/right_outer_knuckle_link:
+                                  neuronbot/mmp0/right_finger_link:
+                                    {}
+            neuronbot/mmp0/front_hokuyo_link:
+              {}
+            neuronbot/mmp0/front_left_wheel:
+              {}
+            neuronbot/mmp0/front_right_wheel:
+              {}
+            neuronbot/mmp0/front_xtion_link:
+              neuronbot/mmp0/front_xtion_depth_frame:
+                neuronbot/mmp0/front_xtion_depth_optical_frame:
                   {}
-                neuronbot/ironman0/back_xtion_link:
-                  neuronbot/ironman0/back_xtion_depth_frame:
-                    neuronbot/ironman0/back_xtion_depth_optical_frame:
-                      {}
-                  neuronbot/ironman0/back_xtion_rgb_frame:
-                    neuronbot/ironman0/back_xtion_rgb_optical_frame:
-                      {}
-                neuronbot/ironman0/control_box_link:
-                  neuronbot/ironman0/arm_base:
-                    neuronbot/ironman0/arm_base_link:
-                      neuronbot/ironman0/arm_shoulder_1_link:
-                        neuronbot/ironman0/arm_arm_1_link:
-                          neuronbot/ironman0/arm_arm_2_link:
-                            neuronbot/ironman0/arm_wrist_1_link:
-                              neuronbot/ironman0/arm_wrist_2_link:
-                                neuronbot/ironman0/arm_wrist_3_link:
-                                  neuronbot/ironman0/toyo_base_link:
-                                    neuronbot/ironman0/left_inner_knuckle_link:
-                                      {}
-                                    neuronbot/ironman0/left_outer_knuckle_link:
-                                      neuronbot/ironman0/left_finger_link:
-                                        {}
-                                    neuronbot/ironman0/right_inner_knuckle_link:
-                                      {}
-                                    neuronbot/ironman0/right_outer_knuckle_link:
-                                      neuronbot/ironman0/right_finger_link:
-                                        {}
-                neuronbot/ironman0/front_hokuyo_link:
+              neuronbot/mmp0/front_xtion_rgb_frame:
+                neuronbot/mmp0/front_xtion_rgb_optical_frame:
                   {}
-                neuronbot/ironman0/front_left_wheel:
-                  {}
-                neuronbot/ironman0/front_right_wheel:
-                  {}
-                neuronbot/ironman0/front_xtion_link:
-                  neuronbot/ironman0/front_xtion_depth_frame:
-                    neuronbot/ironman0/front_xtion_depth_optical_frame:
-                      {}
-                  neuronbot/ironman0/front_xtion_rgb_frame:
-                    neuronbot/ironman0/front_xtion_rgb_optical_frame:
-                      {}
-                neuronbot/ironman0/left_artag_link:
-                  {}
-                neuronbot/ironman0/left_wheel:
-                  {}
-                neuronbot/ironman0/right_wheel:
-                  {}
+            neuronbot/mmp0/left_artag_link:
+              {}
+            neuronbot/mmp0/left_wheel:
+              {}
+            neuronbot/mmp0/right_wheel:
+              {}
       Update Interval: 0
       Value: true
     - Alpha: 0.699999988
@@ -358,11 +474,87 @@ Visualization Manager:
       Transport Hint: raw
       Unreliable: false
       Value: true
+    - Alpha: 1
+      Arrow Length: 0.300000012
+      Axes Length: 0.300000012
+      Axes Radius: 0.00999999978
+      Class: rviz/PoseArray
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 0.0700000003
+      Head Radius: 0.0299999993
+      Name: PoseArray
+      Shaft Length: 0.230000004
+      Shaft Radius: 0.00999999978
+      Shape: Arrow (Flat)
+      Topic: /neuronbot/mmp0/particlecloud
+      Unreliable: false
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 999999
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: LaserScan
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.00999999978
+      Style: Flat Squares
+      Topic: /neuronbot/mmp0/front_scan
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 999999
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: LaserScan
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.00999999978
+      Style: Flat Squares
+      Topic: /neuronbot/mmp0/back_scan
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: map
+    Fixed Frame: neuronbot/mmp0/base_footprint
     Frame Rate: 30
   Name: root
   Tools:
@@ -383,7 +575,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 10.0116215
+      Distance: 10.9324512
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -398,10 +590,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.829796255
+      Pitch: 0.779796362
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.0640378
+      Yaw: 4.8090353
     Saved: ~
 Window Geometry:
   Displays:

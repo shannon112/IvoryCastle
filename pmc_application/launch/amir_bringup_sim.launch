@@ -8,7 +8,7 @@
       <arg name="gui" default="true"/>
     </include>
 
-    <!--Spawn robot in gazebo env-->
+    <!--Load/Spawn robot in gazebo env-->
     <arg name="x" default="0.5"/>
     <arg name="y" default="0.5"/>
     <arg name="z" default="0.101"/>
@@ -24,15 +24,44 @@
     <node ns="$(arg ns)" name="controller_spawner" pkg="controller_manager" type="spawner"
           args="joint_state_controller arm_controller gripper_controller diff_drive_controller"/>
 
-    <!--gripper-->
+    <!-- launch gripper -->
     <node ns="$(arg ns)" name="toyo_chy80_wrapper" pkg="toyo_chy80_wrapper" type="toyo_chy80_wrapper.py"/>
+
+    <!-- correcting the odom -->
+    <node ns="$(arg ns)" name="robot_pose_ekf" pkg="robot_pose_ekf" type="robot_pose_ekf">
+      <param name="output_frame" value="$(arg ns)/odom" />
+      <param name="base_footprint_frame" value="$(arg ns)/base_footprint" />
+      <param name="odom_used" value="true" />
+      <param name="imu_used" value="false" />
+      <param name="vo_used" value="false" />
+      <remap from="odom"     to="diff_drive_controller/odom"/>
+    </node>
+
+    <!-- Load pre-mapped map-->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find pmc_gazebo)/map/map.yaml" />
+
+    <!-- launch amcl localization -->
+    <arg name="initial_pose_x"  default="0.0"/>
+    <arg name="initial_pose_y"  default="0.0"/>
+    <arg name="initial_pose_a"  default="0.0"/>
+    <node ns="$(arg ns)" pkg="amcl" type="amcl" name="amcl">
+      <param name="use_map_topic"  value="true"/>
+      <param name="odom_model_type"  value="diff-corrected"/>
+      <param name="odom_frame_id"  value="$(arg ns)/odom"/>
+      <param name="base_frame_id"  value="$(arg ns)/base_footprint"/>
+      <param name="initial_pose_x" value="$(arg initial_pose_x)"/>
+      <param name="initial_pose_y" value="$(arg initial_pose_y)"/>
+      <param name="initial_pose_a" value="$(arg initial_pose_a)"/>
+      <remap from="map"            to="/map"/>
+      <remap from="scan"           to="front_scan"/>
+    </node>
 
     <!--Gui steering console (Optional)-->
     <node ns="$(arg ns)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
       <param name="default_topic" value="$(arg ns)/diff_drive_controller/cmd_vel"/>
     </node>
 
-    <!-- Show in Rviz   -->
+    <!-- Gui Rviz   -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/pmc_demo.rviz"/>
 
 </launch>
