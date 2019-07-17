@@ -1,0 +1,41 @@
+<launch>
+  <arg name="ns" default="/neuronbot/mmp0"/>
+  <arg name="robot" default="neuronbot"/>
+  <arg name="arm_sim" default="false"/>
+  <arg name="arm_ip" default="192.168.0.10"/>
+  <arg name="map_file" default="$(find neuronbot_mapping)/map/real/ira304_20190425_v1.yaml"/>
+  <arg name="initial_pose_x"  default="0.00"/>
+  <arg name="initial_pose_y"  default="-2.60"/>
+  <arg name="initial_pose_a"  default="3.14"/>
+  <arg name="with_arm" default="true"/>
+
+  <group ns="$(arg ns)">
+    <!-- map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
+
+    <!-- robot bringup -->
+    <include file="$(find syy_wagv)/launch/agv.launch">
+      <arg name="tf_prefix" value="$(arg ns)"/>
+      <arg name="odom_id_arg" value="$(arg ns)/odom" />
+      <arg name="base_id_arg" value="$(arg ns)/base_footprint" />
+      <arg name="with_arm" value="$(arg with_arm)"/>
+      <arg name="robot" value="$(arg robot)"/>
+    </include>
+    <include file="$(find neuronbot_moveit_config_real)/launch/neuronbot_moveit_execution.launch"/>
+    <include file="$(find tm_driver)/launch/tm700_bringup.launch" >
+      <arg name="prefix"  value="arm_" />
+      <arg name="robot_ip" value="$(arg arm_ip)"/>
+    </include>
+    <node name="gripper" pkg="neuronbot_pick_place" type="gripper.py" output="screen"/>
+
+    <!-- localization and navigation -->
+    <include file="$(find ira_factory_robot_controller)/launch/neuronbot/move_base_flex.launch"/>
+    <include file="$(find neuronbot_localization)/launch/real/amcl_real.launch">
+      <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
+      <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
+      <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
+      <arg name="odom_frame_id"  value="$(arg ns)/odom"/>
+      <arg name="base_frame_id"  value="$(arg ns)/base_footprint"/>
+    </include>
+  </group>
+</launch>

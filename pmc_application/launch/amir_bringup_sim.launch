@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <arg name="ns" default="/neuronbot/mmp0"/>
+
+    <!-- Spawn gazebo world-->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name" default="$(find pmc_gazebo)/world/iceira_pmc_demo.world"/>
+      <arg name="gui" default="true"/>
+    </include>
+
+    <!--Spawn robot in gazebo env-->
+    <arg name="x" default="0.5"/>
+    <arg name="y" default="0.5"/>
+    <arg name="z" default="0.101"/>
+    <param name="$(arg ns)/robot_description" command="python $(find xacro)/xacro.py '$(find neuronbot_description)/robots/neuronbot.urdf.xacro' ns:=$(arg ns)" />
+    <node name="neuronbot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-unpause -urdf -param $(arg ns)/robot_description -model $(arg ns) -x $(arg x) -y $(arg y) -z $(arg z)" />
+    <node ns="$(arg ns)" name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+      <param name="tf_prefix" value="$(arg ns)" />
+    </node>
+
+    <!-- Load/Spawn controllers and configuration -->
+    <rosparam ns="$(arg ns)" command="load" file="$(find ira_factory_robot_controller)/config/neuronbot/controllers.yaml" />
+    <node ns="$(arg ns)" name="controller_spawner" pkg="controller_manager" type="spawner"
+          args="joint_state_controller arm_controller gripper_controller diff_drive_controller"/>
+
+    <!--gripper-->
+    <node ns="$(arg ns)" name="toyo_chy80_wrapper" pkg="toyo_chy80_wrapper" type="toyo_chy80_wrapper.py"/>
+
+    <!--Gui steering console (Optional)-->
+    <node ns="$(arg ns)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+      <param name="default_topic" value="$(arg ns)/diff_drive_controller/cmd_vel"/>
+    </node>
+
+    <!-- Show in Rviz   -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/pmc_demo.rviz"/>
+
+</launch>
