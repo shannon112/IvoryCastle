@@ -5,13 +5,14 @@
     <!-- Spawn gazebo world-->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
       <arg name="world_name" default="$(find pmc_gazebo)/world/iceira_pmc_demo.world"/>
+      <!--arg name="world_name" default="$(find iceira_gazebo)/world/iceira302.world"/-->
       <arg name="gui" default="true"/>
     </include>
 
     <!--Load/Spawn robot in gazebo env-->
     <arg name="x" default="0.5"/>
     <arg name="y" default="0.5"/>
-    <arg name="z" default="0.101"/>
+    <arg name="z" default="0.0"/>
     <param name="$(arg ns)/robot_description" command="python $(find xacro)/xacro.py '$(find neuronbot_description)/robots/neuronbot.urdf.xacro' ns:=$(arg ns)" />
     <node name="neuronbot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
           args="-unpause -urdf -param $(arg ns)/robot_description -model $(arg ns) -x $(arg x) -y $(arg y) -z $(arg z)" />
@@ -38,23 +39,35 @@
     </node>
 
     <!-- Load pre-mapped map-->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find pmc_gazebo)/map/map.yaml" />
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find pmc_gazebo)/map/cropped.yaml" />
 
     <!-- launch amcl localization -->
-    <arg name="initial_pose_x"  default="0.0"/>
-    <arg name="initial_pose_y"  default="0.0"/>
-    <arg name="initial_pose_a"  default="0.0"/>
     <node ns="$(arg ns)" pkg="amcl" type="amcl" name="amcl">
       <param name="use_map_topic"  value="true"/>
-      <param name="odom_model_type"  value="diff-corrected"/>
+      <param name="odom_model_type"  value="diff"/>
       <param name="odom_frame_id"  value="$(arg ns)/odom"/>
       <param name="base_frame_id"  value="$(arg ns)/base_footprint"/>
-      <param name="initial_pose_x" value="$(arg initial_pose_x)"/>
-      <param name="initial_pose_y" value="$(arg initial_pose_y)"/>
-      <param name="initial_pose_a" value="$(arg initial_pose_a)"/>
+      <param name="initial_pose_x" value="0.0"/>
+      <param name="initial_pose_y" value="0.0"/>
+      <param name="initial_pose_a" value="0.0"/>
+      <param name="initial_cov_xx"  value="0.1"/>
+      <param name="initial_cov_yy"  value="0.1"/>
+      <param name="initial_cov_aa"  value="0.0872"/>
+      <param name="min_particles"  value="100"/>
+      <param name="max_particles"  value="500"/>
       <remap from="map"            to="/map"/>
       <remap from="scan"           to="front_scan"/>
     </node>
+
+    <!-- launch gmapping slam -->
+    <!--node ns="$(arg ns)" name="slam_gmapping" pkg="gmapping" type="slam_gmapping">
+      <param name="base_frame" value="$(arg ns)/base_footprint"/>
+      <param name="odom_frame" value="$(arg ns)/odom"/>
+      <param name="map_frame" value="map"/>
+      <param name="delta" value="0.02"/>
+      <remap from="scan"                      to="front_scan"/>
+      <remap from="map"			                  to="/map"/>
+    </node-->
 
     <!--Gui steering console (Optional)-->
     <node ns="$(arg ns)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
