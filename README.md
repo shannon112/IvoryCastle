@@ -1,8 +1,27 @@
 # IvoryCastle
 ## icps demo world
+```
+roslaunch icps_gazebo iceira_icps_demo.launch
+```
+
+<img src="https://github.com/shannon112/IvoryCastle/blob/master/icps_gazebo/result/icps_demo_world.png" width="400">
+
+## icps application
+spawn two robot one camera at once with gmapping or amcl
+```
+roslaunch icps_application icps_demo_1Cam2Robot.launch
+roslaunch icps_application icps_demo_nav_amcl.launch
+roslaunch icps_application icps_demo_nav_gampping.launch
+```
+
 <img src="https://github.com/shannon112/IvoryCastle/blob/master/icps_gazebo/result/icps_demo_world.png" width="600">
 
+
 ## pmc demo world
+```
+roslaunch icps_gazebo iceira_pmc_demo.launch
+```
+
 <img src="https://github.com/shannon112/IvoryCastle/blob/master/pmc_gazebo/result/pmc_demo_world2.png" width="600">
 
 ## pmc application
