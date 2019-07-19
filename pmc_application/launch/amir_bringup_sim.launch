@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-    <arg name="ns" default="/neuronbot/mmp0"/>
+    <arg name="ns" default="neuronbot/mmp0"/>
 
     <!-- Spawn gazebo world-->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
       <arg name="world_name" default="$(find pmc_gazebo)/world/iceira_pmc_demo.world"/>
-      <!--arg name="world_name" default="$(find iceira_gazebo)/world/iceira302.world"/-->
       <arg name="gui" default="true"/>
     </include>
 
@@ -39,10 +38,10 @@
     </node>
 
     <!-- Load pre-mapped map-->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find pmc_gazebo)/map/cropped.yaml" />
+    <!--node name="map_server" pkg="map_server" type="map_server" args="$(find pmc_gazebo)/map/cropped.yaml" /-->
 
     <!-- launch amcl localization -->
-    <node ns="$(arg ns)" pkg="amcl" type="amcl" name="amcl">
+    <!--node ns="$(arg ns)" pkg="amcl" type="amcl" name="amcl">
       <param name="use_map_topic"  value="true"/>
       <param name="odom_model_type"  value="diff"/>
       <param name="odom_frame_id"  value="$(arg ns)/odom"/>
@@ -57,7 +56,7 @@
       <param name="max_particles"  value="500"/>
       <remap from="map"            to="/map"/>
       <remap from="scan"           to="front_scan"/>
-    </node>
+    </node-->
 
     <!-- launch gmapping slam -->
     <!--node ns="$(arg ns)" name="slam_gmapping" pkg="gmapping" type="slam_gmapping">
@@ -69,9 +68,41 @@
       <remap from="map"			                  to="/map"/>
     </node-->
 
+    <!-- launch Cartographer slam -->
+    <!--arg name="lua_filename" default="neuronbot_allcarto.lua"/-->
+    <!--arg name="map_filename" default="$(find pmc_gazebo)/map/fusion.bag.pbstream"/-->
+    <!--node ns="$(arg ns)" name="cartographer_node" pkg="cartographer_ros"
+        type="cartographer_node" args="
+            -configuration_directory $(find pmc_application)/config
+            -configuration_basename $(arg lua_filename)"
+        output="screen">
+      <remap from="imu" to="imu" />
+      <remap from="scan" to="front_scan" />
+    </node-->
+
+    <!--launch cartographer localization-->
+    <arg name="lua_filename_local" default="neuronbot_allcarto_locali.lua"/>
+    <arg name="map_filename" default="$(find pmc_gazebo)/map/fusion.bag.pbstream"/>
+    <node ns="$(arg ns)" name="cartographer" pkg="cartographer_ros"
+        type="cartographer_node" args="
+            -configuration_directory $(find pmc_application)/config
+            -configuration_basename $(arg lua_filename_local)
+            -load_state_filename $(arg map_filename)
+            -start_trajectory_with_default_topics=false"
+        output="screen">
+        <remap from="imu" to="imu" />
+        <remap from="scan" to="front_scan" />
+    </node>
+
+    <!--launch cartographer grid map transformer-->
+    <node ns="$(arg ns)" name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
+        type="cartographer_occupancy_grid_node" args="-resolution 0.05">
+      <remap from="map" to="/map" />
+    </node>
+
     <!--Gui steering console (Optional)-->
     <node ns="$(arg ns)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
-      <param name="default_topic" value="$(arg ns)/diff_drive_controller/cmd_vel"/>
+      <param name="default_topic" value="/$(arg ns)/diff_drive_controller/cmd_vel"/>
     </node>
 
     <!-- Gui Rviz   -->
