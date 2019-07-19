@@ -14,8 +14,7 @@ roslaunch icps_application icps_demo_nav_amcl.launch
 roslaunch icps_application icps_demo_nav_gampping.launch
 ```
 
-<img src="https://github.com/shannon112/IvoryCastle/blob/master/icps_gazebo/result/icps_demo_world.png" width="600">
-
+<img src="https://github.com/shannon112/IvoryCastle/blob/master/icps_application/result/1cam2robots_gazebo.png" width="400"><img src="https://github.com/shannon112/IvoryCastle/blob/master/icps_application/result/1cam2robots_rviz.png" width="400">
 
 ## pmc demo world
 ```
