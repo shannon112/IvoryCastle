@@ -3,6 +3,7 @@
 import rospy
 import smach
 import smach_ros
+from std_msgs.msg import String
 
 # define state VoiceCommand
 class VoiceCommand(smach.State):
@@ -10,18 +11,24 @@ class VoiceCommand(smach.State):
         smach.State.__init__(self, outcomes=['what_happened','others','find_material','delivery_product','all_task_clear'])
         self.intent = 0
 
+    def callback(self, data):
+        if data.data == "Others": self.intent = 0
+        elif data.data == "IntentFind": self.intent = 1
+        elif data.data == "IntentDelivery": self.intent = 2
+        elif data.data == "IntentWhat": self.intent = 3
+        elif data.data == "Clear": self.intent = 4
+
     def execute(self, userdata):
         rospy.loginfo('Executing state VoiceCommand')
+        self.subscriber = rospy.Subscriber('/Intent', String, self.callback)
+
         if self.intent == 0:
-            self.intent += 1
             rospy.sleep(2.)
             return 'others'
         elif self.intent == 1:
-            self.intent += 1
             rospy.sleep(2.)
             return 'find_material'
         elif self.intent == 2:
-            self.intent = 0
             rospy.sleep(2.)
             return 'delivery_product'
         elif self.intent == 3:
