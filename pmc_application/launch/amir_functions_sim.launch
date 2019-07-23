@@ -1,5 +1,5 @@
 <launch>
-  <arg name="ns" default="/neuronbot/mmp0"/>
+  <arg name="ns" default="neuronbot/mmp0"/>
 
   <!-- base -->
   <arg name="odom_topic" default="$(arg ns)/odom"/>
@@ -33,29 +33,9 @@
     <param name="fixed_gsp" value="$(arg fixed_gsp)"/>
   </node-->
 
-  <!-- static tf publisher -->
-  <!-- Note: static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms-->
-  <node name="d435_artag_tf" pkg="tf" type="static_transform_publisher" args="-0.3 0 1.2 3.14 1.3 0 localizer_marker_1 d435/camera0/camera_link 100"/>
-  <node name="left_desk_artag_tf" pkg="tf" type="static_transform_publisher" args="-0.2 0.42 0.5 0 0 0 localizer_marker_1 left_desk 100"/>
-  <node name="mid_desk_artag_tf" pkg="tf" type="static_transform_publisher" args="-0.2 0.12 0.5 0 0 0 localizer_marker_1 mid_desk 100"/>
-  <node name="right_desk_artag_tf" pkg="tf" type="static_transform_publisher" args="-0.2 -0.18 0.5 0 0 0 localizer_marker_1 right_desk 100"/>
-
   <group ns="$(arg ns)">
     <param name="odom_topic" value="$(arg odom_topic)"/>
     <param name="cmd_vel_topic" value="$(arg cmd_vel_topic)"/>
-
-    <!-- artag -->
-    <include file="$(find ar_track_alvar)/launch/pr2_bundle_no_kinect.launch">
-      <arg name="marker_size" value="$(arg marker_size)" />
-      <arg name="max_new_marker_error" value="$(arg max_new_marker_error)" />
-      <arg name="max_track_error" value="$(arg max_track_error)" />
-      <arg name="cam_image_topic" value="$(arg cam_image_topic)" />
-      <arg name="cam_info_topic" value="$(arg cam_info_topic)" />
-      <arg name="output_frame" value="$(arg output_frame)" />
-      <arg name="bundle_files" value="$(arg bundle_files)" />
-    </include>
-    <node name="ar_tf_converter" pkg="neuronbot_alignment" type="ar_tf_converter.py" output="screen"/>
-    <node name="ar_enable_manager" pkg="neuronbot_alignment" type="ar_enable_manager.py" output="screen"/>
 
     <!-- basic task functions -->
     <node name="voice_command_server" pkg="neuronbot_voice_command" type="voiceCommandServer.py" output="screen"/>
