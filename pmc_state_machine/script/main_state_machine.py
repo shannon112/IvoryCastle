@@ -5,6 +5,7 @@ import smach
 import smach_ros
 from std_msgs.msg import String
 from std_srvs.srv import Trigger, TriggerRequest
+from pmc_navigation.srv import navigoal
 
 # define state VoiceCommand
 class VoiceCommand(smach.State):
@@ -147,59 +148,61 @@ class StackingBox(smach.State):
 # define state NaviFind
 class NaviFind(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['start','reachGoal','restart','home','done'])
+        smach.State.__init__(self, outcomes=['prepare_to_go','reach_goal','back_to_home','done'])
+        rospy.wait_for_service('/triggerNavigating')
+        self.triggerNavigating_service = rospy.ServiceProxy('/triggerNavigating', navigoal)
         self.state = 0
 
     def execute(self, userdata):
         rospy.loginfo('Executing state NaviFind')
         if self.state == 0:
-            rospy.sleep(2.)
             self.state += 1
-            return 'start'
-        elif self.state == 1:
-            rospy.sleep(2.)
-            self.state += 1
-            return 'reachGoal'
+            return 'prepare_to_go'
+        if self.state == 1:
+            result = self.triggerNavigating_service(1)
+            rospy.loginfo(result.message)
+            if result.success:
+                self.state += 1
+                return 'reach_goal'
         elif self.state == 2:
-            rospy.sleep(2.)
-            self.state += 1
-            return 'restart'
+            result = self.triggerNavigating_service(2)
+            rospy.loginfo(result.message)
+            if result.success:
+                self.state += 1
+                return 'back_to_home'
         elif self.state == 3:
-            rospy.sleep(2.)
-            self.state += 1
-            return 'home'
-        elif self.state == 4:
             self.state = 0
             return 'done'
+
 
 # define state NaviDelivery
 class NaviDelivery(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['start','reachGoal','restart','home','done'])
+        smach.State.__init__(self, outcomes=['prepare_to_go','reach_goal','back_to_home','done'])
+        rospy.wait_for_service('/triggerNavigating')
+        self.triggerNavigating_service = rospy.ServiceProxy('/triggerNavigating', navigoal)
         self.state = 0
 
     def execute(self, userdata):
         rospy.loginfo('Executing state NaviDelivery')
         if self.state == 0:
-            rospy.sleep(2.)
             self.state += 1
-            return 'start'
+            return 'prepare_to_go'
         elif self.state == 1:
-            rospy.sleep(2.)
-            self.state += 1
-            return 'reachGoal'
+            result = self.triggerNavigating_service(3)
+            rospy.loginfo(result.message)
+            if result.success:
+                self.state += 1
+                return 'reach_goal'
         elif self.state == 2:
-            rospy.sleep(2.)
-            self.state += 1
-            return 'restart'
+            result = self.triggerNavigating_service(4)
+            rospy.loginfo(result.message)
+            if result.success:
+                self.state += 1
+                return 'back_to_home'
         elif self.state == 3:
-            rospy.sleep(2.)
-            self.state += 1
-            return 'home'
-        elif self.state == 4:
             self.state = 0
             return 'done'
-
 
 def main():
     rospy.init_node('smach_example_state_machine')
@@ -235,10 +238,9 @@ def main():
         # ************************************************
         with sm_naviF:
             smach.StateMachine.add('NaviFind', NaviFind(),
-                                   transitions={'start':'NaviFind',
-                                                'reachGoal':'GraspingObject',
-                                                'restart':'NaviFind',
-                                                'home':'PlacingBasket',
+                                   transitions={'prepare_to_go':'NaviFind',
+                                                'reach_goal':'GraspingObject',
+                                                'back_to_home':'PlacingBasket',
                                                 'done':'finding_done'})
             smach.StateMachine.add('GraspingObject', GraspingObject(),
                                     transitions={'grasping_done':'NaviFind',
@@ -258,10 +260,9 @@ def main():
         # ************************************************
         with sm_naviD:
             smach.StateMachine.add('NaviDelivery', NaviDelivery(),
-                                   transitions={'start':'FetchingBox',
-                                                'reachGoal':'StackingBox',
-                                                'restart':'NaviDelivery',
-                                                'home':'NaviDelivery',
+                                   transitions={'prepare_to_go':'FetchingBox',
+                                                'reach_goal':'StackingBox',
+                                                'back_to_home':'NaviDelivery',
                                                 'done':'delivering_done'})
             smach.StateMachine.add('FetchingBox', FetchingBox(),
                                     transitions={'fetching_done':'NaviDelivery',
