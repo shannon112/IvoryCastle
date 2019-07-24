@@ -5,6 +5,9 @@ from std_msgs.msg import String
 from std_srvs.srv import Trigger, TriggerResponse
 
 def executeCaption(req):
+    '''
+    caption executing
+    '''
     rospy.sleep(10.)
     return TriggerResponse(
         success=True,
@@ -12,6 +15,9 @@ def executeCaption(req):
     )
 
 def executeGrasping(req):
+    '''
+    grasping executing
+    '''
     rospy.sleep(10.)
     return TriggerResponse(
         success=True,
@@ -19,6 +25,9 @@ def executeGrasping(req):
     )
 
 def executePlacing(req):
+    '''
+    placing executing
+    '''
     rospy.sleep(10.)
     return TriggerResponse(
         success=True,
@@ -26,6 +35,9 @@ def executePlacing(req):
     )
 
 def executeFetching(req):
+    '''
+    fetching executing
+    '''
     rospy.sleep(10.)
     return TriggerResponse(
         success=True,
@@ -33,6 +45,9 @@ def executeFetching(req):
     )
 
 def executeStacking(req):
+    '''
+    stacking executing
+    '''
     rospy.sleep(10.)
     return TriggerResponse(
         success=True,
