@@ -19,6 +19,7 @@ class VoiceCommand(smach.State):
 
         if result.success:
             if result.message == "Others":
+                rospy.sleep(2.)
                 return 'others'
             elif result.message == "IntentFind":
                 return 'find_material'
