@@ -9,42 +9,29 @@ from std_srvs.srv import Trigger, TriggerRequest
 # define state VoiceCommand
 class VoiceCommand(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['what_happened','others','find_material','delivery_product','all_task_clear'])
-        self.intent = 0
-
-    def callback(self, data):
-        print "callback",data.data
-        if data.data == "Others": self.intent = 0
-        elif data.data == "IntentFind": self.intent = 1
-        elif data.data == "IntentDelivery": self.intent = 2
-        elif data.data == "IntentWhat": self.intent = 3
-        elif data.data == "Clear": self.intent = 4
+        smach.State.__init__(self, outcomes=['what_happened','others','find_material','delivery_product','all_task_clear','aborted'])
+        rospy.wait_for_service('/triggerVCommand')
+        self.triggerVCommand_service = rospy.ServiceProxy('/triggerVCommand', Trigger)
 
     def execute(self, userdata):
         rospy.loginfo('Executing state VoiceCommand')
-        rospy.Subscriber('/Intent', String, self.callback)
+        result = self.triggerVCommand_service(TriggerRequest())
 
-        if self.intent == 0:
-            return 'others'
-        elif self.intent == 1:
-            self.intent = 0
-            rospy.sleep(2.)
-            return 'find_material'
-        elif self.intent == 2:
-            self.intent = 0
-            rospy.sleep(2.)
-            return 'delivery_product'
-        elif self.intent == 3:
-            self.intent = 0
-            rospy.sleep(2.)
-            return 'what_happened'
-        elif self.intent == 4:
-            self.intent = 0
-            rospy.sleep(2.)
-            return 'all_task_clear'
+        if result.success:
+            if result.message == "Others":
+                return 'others'
+            elif result.message == "IntentFind":
+                return 'find_material'
+            elif result.message == "IntentDelivery":
+                return 'delivery_product'
+            elif result.message == "IntentWhat":
+                return 'what_happened'
+            elif result.message == "Clear":
+                return 'all_task_clear'
+            else:
+                return 'others'
         else:
-            rospy.sleep(2.)
-            return 'others'
+            return 'aborted'
 
 
 # define state ImageCaption
@@ -61,14 +48,11 @@ class ImageCaption(smach.State):
         rospy.loginfo(result.message)
 
         if result.success:
-            rospy.sleep(2.)
             return 'telling_done'
         elif error_counter<3:
             error_counter+=1
-            rospy.sleep(2.)
             return 'retry'
         else:
-            rospy.sleep(2.)
             return 'aborted'
 
 
@@ -86,14 +70,11 @@ class GraspingObject(smach.State):
         rospy.loginfo(result.message)
 
         if result.success:
-            rospy.sleep(2.)
             return 'grasping_done'
         elif error_counter<3:
             error_counter+=1
-            rospy.sleep(2.)
             return 'retry'
         else:
-            rospy.sleep(2.)
             return 'aborted'
 
 
@@ -110,14 +91,11 @@ class PlacingBasket(smach.State):
         rospy.loginfo(result.message)
 
         if result.success:
-            rospy.sleep(2.)
             return 'placing_done'
         elif error_counter<3:
             error_counter+=1
-            rospy.sleep(2.)
             return 'retry'
         else:
-            rospy.sleep(2.)
             return 'aborted'
 
 
@@ -135,14 +113,11 @@ class FetchingBox(smach.State):
         rospy.loginfo(result.message)
 
         if result.success:
-            rospy.sleep(2.)
             return 'fetching_done'
         elif error_counter<3:
             error_counter+=1
-            rospy.sleep(2.)
             return 'retry'
         else:
-            rospy.sleep(2.)
             return 'aborted'
 
 
@@ -160,14 +135,11 @@ class StackingBox(smach.State):
         rospy.loginfo(result.message)
 
         if result.success:
-            rospy.sleep(2.)
             return 'stacking_done'
         elif error_counter<3:
             error_counter+=1
-            rospy.sleep(2.)
             return 'retry'
         else:
-            rospy.sleep(2.)
             return 'aborted'
 
 
@@ -180,24 +152,23 @@ class NaviFind(smach.State):
     def execute(self, userdata):
         rospy.loginfo('Executing state NaviFind')
         if self.state == 0:
-            self.state += 1
             rospy.sleep(2.)
+            self.state += 1
             return 'start'
         elif self.state == 1:
-            self.state += 1
             rospy.sleep(2.)
+            self.state += 1
             return 'reachGoal'
         elif self.state == 2:
-            self.state += 1
             rospy.sleep(2.)
+            self.state += 1
             return 'restart'
         elif self.state == 3:
-            self.state += 1
             rospy.sleep(2.)
+            self.state += 1
             return 'home'
         elif self.state == 4:
             self.state = 0
-            rospy.sleep(2.)
             return 'done'
 
 # define state NaviDelivery
@@ -209,24 +180,23 @@ class NaviDelivery(smach.State):
     def execute(self, userdata):
         rospy.loginfo('Executing state NaviDelivery')
         if self.state == 0:
-            self.state += 1
             rospy.sleep(2.)
+            self.state += 1
             return 'start'
         elif self.state == 1:
             rospy.sleep(2.)
             self.state += 1
             return 'reachGoal'
         elif self.state == 2:
-            self.state += 1
             rospy.sleep(2.)
+            self.state += 1
             return 'restart'
         elif self.state == 3:
-            self.state += 1
             rospy.sleep(2.)
+            self.state += 1
             return 'home'
         elif self.state == 4:
             self.state = 0
-            rospy.sleep(2.)
             return 'done'
 
 
@@ -239,15 +209,18 @@ def main():
     # ************************************************
     sm_top = smach.StateMachine(outcomes=['demo_done'])
     sis_root = smach_ros.IntrospectionServer('server_pmc', sm_top, '/SM_ROOT')
-    sis_root.start()
+    sm_naviD = smach.StateMachine(outcomes=['delivering_done'])
+    sis_naviD = smach_ros.IntrospectionServer('server_pmc', sm_naviD, '/SM_ROOT/NAVI_D')
+    sm_naviF = smach.StateMachine(outcomes=['finding_done'])
+    sis_naviF = smach_ros.IntrospectionServer('server_pmc', sm_naviF, '/SM_ROOT/NAVI_F')
     with sm_top:
-
         smach.StateMachine.add('VoiceCommand', VoiceCommand(),
                                transitions={'others':'VoiceCommand',
                                             'find_material':'NAVI_F',
                                             'delivery_product':'NAVI_D',
                                             'what_happened':'ImageCaption',
-                                            'all_task_clear':'demo_done'})
+                                            'all_task_clear':'demo_done',
+                                            'aborted':'VoiceCommand'})
 
         smach.StateMachine.add('ImageCaption', ImageCaption(),
                                 transitions={'telling_done':'VoiceCommand',
@@ -259,9 +232,6 @@ def main():
         # ************************************************
         # *********** SM_ROOT/NAVI_F *********************
         # ************************************************
-        sm_naviF = smach.StateMachine(outcomes=['finding_done'])
-        sis_naviF = smach_ros.IntrospectionServer('server_pmc', sm_naviF, '/SM_ROOT/NAVI_F')
-        sis_naviF.start()
         with sm_naviF:
             smach.StateMachine.add('NaviFind', NaviFind(),
                                    transitions={'start':'NaviFind',
@@ -281,12 +251,10 @@ def main():
                                                 })
         smach.StateMachine.add('NAVI_F', sm_naviF, transitions={'finding_done':'VoiceCommand'})
 
+
         # ************************************************
         # *********** SM_ROOT/NAVI_D *********************
         # ************************************************
-        sm_naviD = smach.StateMachine(outcomes=['delivering_done'])
-        sis_naviD = smach_ros.IntrospectionServer('server_pmc', sm_naviD, '/SM_ROOT/NAVI_D')
-        sis_naviD.start()
         with sm_naviD:
             smach.StateMachine.add('NaviDelivery', NaviDelivery(),
                                    transitions={'start':'FetchingBox',
@@ -307,10 +275,14 @@ def main():
         smach.StateMachine.add('NAVI_D', sm_naviD, transitions={'delivering_done':'VoiceCommand'})
 
     # Execute SMACH plan
+    sis_root.start()
+    sis_naviF.start()
+    sis_naviD.start()
     outcome = sm_top.execute()
+    rospy.spin()
     sis_root.stop()
-    sis_NaviD.stop()
-    sis_NaviF.stop()
+    sis_naviD.stop()
+    sis_naviF.stop()
 
 if __name__ == '__main__':
     main()
