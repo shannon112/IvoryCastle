@@ -9,9 +9,9 @@ from math import atan2, pi
 from std_msgs.msg import Bool
 from geometry_msgs.msg import Twist, Pose
 #from neuronbot_msgs.srv import Alignment, AlignmentResponse
-#from ira_factory_msgs.msg import RobotStatus
+#from ira_factory_msgs.msg import RobotStatus 
 from ira_factory_msgs.srv import RequestRobotStatus, UpdateRobotStatus, RobotTF
-from std_srvs.srv import Trigger, TriggerResponse
+from pmc_navigation.srv import navigoal, navigoalResponse
 
 br = None
 listener = None
@@ -28,19 +28,21 @@ hpause = False
 rx = None
 ry = None
 rtheta =None
-def hpausehandler(state):
-	while(hpause):
-		print("people! waiting")
-	if(state=='a'):
-		movea(-0.6,-0.9,0)
-	elif(state=='b'):
-		moveb(0,0,0)
+def hpausehandler(x,y,state):
+    while(hpause):
+        print("people! waiting")
+    if(state==1):
+        movea(x,y,0)
+    elif(state==3):
+        movec(x,y,0)
+    else:
+        moveb(x,y,0)
 def hpausedegree(theta):
-	while(hpause):
-		print("waiting")
-	absRotation(theta,"map")
+    while(hpause):
+        print("waiting")
+    absRotation(theta,"map")
 
-
+        
 
 def movea(goalx,goaly,goaltheta):
     global twistPub, tfReq, transVel ,hpause
@@ -58,32 +60,33 @@ def movea(goalx,goaly,goaltheta):
     ts.linear.x = transVel
     r = rospy.Rate(10)
     if(abs(currX-goalx)>0.05 and hpause != True):
-    	absRotation(3.14,"map")
+        absRotation(0,"map")
+    ts.linear.x = -transVel
     while(abs(currX-goalx)>0.05 and hpause != True):
-    	resp = tfReq(goal_frame, base_frame)
-    	currX = resp.trans[0]
-    	print(hpause)
-    	print("a:moveing")
-    	twistPub.publish(ts)
-    	r.sleep()
-    ts.linear.x = 0.0
+        resp = tfReq(goal_frame, base_frame)
+        currX = resp.trans[0]
+        print(hpause)
+        print("a:moveing")
+        twistPub.publish(ts)
+        r.sleep()
+    ts.linear.x = 0.0 
     twistPub.publish(ts)
     ts.linear.x = transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
-    	absRotation(-1.57,"map")
+        absRotation(-1.57,"map")
     while(abs(currY-goaly)>0.05 and hpause != True):
-    	resp = tfReq(goal_frame, base_frame)
-    	currY = resp.trans[1]
-    	print(hpause)
-    	print("a:moveing")
-    	twistPub.publish(ts)
-    	r.sleep()
-    ts.linear.x = 0.0
+        resp = tfReq(goal_frame, base_frame)
+        currY = resp.trans[1]
+        print(hpause)
+        print("a:moveing")
+        twistPub.publish(ts)
+        r.sleep()
+    ts.linear.x = 0.0 
     twistPub.publish(ts)
     if(hpause):
-    	hpausehandler('a')
+        hpausehandler(goalx,goaly,1)
     else:
-    	return True
+        return True
 def moveb(goalx,goaly,goaltheta):
     global twistPub, tfReq, transVel ,hpause
     print("B")
@@ -100,33 +103,74 @@ def moveb(goalx,goaly,goaltheta):
     ts.linear.x = transVel
     r = rospy.Rate(10)
     #if(abs(currY-goaly)>0.05 and hpause != True):
-    #	absRotation(1.57,"map")
+    #   absRotation(1.57,"map")
     ts.linear.x = -transVel
     while(abs(currY-goaly)>0.05 and hpause != True):
-    	resp = tfReq(goal_frame, base_frame)
-    	currY = resp.trans[1]
-    	print(hpause)
-    	print("b:moveing")
-    	twistPub.publish(ts)
-    	r.sleep()
-    ts.linear.x = 0.0
+        resp = tfReq(goal_frame, base_frame)
+        currY = resp.trans[1]
+        print(hpause)
+        print("b:moveing")
+        twistPub.publish(ts)
+        r.sleep()
+    ts.linear.x = 0.0 
     twistPub.publish(ts)
-    ts.linear.x = -transVel
+    ts.linear.x = transVel
     if(abs(currX-goalx)>0.05 and hpause != True):
-    	absRotation(3.14,"map")
+        absRotation(0,"map")
     while(abs(currX-goalx)>0.05 and hpause != True):
-    	resp = tfReq(goal_frame, base_frame)
-    	currX = resp.trans[0]
-    	print(hpause)
-    	print("b:moveing")
-    	twistPub.publish(ts)
-    	r.sleep()
-    ts.linear.x = 0.0
+        resp = tfReq(goal_frame, base_frame)
+        currX = resp.trans[0]
+        print(hpause)
+        print("b:moveing")
+        twistPub.publish(ts)
+        r.sleep()
+    ts.linear.x = 0.0 
     twistPub.publish(ts)
     if(hpause):
-    	hpausehandler('b')
+        hpausehandler(goalx,goaly,2)
     else:
-    	return True
+        return True
+def movec(goalx,goaly,goaltheta):
+    global twistPub, tfReq, transVel ,hpause
+    print("C")
+    goal_frame='/neuronbot/mmp0/base_link'
+    base_frame='/map'
+    resp = tfReq(goal_frame, base_frame)
+    quat = tuple(resp.quat)
+    currY = resp.trans[1]
+    currX= resp.trans[0]
+    print(currX)
+    quat = tuple(resp.quat)
+    currYaw = tf.transformations.euler_from_quaternion(quat)[2]
+    ts = Twist()
+    ts.linear.x = transVel
+    r = rospy.Rate(10)
+    if(abs(currX-goalx)>0.05 and hpause != True):
+        absRotation(0,"map")
+    ts.linear.x = -transVel
+    while(abs(currX-goalx)>0.05 and hpause != True):
+        resp = tfReq(goal_frame, base_frame)
+        currX = resp.trans[0]
+        print("c:moveing")
+        twistPub.publish(ts)
+        r.sleep()
+    ts.linear.x = 0.0 
+    twistPub.publish(ts)
+    ts.linear.x = transVel
+    if(abs(currY-goaly)>0.05 and hpause != True):
+        absRotation(1.57,"map")
+    while(abs(currY-goaly)>0.05 and hpause != True):
+        resp = tfReq(goal_frame, base_frame)
+        currY = resp.trans[1]
+        print("c:moveing")
+        twistPub.publish(ts)
+        r.sleep()
+    ts.linear.x = 0.0 
+    twistPub.publish(ts)
+    if(hpause):
+        hpausehandler(goalx,goaly,3)
+    else:
+        return True
 
 
 def absRotation(tarAngle, base_frame):
@@ -156,7 +200,7 @@ def absRotation(tarAngle, base_frame):
         angleDiff =  abs(tarAngle - currYaw) if abs(tarAngle - currYaw) < 3.14 else (6.28 - abs(tarAngle - currYaw))
         r.sleep()
 
-    ts.angular.z = 0.0
+    ts.angular.z = 0.0 
     twistPub.publish(ts)
     if(hpause):
         hpausedegree(tarAngle)
@@ -166,20 +210,30 @@ def callback(lmsg):
     hpause=lmsg.data
 
 def naviflow(req):
-	movea(-0.6,-0.9,0)
-	moveb(0,0,0)
-	return TriggerResponse(
-		success=True,
-		message="navigate to A is executed!"
-	)
+    state=req.goal_status
+    if(state==1):
+        movea(-0.6,-0.9,0)
+        goal = "A"
+    elif(state==3):
+        movec(-0.6,0.9,0)
+        goal = "B"
+    else:
+        moveb(0,0,0)
+        goal = "O"
+    return navigoalResponse(
+        success=True,
+        message="navigate to "+goal+" is executed!"
+    )
+
+
 
 if __name__ == '__main__':
-	rospy.init_node('pmcT', anonymous=True)
-	rospy.Subscriber("/pause", Bool, callback)
-	cmdVelTopic = "/neuronbot/mmp0/diff_drive_controller/cmd_vel"
-	twistPub = rospy.Publisher(cmdVelTopic, Twist, queue_size=1)
-	rospy.wait_for_service('robot_tf_server')
-	tfReq = rospy.ServiceProxy('robot_tf_server', RobotTF)
-	navi_srv = rospy.Service('navi_trigger1',Trigger, naviflow)
+    rospy.init_node('pmcT', anonymous=True)
+    rospy.Subscriber("/pause", Bool, callback)
+    cmdVelTopic = "/neuronbot/mmp0/diff_drive_controller/cmd_vel"
+    twistPub = rospy.Publisher(cmdVelTopic, Twist, queue_size=1)
+    rospy.wait_for_service('robot_tf_server')
+    tfReq = rospy.ServiceProxy('robot_tf_server', RobotTF)
+    navi_srv = rospy.Service('navi_trigger1',navigoal, naviflow)
 
-	rospy.spin()
+    rospy.spin()
