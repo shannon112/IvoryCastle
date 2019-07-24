@@ -1,4 +1,4 @@
 <launch>
   <node name="tfServer" pkg="ira_factory_state_machine" type="tfServer.py" output="screen"/>
-  <node name="apmcT" pkg="pmc_navigation" type="apmcT.py" output="screen"/>
+  <node name="dpmcT" pkg="pmc_navigation" type="dpmcT.py" output="screen"/>
 </launch>

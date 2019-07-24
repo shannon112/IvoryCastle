@@ -234,6 +234,6 @@ if __name__ == '__main__':
     twistPub = rospy.Publisher(cmdVelTopic, Twist, queue_size=1)
     rospy.wait_for_service('robot_tf_server')
     tfReq = rospy.ServiceProxy('robot_tf_server', RobotTF)
-    navi_srv = rospy.Service('navi_trigger1',navigoal, naviflow)
+    navi_srv = rospy.Service('triggerNavigating',navigoal, naviflow)
 
     rospy.spin()
