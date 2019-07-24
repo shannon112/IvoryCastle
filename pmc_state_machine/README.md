@@ -16,3 +16,6 @@ rostopic pub /Intent std_msgs/String "data: 'Clear'"
 /triggerPlacing rosservice server  
 /triggerFetching rosservice server  
 /triggerStacking rosservice server  
+```
+please checkout script/fake_server.py
+```
