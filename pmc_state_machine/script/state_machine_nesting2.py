@@ -4,6 +4,7 @@ import rospy
 import smach
 import smach_ros
 from std_msgs.msg import String
+from std_srvs.srv import Trigger, TriggerRequest
 
 # define state VoiceCommand
 class VoiceCommand(smach.State):
@@ -12,6 +13,7 @@ class VoiceCommand(smach.State):
         self.intent = 0
 
     def callback(self, data):
+        print "callback",data.data
         if data.data == "Others": self.intent = 0
         elif data.data == "IntentFind": self.intent = 1
         elif data.data == "IntentDelivery": self.intent = 2
@@ -20,21 +22,24 @@ class VoiceCommand(smach.State):
 
     def execute(self, userdata):
         rospy.loginfo('Executing state VoiceCommand')
-        self.subscriber = rospy.Subscriber('/Intent', String, self.callback)
+        rospy.Subscriber('/Intent', String, self.callback)
 
         if self.intent == 0:
-            rospy.sleep(2.)
             return 'others'
         elif self.intent == 1:
+            self.intent = 0
             rospy.sleep(2.)
             return 'find_material'
         elif self.intent == 2:
+            self.intent = 0
             rospy.sleep(2.)
             return 'delivery_product'
         elif self.intent == 3:
+            self.intent = 0
             rospy.sleep(2.)
             return 'what_happened'
         elif self.intent == 4:
+            self.intent = 0
             rospy.sleep(2.)
             return 'all_task_clear'
         else:
@@ -45,109 +50,131 @@ class VoiceCommand(smach.State):
 # define state ImageCaption
 class ImageCaption(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['telling_done'])
-        self.state = 0
+        smach.State.__init__(self, outcomes=['telling_done','retry','aborted'])
+        rospy.wait_for_service('/triggerCaption')
+        self.triggerCaption_service = rospy.ServiceProxy('/triggerCaption', Trigger)
+        self.error_counter = 0
 
     def execute(self, userdata):
         rospy.loginfo('Executing state ImageCaption')
-        if self.state == 0:
+        result = self.triggerCaption_service(TriggerRequest())
+        rospy.loginfo(result.message)
+
+        if result.success:
             rospy.sleep(2.)
             return 'telling_done'
+        elif error_counter<3:
+            error_counter+=1
+            rospy.sleep(2.)
+            return 'retry'
+        else:
+            rospy.sleep(2.)
+            return 'aborted'
 
 
 # define state GraspingObject
 class GraspingObject(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['grasping_done','someone_is_hit'])
-        self.state = 0
+        smach.State.__init__(self, outcomes=['grasping_done','retry','aborted'])
+        rospy.wait_for_service('/triggerGrasping')
+        self.triggerGrasping_service = rospy.ServiceProxy('/triggerGrasping', Trigger)
+        self.error_counter = 0
 
     def execute(self, userdata):
         rospy.loginfo('Executing state GraspingObject')
-        if self.state == 0:
+        result = self.triggerGrasping_service(TriggerRequest())
+        rospy.loginfo(result.message)
+
+        if result.success:
             rospy.sleep(2.)
             return 'grasping_done'
-        elif self.state == 1:
+        elif error_counter<3:
+            error_counter+=1
             rospy.sleep(2.)
-            return 'someone_is_hit'
+            return 'retry'
+        else:
+            rospy.sleep(2.)
+            return 'aborted'
 
-# define state PlacingBasket
+
 class PlacingBasket(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['placing_done','someone_is_hit'])
-        self.state = 0
+        smach.State.__init__(self, outcomes=['placing_done','retry','aborted'])
+        rospy.wait_for_service('/triggerPlacing')
+        self.triggerPlacing_service = rospy.ServiceProxy('/triggerPlacing', Trigger)
+        self.error_counter = 0
 
     def execute(self, userdata):
         rospy.loginfo('Executing state PlacingBasket')
-        if self.state == 0:
+        result = self.triggerPlacing_service(TriggerRequest())
+        rospy.loginfo(result.message)
+
+        if result.success:
             rospy.sleep(2.)
             return 'placing_done'
-        elif self.state == 1:
+        elif error_counter<3:
+            error_counter+=1
             rospy.sleep(2.)
-            return 'someone_is_hit'
+            return 'retry'
+        else:
+            rospy.sleep(2.)
+            return 'aborted'
+
 
 # define state FetchingBox
 class FetchingBox(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['fetching_done','someone_is_hit'])
-        self.state = 0
+        smach.State.__init__(self, outcomes=['fetching_done','retry','aborted'])
+        rospy.wait_for_service('/triggerFetching')
+        self.triggerFetching_service = rospy.ServiceProxy('/triggerFetching', Trigger)
+        self.error_counter = 0
 
     def execute(self, userdata):
         rospy.loginfo('Executing state FetchingBox')
-        if self.state == 0:
+        result = self.triggerFetching_service(TriggerRequest())
+        rospy.loginfo(result.message)
+
+        if result.success:
             rospy.sleep(2.)
             return 'fetching_done'
-        elif self.state == 1:
+        elif error_counter<3:
+            error_counter+=1
             rospy.sleep(2.)
-            return 'someone_is_hit'
+            return 'retry'
+        else:
+            rospy.sleep(2.)
+            return 'aborted'
+
 
 # define state StackingBox
 class StackingBox(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['stacking_done','someone_is_hit'])
-        self.state = 0
+        smach.State.__init__(self, outcomes=['stacking_done','retry','aborted'])
+        rospy.wait_for_service('/triggerStacking')
+        self.triggerStacking_service = rospy.ServiceProxy('/triggerStacking', Trigger)
+        self.error_counter = 0
 
     def execute(self, userdata):
         rospy.loginfo('Executing state StackingBox')
-        if self.state == 0:
+        result = self.triggerStacking_service(TriggerRequest())
+        rospy.loginfo(result.message)
+
+        if result.success:
             rospy.sleep(2.)
             return 'stacking_done'
-        elif self.state == 1:
+        elif error_counter<3:
+            error_counter+=1
             rospy.sleep(2.)
-            return 'someone_is_hit'
-
-# define state PauseNavi
-class PauseNavi(smach.State):
-    def __init__(self):
-        smach.State.__init__(self, outcomes=['resume_navi'])
-        self.state = 0
-
-    def execute(self, userdata):
-        rospy.loginfo('Executing state PauseNavi')
-        if self.state == 0:
+            return 'retry'
+        else:
             rospy.sleep(2.)
-            return 'resume_navi'
-
-
-# define state PauseMoveit
-class PauseMoveit(smach.State):
-    def __init__(self):
-        smach.State.__init__(self, outcomes=['resume_1','resume_2'])
-        self.state = 0
-
-    def execute(self, userdata):
-        rospy.loginfo('Executing state PauseMoveit')
-        if self.state == 0:
-            rospy.sleep(2.)
-            return 'resume_grasping'
-        elif self.state == 1:
-            rospy.sleep(2.)
-            return 'resume_fetching'
+            return 'aborted'
 
 
 # define state NaviFind
 class NaviFind(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['start','reachGoal','restart','home','someone_is_here'])
+        smach.State.__init__(self, outcomes=['start','reachGoal','restart','home','done'])
         self.state = 0
 
     def execute(self, userdata):
@@ -165,18 +192,18 @@ class NaviFind(smach.State):
             rospy.sleep(2.)
             return 'restart'
         elif self.state == 3:
-            self.state = 0
+            self.state += 1
             rospy.sleep(2.)
             return 'home'
         elif self.state == 4:
+            self.state = 0
             rospy.sleep(2.)
-            return 'someone_is_here'
-
+            return 'done'
 
 # define state NaviDelivery
 class NaviDelivery(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['start','reachGoal','restart','home','someone_is_here'])
+        smach.State.__init__(self, outcomes=['start','reachGoal','restart','home','done'])
         self.state = 0
 
     def execute(self, userdata):
@@ -194,12 +221,13 @@ class NaviDelivery(smach.State):
             rospy.sleep(2.)
             return 'restart'
         elif self.state == 3:
-            self.state = 0
+            self.state += 1
             rospy.sleep(2.)
             return 'home'
         elif self.state == 4:
+            self.state = 0
             rospy.sleep(2.)
-            return 'someone_is_here'
+            return 'done'
 
 
 def main():
@@ -221,8 +249,12 @@ def main():
                                             'what_happened':'ImageCaption',
                                             'all_task_clear':'demo_done'})
 
-        smach.StateMachine.add('ImageCaption', ImageCaption(), transitions={'telling_done':'VoiceCommand'})
-        #smach.StateMachine.add('PauseMoveit', PauseMoveit(), transitions={'resume_moveit':'GraspingObject'})
+        smach.StateMachine.add('ImageCaption', ImageCaption(),
+                                transitions={'telling_done':'VoiceCommand',
+                                             'retry':'ImageCaption',
+                                             'aborted':'VoiceCommand',
+                                            })
+
 
         # ************************************************
         # *********** SM_ROOT/NAVI_F *********************
@@ -236,11 +268,17 @@ def main():
                                                 'reachGoal':'GraspingObject',
                                                 'restart':'NaviFind',
                                                 'home':'PlacingBasket',
-                                                'someone_is_here':'PauseNavi'})
-            smach.StateMachine.add('GraspingObject', GraspingObject(), transitions={'grasping_done':'NaviFind','someone_is_hit':'PauseMoveit'})
-            smach.StateMachine.add('PlacingBasket', PlacingBasket(), transitions={'placing_done':'NaviFind','someone_is_hit':'PauseMoveit'})
-            smach.StateMachine.add('PauseNavi', PauseNavi(), transitions={'resume_navi':'NaviFind'})
-            smach.StateMachine.add('PauseMoveit', PauseMoveit(), transitions={'resume_1':'GraspingObject','resume_2':'PlacingBasket'})
+                                                'done':'finding_done'})
+            smach.StateMachine.add('GraspingObject', GraspingObject(),
+                                    transitions={'grasping_done':'NaviFind',
+                                                 'retry':'GraspingObject',
+                                                 'aborted':'NaviFind',
+                                                })
+            smach.StateMachine.add('PlacingBasket', PlacingBasket(),
+                                    transitions={'placing_done':'NaviFind',
+                                                 'retry':'PlacingBasket',
+                                                 'aborted':'NaviFind',
+                                                })
         smach.StateMachine.add('NAVI_F', sm_naviF, transitions={'finding_done':'VoiceCommand'})
 
         # ************************************************
@@ -255,11 +293,17 @@ def main():
                                                 'reachGoal':'StackingBox',
                                                 'restart':'NaviDelivery',
                                                 'home':'NaviDelivery',
-                                                'someone_is_here':'PauseNavi'})
-            smach.StateMachine.add('FetchingBox', FetchingBox(), transitions={'fetching_done':'NaviDelivery','someone_is_hit':'PauseMoveit'})
-            smach.StateMachine.add('StackingBox', StackingBox(), transitions={'stacking_done':'NaviDelivery','someone_is_hit':'PauseMoveit'})
-            smach.StateMachine.add('PauseNavi', PauseNavi(), transitions={'resume_navi':'NaviDelivery'})
-            smach.StateMachine.add('PauseMoveit', PauseMoveit(), transitions={'resume_1':'FetchingBox','resume_2':'StackingBox'})
+                                                'done':'delivering_done'})
+            smach.StateMachine.add('FetchingBox', FetchingBox(),
+                                    transitions={'fetching_done':'NaviDelivery',
+                                                 'retry':'FetchingBox',
+                                                 'aborted':'NaviDelivery',
+                                                })
+            smach.StateMachine.add('StackingBox', StackingBox(),
+                                    transitions={'stacking_done':'NaviDelivery',
+                                                 'retry':'StackingBox',
+                                                 'aborted':'NaviDelivery',
+                                                })
         smach.StateMachine.add('NAVI_D', sm_naviD, transitions={'delivering_done':'VoiceCommand'})
 
     # Execute SMACH plan
