@@ -66,7 +66,7 @@ def movea(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         print(hpause)
-        print("a:moveing")
+        #print("a:moveing")
         twistPub.publish(ts)
         r.sleep()
     ts.linear.x = 0.0 
@@ -78,7 +78,7 @@ def movea(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         print(hpause)
-        print("a:moveing")
+        #print("a:moveing")
         twistPub.publish(ts)
         r.sleep()
     ts.linear.x = 0.0 
@@ -109,7 +109,7 @@ def moveb(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         print(hpause)
-        print("b:moveing")
+        #print("b:moveing")
         twistPub.publish(ts)
         r.sleep()
     ts.linear.x = 0.0 
@@ -121,7 +121,7 @@ def moveb(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         print(hpause)
-        print("b:moveing")
+        #print("b:moveing")
         twistPub.publish(ts)
         r.sleep()
     ts.linear.x = 0.0 
@@ -151,7 +151,7 @@ def movec(goalx,goaly,goaltheta):
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
-        print("c:moveing")
+        #print("c:moveing")
         twistPub.publish(ts)
         r.sleep()
     ts.linear.x = 0.0 
@@ -162,7 +162,7 @@ def movec(goalx,goaly,goaltheta):
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
-        print("c:moveing")
+        #print("c:moveing")
         twistPub.publish(ts)
         r.sleep()
     ts.linear.x = 0.0 
