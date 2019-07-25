@@ -226,7 +226,6 @@ def naviflow(req):
     )
 
 
-
 if __name__ == '__main__':
     rospy.init_node('pmcT', anonymous=True)
     rospy.Subscriber("/pause", Bool, callback)

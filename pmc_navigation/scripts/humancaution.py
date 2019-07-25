@@ -91,7 +91,7 @@ def humancallback2(hmsg):
 
 if __name__ == '__main__':
     rospy.init_node('humancause', anonymous=True)
-    #rospy.Subscriber("/people_tracker_measurements2", PositionMeasurementArray, humancallback2)
+    rospy.Subscriber("/people_tracker_measurements2", PositionMeasurementArray, humancallback2)
     rospy.Subscriber("/people_tracker_measurements", PositionMeasurementArray, humancallback1)
     cautiontopic = "/caution"
     pausetopic = "/pause"
