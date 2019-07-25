@@ -1,9 +1,14 @@
 # IvoryCastle
 ## Dependences
-neronbot:
+neronbot:  
 leg_detector: https://github.com/Herobrixx/people.git -b ros1  
 neronbot: https://github.com/willie5588912/neuronbot  -b  multi-bots  
 ira_factory: https://github.com/willie5588912/ira_factory  -b  multibots  
+
+scorpio:  
+leg_detector: https://github.com/Herobrixx/people.git -b ros1  
+scorpio: https://github.com/willie5588912/scorpio -b pure-simulation
+ira_factory: https://github.com/willie5588912/ira_factory  -b  scorpio  
 
 ## icps demo world
 ```
