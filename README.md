@@ -1,4 +1,9 @@
 # IvoryCastle
+## Dependences
+leg_detector: https://github.com/Herobrixx/people.git  
+neronbot: https://github.com/willie5588912/neuronbot  
+ira_factory: https://github.com/willie5588912/ira_factory  
+
 ## icps demo world
 ```
 roslaunch icps_gazebo iceira_icps_demo.launch
