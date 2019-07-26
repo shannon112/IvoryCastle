@@ -1,9 +1,0 @@
-<launch>
-  <include file="$(find ironfish_sensors)/launch/rs_camera.launch"/>
-  <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
-    <arg name="rtabmap_args" default="--delete_db_on_start" />
-    <arg name="depth_topic" default="/camera/aligned_depth_to_color/image_raw" />
-    <arg name="rgb_topic" default="/camera/color/image_raw" />
-    <arg name="camera_info_topic" default="/camera/color/camera_info" />
-  </include>
-</launch>

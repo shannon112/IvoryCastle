@@ -1,5 +1,0 @@
-<launch>
-  <arg name="number" default="0"/>
-  <arg name="map" default="-f /home/shannon/Documents/ros-kinetic/src/IronFish/ironfish_navigation/map/test$(arg number)"/>
-  <node pkg="map_server" type="map_saver" name="map_saver" args="$(arg map)"/>
-</launch>

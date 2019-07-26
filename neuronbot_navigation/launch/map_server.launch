@@ -1,5 +1,0 @@
-<launch>
-  <arg name="map" default="$(find neuronbot_navigation)/map/test1.yaml"/>
-  <!--arg name="map" default="$(find ironfish_navigation)/map/Albert_Einstein_1947.yaml"/-->
-  <node pkg="map_server" type="map_server" name="map_server" args="$(arg map)"/>
-</launch>
