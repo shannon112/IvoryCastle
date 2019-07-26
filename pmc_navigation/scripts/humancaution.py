@@ -2,6 +2,7 @@
 import rospy
 import tf
 import os
+import sys
 import numpy as np
 import smach
 import smach_ros
@@ -53,7 +54,9 @@ def ppdistance(x1,y1,x2,y2):
 
 def humancallback1(hmsg):
     global hpause1 , hcaution1 ,CPub ,PPub ,tfReq ,currX ,currY ,currYaw
-    resp = tfReq("/neuronbot/mmp0/base_link","/map")
+    ns = rospy.myargv(argv=sys.argv)[1]
+    link = os.path.join(ns,'base_link')
+    resp = tfReq(link,"/map")
     quat = tuple(resp.quat)
     currYaw = tf.transformations.euler_from_quaternion(quat)[2]
     currY = resp.trans[1]

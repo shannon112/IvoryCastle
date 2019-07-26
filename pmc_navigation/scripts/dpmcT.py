@@ -2,6 +2,7 @@
 import rospy
 import tf
 import os
+import sys
 import numpy as np
 import smach
 import smach_ros
@@ -9,7 +10,7 @@ from math import atan2, pi
 from std_msgs.msg import Bool
 from geometry_msgs.msg import Twist, Pose
 #from neuronbot_msgs.srv import Alignment, AlignmentResponse
-#from ira_factory_msgs.msg import RobotStatus 
+#from ira_factory_msgs.msg import RobotStatus
 from ira_factory_msgs.srv import RequestRobotStatus, UpdateRobotStatus, RobotTF
 from pmc_navigation.srv import navigoal, navigoalResponse
 
@@ -42,12 +43,13 @@ def hpausedegree(theta):
         print("waiting")
     absRotation(theta,"map")
 
-        
+
 
 def movea(goalx,goaly,goaltheta):
     global twistPub, tfReq, transVel ,hpause
     print("A")
-    goal_frame='/neuronbot/mmp0/base_link'
+    ns = rospy.myargv(argv=sys.argv)[1]
+    goal_frame=os.path.join(ns,'base_link')
     base_frame='/map'
     resp = tfReq(goal_frame, base_frame)
     quat = tuple(resp.quat)
@@ -69,7 +71,7 @@ def movea(goalx,goaly,goaltheta):
         #print("a:moveing")
         twistPub.publish(ts)
         r.sleep()
-    ts.linear.x = 0.0 
+    ts.linear.x = 0.0
     twistPub.publish(ts)
     ts.linear.x = transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
@@ -81,7 +83,7 @@ def movea(goalx,goaly,goaltheta):
         #print("a:moveing")
         twistPub.publish(ts)
         r.sleep()
-    ts.linear.x = 0.0 
+    ts.linear.x = 0.0
     twistPub.publish(ts)
     if(hpause):
         hpausehandler(goalx,goaly,1)
@@ -90,7 +92,8 @@ def movea(goalx,goaly,goaltheta):
 def moveb(goalx,goaly,goaltheta):
     global twistPub, tfReq, transVel ,hpause
     print("B")
-    goal_frame='/neuronbot/mmp0/base_link'
+    ns = rospy.myargv(argv=sys.argv)[1]
+    goal_frame=os.path.join(ns,'base_link')
     base_frame='/map'
     resp = tfReq(goal_frame, base_frame)
     quat = tuple(resp.quat)
@@ -112,7 +115,7 @@ def moveb(goalx,goaly,goaltheta):
         #print("b:moveing")
         twistPub.publish(ts)
         r.sleep()
-    ts.linear.x = 0.0 
+    ts.linear.x = 0.0
     twistPub.publish(ts)
     ts.linear.x = transVel
     if(abs(currX-goalx)>0.05 and hpause != True):
@@ -124,7 +127,7 @@ def moveb(goalx,goaly,goaltheta):
         #print("b:moveing")
         twistPub.publish(ts)
         r.sleep()
-    ts.linear.x = 0.0 
+    ts.linear.x = 0.0
     twistPub.publish(ts)
     if(hpause):
         hpausehandler(goalx,goaly,2)
@@ -133,7 +136,8 @@ def moveb(goalx,goaly,goaltheta):
 def movec(goalx,goaly,goaltheta):
     global twistPub, tfReq, transVel ,hpause
     print("C")
-    goal_frame='/neuronbot/mmp0/base_link'
+    ns = rospy.myargv(argv=sys.argv)[1]
+    goal_frame=os.path.join(ns,'base_link')
     base_frame='/map'
     resp = tfReq(goal_frame, base_frame)
     quat = tuple(resp.quat)
@@ -154,7 +158,7 @@ def movec(goalx,goaly,goaltheta):
         #print("c:moveing")
         twistPub.publish(ts)
         r.sleep()
-    ts.linear.x = 0.0 
+    ts.linear.x = 0.0
     twistPub.publish(ts)
     ts.linear.x = transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
@@ -165,7 +169,7 @@ def movec(goalx,goaly,goaltheta):
         #print("c:moveing")
         twistPub.publish(ts)
         r.sleep()
-    ts.linear.x = 0.0 
+    ts.linear.x = 0.0
     twistPub.publish(ts)
     if(hpause):
         hpausehandler(goalx,goaly,3)
@@ -175,7 +179,8 @@ def movec(goalx,goaly,goaltheta):
 
 def absRotation(tarAngle, base_frame):
     global twistPub, rotateVel, angleTH,tfReq ,hpause
-    goal_frame = '/neuronbot/mmp0/base_link'
+    ns = rospy.myargv(argv=sys.argv)[1]
+    goal_frame=os.path.join(ns,'base_link')
     #base_frame = "charger"
     resp = tfReq(goal_frame , base_frame)
     quat = tuple(resp.quat)
@@ -200,7 +205,7 @@ def absRotation(tarAngle, base_frame):
         angleDiff =  abs(tarAngle - currYaw) if abs(tarAngle - currYaw) < 3.14 else (6.28 - abs(tarAngle - currYaw))
         r.sleep()
 
-    ts.angular.z = 0.0 
+    ts.angular.z = 0.0
     twistPub.publish(ts)
     if(hpause):
         hpausedegree(tarAngle)
@@ -229,7 +234,8 @@ def naviflow(req):
 if __name__ == '__main__':
     rospy.init_node('pmcT', anonymous=True)
     rospy.Subscriber("/pause", Bool, callback)
-    cmdVelTopic = "/neuronbot/mmp0/diff_drive_controller/cmd_vel"
+    ns = rospy.myargv(argv=sys.argv)[1]
+    cmdVelTopic=os.path.join(ns,'diff_drive_controller','cmd_vel')
     twistPub = rospy.Publisher(cmdVelTopic, Twist, queue_size=1)
     rospy.wait_for_service('robot_tf_server')
     tfReq = rospy.ServiceProxy('robot_tf_server', RobotTF)

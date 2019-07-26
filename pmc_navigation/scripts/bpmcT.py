@@ -9,7 +9,7 @@ from math import atan2, pi
 from std_msgs.msg import Bool
 from geometry_msgs.msg import Twist, Pose
 #from neuronbot_msgs.srv import Alignment, AlignmentResponse
-#from ira_factory_msgs.msg import RobotStatus 
+#from ira_factory_msgs.msg import RobotStatus
 from ira_factory_msgs.srv import RequestRobotStatus, UpdateRobotStatus, RobotTF
 from my_pcl_tutorial .srv import save, saveResponse
 
@@ -63,7 +63,7 @@ def movec(goalx,goaly,goaltheta):
     	print("c:moveing")
     	twistPub.publish(ts)
     	r.sleep()
-    ts.linear.x = 0.0 
+    ts.linear.x = 0.0
     twistPub.publish(ts)
     ts.linear.x = transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
@@ -74,7 +74,7 @@ def movec(goalx,goaly,goaltheta):
     	print("c:moveing")
     	twistPub.publish(ts)
     	r.sleep()
-    ts.linear.x = 0.0 
+    ts.linear.x = 0.0
     twistPub.publish(ts)
     if(hpause):
     	hpausehandler('c')
@@ -104,7 +104,7 @@ def moved(goalx,goaly,goaltheta):
     	print("d:moveing")
     	twistPub.publish(ts)
     	r.sleep()
-    ts.linear.x = 0.0 
+    ts.linear.x = 0.0
     twistPub.publish(ts)
     ts.linear.x = -transVel
     if(abs(currX-goalx)>0.05 and hpause != True):
@@ -115,13 +115,13 @@ def moved(goalx,goaly,goaltheta):
     	print("d:moveing")
     	twistPub.publish(ts)
     	r.sleep()
-    ts.linear.x = 0.0 
+    ts.linear.x = 0.0
     twistPub.publish(ts)
     if(hpause):
     	hpausehandler('d')
     else:
-    	return True    
-    
+    	return True
+
 
 
 def absRotation(tarAngle, base_frame):
@@ -151,7 +151,7 @@ def absRotation(tarAngle, base_frame):
         angleDiff =  abs(tarAngle - currYaw) if abs(tarAngle - currYaw) < 3.14 else (6.28 - abs(tarAngle - currYaw))
         r.sleep()
 
-    ts.angular.z = 0.0 
+    ts.angular.z = 0.0
     twistPub.publish(ts)
     if(hpause):
         hpausedegree(tarAngle)
@@ -163,7 +163,7 @@ def callback(lmsg):
 def naviflow(req):
 	movec(-0.6,0.9,0)
 	moved(0,0,0)
-	return saveResponse(True)	
+	return saveResponse(True)
 
 
 if __name__ == '__main__':
