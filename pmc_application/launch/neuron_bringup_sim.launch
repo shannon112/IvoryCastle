@@ -112,6 +112,6 @@
     </node>
 
     <!-- Gui Rviz   -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/pmc_demo.rviz"/>
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/neuron_pmc_demo.rviz"/>
 
 </launch>

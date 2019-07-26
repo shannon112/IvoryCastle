@@ -1,6 +1,15 @@
 <launch>
   <arg name="ns" default="scorpio/mmp0"/>
 
+  <!--assistant related-->
+  <param name="aiml_path" value="$(find ros_aiml)/data" />
+  <node name="aiml_server" pkg="ros_aiml" type="aiml_server.py" output="screen"/>
+  <node name="text_process" pkg="ros_aiml" type="text_process.py" output="screen"/>
+
+  <!--vocal output related-->
+  <include file="$(find sound_play)/soundplay_node.launch"/>
+	<node name="aiml_tts" pkg="ros_aiml" type="aiml_tts_client.py" output="screen"/>
+
   <!--navigation related-->
   <node name="tfServer" pkg="ira_factory_state_machine" type="tfServer.py" output="screen"/>
   <node name="dpmcT" pkg="pmc_navigation" type="dpmcT.py" args="$(arg ns)" output="screen"/>
