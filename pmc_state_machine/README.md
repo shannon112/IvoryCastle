@@ -3,7 +3,7 @@ runing
 ```
 roslaunch pmc_state_machine pmc_state_machine_test.launch
 ```
-state machine trigger topic
+state machine trigger topic ```/Intent```
 ```
 rostopic pub /Intent std_msgs/String "data: 'IntentFind'"
 rostopic pub /Intent std_msgs/String "data: 'IntentDelivery'"
@@ -11,7 +11,14 @@ rostopic pub /Intent std_msgs/String "data: 'Others'"
 rostopic pub /Intent std_msgs/String "data: 'IntentWhat'"
 rostopic pub /Intent std_msgs/String "data: 'Clear'"
 ```
-
+natural language sentence input ```/chatter```  
+```
+rostopic pub /chatter std_msgs/String "data: 'hi '"
+```
+natural language or anything voice output ```/response```  
+```
+rostopic pub /response std_msgs/String "data: 'hi '"
+```
 /triggerCaption rosservice server  
 /triggerGrasping rosservice server  
 /triggerPlacing rosservice server  
@@ -19,14 +26,6 @@ rostopic pub /Intent std_msgs/String "data: 'Clear'"
 /triggerStacking rosservice server  
 ```
 please checkout script/fake_server.py
-```
-natural language input  
-```
-/chatter
-```
-natural language output  
-```
-/response
 ```
 
 # Our setting
