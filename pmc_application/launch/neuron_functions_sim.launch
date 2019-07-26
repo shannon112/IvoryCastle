@@ -3,7 +3,8 @@
 
   <!--navigation related-->
   <node name="tfServer" pkg="ira_factory_state_machine" type="tfServer.py" output="screen"/>
-  <node name="dpmcT" pkg="pmc_navigation" type="dpmcT.py" output="screen"/>
-  <include file="$(find leg_detector)/launch/leg_detector.launch"/>
-  <node name="humancaution" pkg="pmc_navigation" type="humancaution.py"/>
+  <node name="dpmcT" pkg="pmc_navigation" type="dpmcT.py" args="$(arg ns)" output="screen"/>
+  <node pkg="leg_detector" type="leg_detector" name="leg_detector" args="scan:=$(arg ns)/front_scan $(find leg_detector)/config/trained_leg_detector.yaml" output="screen"/>
+  <node pkg="leg_detector" type="leg_detector2" name="leg_detector2" args="scan:=$(arg ns)/back_scan $(find leg_detector)/config/trained_leg_detector.yaml" output="screen"/>
+  <node name="humancaution" pkg="pmc_navigation" type="humancaution.py" args="$(arg ns)" output="screen"/>
 </launch>
