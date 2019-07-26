@@ -48,9 +48,9 @@ roslaunch pmc_application project_spawn.launch
 
 standalone robot generator launch w/o task nodes
 ```js
-roslaunch pmc_application amir_bringup_sim.launch
-roslaunch pmc_application amir_init_pose.launch       #(optional)
-roslaunch pmc_application amir_functions_sim.launch
+roslaunch pmc_application neuron_bringup_sim.launch
+roslaunch pmc_application neuron_init_pose.launch       #(optional)
+roslaunch pmc_application neuron_functions_sim.launch
 roslaunch pmc_state_machine pmc_state_machine_test.launch
 ```
 <img src="https://github.com/shannon112/IvoryCastle/blob/master/pmc_application/result/isolated_generator_result_carto.png" width="800">
