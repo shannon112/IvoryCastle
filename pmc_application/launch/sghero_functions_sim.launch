@@ -1,0 +1,9 @@
+<launch>
+  <arg name="ns" default="neuronbot/mmp0"/>
+
+  <!--navigation related-->
+  <node name="tfServer" pkg="ira_factory_state_machine" type="tfServer.py" output="screen"/>
+  <node name="dpmcT" pkg="pmc_navigation" type="dpmcT.py" output="screen"/>
+  <include file="$(find leg_detector)/launch/leg_detector.launch"/>
+  <node name="humancaution" pkg="pmc_navigation" type="humancaution.py"/>
+</launch>
