@@ -8,7 +8,7 @@
 
   <!--vocal output related-->
   <include file="$(find sound_play)/soundplay_node.launch"/>
-	<node name="aiml_tts" pkg="ros_aiml" type="aiml_tts_client.py" output="screen"/>
+	<node name="tts_bridge" pkg="ros_aiml" type="aiml_tts_client.py" output="screen"/>
 
   <!--vocal input related-->
   <node name="google_speech_recog" pkg="ros_aiml" type="robot.py" output="screen"/>
