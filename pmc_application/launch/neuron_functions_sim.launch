@@ -11,7 +11,7 @@
   <node name="aiml_tts" pkg="ros_aiml" type="aiml_tts_client.py" output="screen"/>
 
   <!--vocal input related-->
-	<node name="google_speech_recog" pkg="ros_aiml" type="robot.py" output="screen"/>
+  <node name="google_speech_recog" pkg="ros_aiml" type="robot.py" output="screen"/>
 
   <!--navigation related-->
   <node name="tfServer" pkg="ira_factory_state_machine" type="tfServer.py" output="screen"/>
