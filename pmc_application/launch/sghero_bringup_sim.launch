@@ -10,7 +10,7 @@
     </include>
 
     <!--Load/Spawn robot in gazebo env-->
-    <arg name="x" default="0.5"/>
+    <arg name="x" default="0.4"/>
     <arg name="y" default="0.5"/>
     <arg name="z" default="0.0"/>
     <param name="$(arg ns)/robot_description" command="python $(find xacro)/xacro.py '$(find scorpio_description)/robots/scorpio.urdf.xacro' ns:=$(arg ns)" />

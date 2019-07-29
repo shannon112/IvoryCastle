@@ -217,13 +217,16 @@ def callback(lmsg):
 def naviflow(req):
     state=req.goal_status
     if(state==1):
-        movea(-0.6,-0.9,0)
+        movea(-0.35,-0.6,0)#-0.6 -0.9
+        #movea(-0.6,-0.9,0)#-0.6 -0.9
         goal = "A"
     elif(state==3):
-        movec(-0.6,0.9,0)
+        movec(-0.35,0.6,0) #-0
+        #movec(-0.6,0.9,0) #-0
         goal = "B"
     else:
-        moveb(0,0,0)
+        #moveb(0,0,0)
+        moveb(-0.1,0,0)
         goal = "O"
     return navigoalResponse(
         success=True,
