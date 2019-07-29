@@ -112,12 +112,13 @@ def humancallback2(hmsg):
 
 if __name__ == '__main__':
     rospy.init_node('humancause', anonymous=True)
+    rospy.wait_for_service('robot_tf_server')
+    tfReq = rospy.ServiceProxy('robot_tf_server', RobotTF)
     rospy.Subscriber("/people_tracker_measurements2", PositionMeasurementArray, humancallback2)
     rospy.Subscriber("/people_tracker_measurements", PositionMeasurementArray, humancallback1)
     cautiontopic = "/caution"
     pausetopic = "/pause"
     CPub = rospy.Publisher(cautiontopic, Bool, queue_size=1)
     PPub = rospy.Publisher(pausetopic, Bool, queue_size=1)
-    rospy.wait_for_service('robot_tf_server')
-    tfReq = rospy.ServiceProxy('robot_tf_server', RobotTF)
+
     rospy.spin()
