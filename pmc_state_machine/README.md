@@ -14,9 +14,13 @@ A
 IntentDelivery
 ```
 Q
-1.
+1.Product A have been done.
+2.It's OK to deliver to shipping area.
+3.Please deliver the completed products to shipping area.
 A
-1.
+1.OK, I'll deliver it to the shipping area.
+2.OK, I will take it.
+3.No problem, I'll do it.
 ```
 Others
 ```
@@ -31,6 +35,11 @@ IntentWhat
 Q：What is the status of the environment?
 A:The staff is stand by the table.
 A:There are three areas in this environment.
+
+Q:What is the state of the staff?
+A:He looks tried.
+A:He working hard now.
+A:He is packaging something.
 ```
 Clear
 ```
