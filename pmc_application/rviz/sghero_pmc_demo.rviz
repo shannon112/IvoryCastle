@@ -1,13 +1,12 @@
 Panels:
   - Class: rviz/Displays
-    Help Height: 78
+    Help Height: 0
     Name: Displays
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /TF1/Status1
       Splitter Ratio: 0.706278026
-    Tree Height: 257
+    Tree Height: 303
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -142,11 +141,7 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        base_footprint:
-          Value: true
         map:
-          Value: true
-        odom:
           Value: true
         scorpio/mmp0/back_hokuyo_link:
           Value: true
@@ -154,9 +149,21 @@ Visualization Manager:
           Value: true
         scorpio/mmp0/back_right_wheel:
           Value: true
+        scorpio/mmp0/base_camera_color_frame:
+          Value: true
+        scorpio/mmp0/base_camera_color_optical_frame:
+          Value: true
         scorpio/mmp0/base_camera_depth_frame:
           Value: true
         scorpio/mmp0/base_camera_depth_optical_frame:
+          Value: true
+        scorpio/mmp0/base_camera_infra1_frame:
+          Value: true
+        scorpio/mmp0/base_camera_infra1_optical_frame:
+          Value: true
+        scorpio/mmp0/base_camera_infra2_frame:
+          Value: true
+        scorpio/mmp0/base_camera_infra2_optical_frame:
           Value: true
         scorpio/mmp0/base_camera_link:
           Value: true
@@ -187,35 +194,42 @@ Visualization Manager:
       Show Names: false
       Tree:
         map:
-          scorpio/mmp0/odom:
-            scorpio/mmp0/base_footprint:
-              scorpio/mmp0/base_link:
-                scorpio/mmp0/back_hokuyo_link:
-                  {}
-                scorpio/mmp0/back_left_wheel:
-                  {}
-                scorpio/mmp0/back_right_wheel:
-                  {}
-                scorpio/mmp0/base_camera_link:
-                  scorpio/mmp0/base_camera_depth_frame:
-                    scorpio/mmp0/base_camera_depth_optical_frame:
-                      {}
-                  scorpio/mmp0/base_camera_rgb_frame:
-                    scorpio/mmp0/base_camera_rgb_optical_frame:
-                      {}
-                scorpio/mmp0/front_hokuyo_link:
-                  {}
-                scorpio/mmp0/front_left_wheel:
-                  {}
-                scorpio/mmp0/front_right_wheel:
-                  {}
-                scorpio/mmp0/left_wheel:
-                  {}
-                scorpio/mmp0/right_wheel:
-                  {}
-        odom:
-          base_footprint:
-            {}
+          {}
+        scorpio/mmp0/odom:
+          scorpio/mmp0/base_footprint:
+            scorpio/mmp0/base_link:
+              scorpio/mmp0/back_hokuyo_link:
+                {}
+              scorpio/mmp0/back_left_wheel:
+                {}
+              scorpio/mmp0/back_right_wheel:
+                {}
+              scorpio/mmp0/base_camera_link:
+                scorpio/mmp0/base_camera_color_frame:
+                  scorpio/mmp0/base_camera_color_optical_frame:
+                    {}
+                scorpio/mmp0/base_camera_depth_frame:
+                  scorpio/mmp0/base_camera_depth_optical_frame:
+                    {}
+                scorpio/mmp0/base_camera_infra1_frame:
+                  scorpio/mmp0/base_camera_infra1_optical_frame:
+                    {}
+                scorpio/mmp0/base_camera_infra2_frame:
+                  scorpio/mmp0/base_camera_infra2_optical_frame:
+                    {}
+                scorpio/mmp0/base_camera_rgb_frame:
+                  scorpio/mmp0/base_camera_rgb_optical_frame:
+                    {}
+              scorpio/mmp0/front_hokuyo_link:
+                {}
+              scorpio/mmp0/front_left_wheel:
+                {}
+              scorpio/mmp0/front_right_wheel:
+                {}
+              scorpio/mmp0/left_wheel:
+                {}
+              scorpio/mmp0/right_wheel:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 0.699999988
@@ -323,7 +337,7 @@ Visualization Manager:
       Shaft Length: 0.230000004
       Shaft Radius: 0.00999999978
       Shape: Arrow (Flat)
-      Topic: /neuronbot/mmp0/particlecloud
+      Topic: /scorpio/mmp0/particlecloud
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -429,14 +443,14 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1028
+  Height: 1008
   Hide Left Dock: false
   Hide Right Dock: false
   MMP:
     collapsed: false
   North_camera:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000020800000372fc020000000bfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000002800000190000000dd00fffffffb00000006004d004d005001000001be0000010e0000001600fffffffb000000060041004d005201000002b4000000e60000000000000000fb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb00000018004e006f007200740068005f00630061006d00650072006101000002d2000000c80000001600ffffff000000010000014c00000372fc0200000006fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fc00000028000002a4000000b000fffffffa000000010100000002fb0000000a0049006d0061006700650000000000ffffffff0000000000000000fb0000000a0056006900650077007301000005e30000014c0000010f00fffffffb000000180053006f007500740068005f00630061006d00650072006101000002d2000000c80000001600fffffffb0000000800440034003300350100000276000001240000000000000000fb0000000a0049006d00610067006501000002cb000000c40000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000072f00000046fc0100000002fb0000000800540069006d006501000000000000072f0000030000fffffffb0000000800540069006d00650100000000000004500000000000000000000003cf0000037200000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000400000000000002080000034dfc020000000bfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006600fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c00610079007301000000310000017d000000e400fffffffb00000006004d004d005001000001b6000001020000001b00fffffffb000000060041004d005201000002b4000000e60000000000000000fb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb00000018004e006f007200740068005f00630061006d00650072006101000002c0000000be0000001b00ffffff000000010000014c0000034dfc0200000006fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fc0000003100000286000000c200fffffffa000000010100000002fb0000000a0049006d0061006700650000000000ffffffff0000000000000000fb0000000a0056006900650077007301000005e30000014c0000012200fffffffb000000180053006f007500740068005f00630061006d00650072006101000002bf000000bf0000001b00fffffffb0000000800440034003300350100000276000001240000000000000000fb0000000a0049006d00610067006501000002cb000000c40000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000072700000046fc0100000002fb0000000800540069006d0065010000000000000727000003de00fffffffb0000000800540069006d00650100000000000004500000000000000000000003c30000034d00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   South_camera:
@@ -447,6 +461,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1839
-  X: 2154
-  Y: 24
+  Width: 1831
+  X: 89
+  Y: 33

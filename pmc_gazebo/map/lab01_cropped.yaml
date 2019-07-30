@@ -1,6 +1,6 @@
 free_thresh: 0.196
-image: cropped.pgm
+image: lab01_cropped.pgm
 negate: 0
 occupied_thresh: 0.65
-origin: [-1.9599999999999937, -1.3799999999999955, 0.0]
+origin: [-1.4599999999999937, -1.5600000000000023, 0.0]
 resolution: 0.02
