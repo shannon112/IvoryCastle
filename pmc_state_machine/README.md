@@ -2,19 +2,18 @@
 IntentFind
 ```
 Q
-1.Let's package the product A.
-2.Go to package the product A.
-3.Please give me the material of product A.
-4.Let's do the product A packaging.
+1.Let's package the camera.
+2.Please give me the material of camera.
+3.Let's do the camera packaging.
 A
 1.Ok, I'll pick the material for you.
-2.I will collect the items of product A.
+2.I will collect the parts of camera.
 3.Sure, I can do it.
 ```
 IntentDelivery
 ```
 Q
-1.Product A have been done.
+1.Camera have been done.
 2.It's OK to deliver to shipping area.
 3.Please deliver the completed products to shipping area.
 A
@@ -29,6 +28,8 @@ A：I'm delivering items.
 
 Q：What task are you doing now?
 A:I'm delivering the material of product A.
+
+#shipping
 ```
 IntentWhat
 ```
