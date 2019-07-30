@@ -2,16 +2,18 @@
 <launch>
     <arg name="ns" default="scorpio/mmp0"/>
     <arg name="carto" default="false"/>
-    <arg name="slam" default="false"/>
+    <arg name="slam" default="true"/>
 
     <!--Load/Spawn robot in real env-->
     <!--Spawn Controller-->
-    <node name="diff_controller_spawner" pkg="controller_manager" type="spawner"
-      args="joint_state_controller diff_drive_controller"/>
-    <!--Main control node-->
     <rosparam ns="$(arg ns)" command="load" file="$(find ira_factory_robot_controller)/config/scorpio/ros_control/real/controllers.yaml"/>
-    <node name="scorpio_base_ros_control" pkg="scorpio_base_ros_control" type="scorpio_base_ros_control"
+    <node ns="$(arg ns)" name="diff_controller_spawner" pkg="controller_manager" type="spawner"
+      args="joint_state_controller diff_drive_controller"/>
+
+    <!--Main control node-->
+    <node ns="$(arg ns)" name="scorpio_base_ros_control" pkg="scorpio_base_ros_control" type="scorpio_base_ros_control"
       output="screen" respawn="false" respawn_delay="3"/>
+
     <!--Publish robot state-->
     <arg name="x" default="0.4"/>
     <arg name="y" default="0.5"/>
@@ -20,22 +22,16 @@
     <node ns="$(arg ns)" name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
       <param name="tf_prefix" value="$(arg ns)" />
     </node>
+
     <!--Laser ros driver-->
-    <include file="$(find scorpio_bringup)/launch/real/hokuyo.launch">
+    <include ns="$(arg ns)" file="$(find scorpio_bringup)/launch/real/hokuyo.launch">
       <arg name="tf_prefix" value="$(arg ns)"/>
     </include>
+
     <!--Camera ros driver-->
-    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <include ns="$(arg ns)" file="$(find realsense2_camera)/launch/rs_camera.launch">
       <arg name="tf_prefix" value="$(arg ns)/base_camera"/>
     </include>
-
-    <!-- Load/Spawn controllers and configuration -->
-    <rosparam ns="$(arg ns)" command="load" file="$(find ira_factory_robot_controller)/config/scorpio/ros_control/sim/controllers.yaml" />
-    <node ns="$(arg ns)" name="controller_spawner" pkg="controller_manager" type="spawner"
-          args="joint_state_controller diff_drive_controller"/>
-
-    <!-- launch gripper -->
-    <node ns="$(arg ns)" name="toyo_chy80_wrapper" pkg="toyo_chy80_wrapper" type="toyo_chy80_wrapper.py"/>
 
     <!-- correcting the odom -->
     <node ns="$(arg ns)" name="robot_pose_ekf" pkg="robot_pose_ekf" type="robot_pose_ekf">
@@ -62,8 +58,8 @@
 
       <!-- launch Cartographer slam -->
       <group if="$(arg carto)">
-        <arg name="lua_filename" default="neuronbot_allcarto.lua"/-->
-        <arg name="map_filename" default="$(find pmc_gazebo)/map/fusion.bag.pbstream"/-->
+        <arg name="lua_filename" default="neuronbot_allcarto.lua"/>
+        <arg name="map_filename" default="$(find pmc_gazebo)/map/fusion.bag.pbstream"/>
         <node ns="$(arg ns)" name="cartographer_node" pkg="cartographer_ros"
             type="cartographer_node" args="
                 -configuration_directory $(find pmc_application)/config
