@@ -74,7 +74,7 @@
     <group unless="$(arg slam)">
       <group unless="$(arg carto)">
         <!-- Load pre-mapped map-->
-        <node name="map_server" pkg="map_server" type="map_server" args="$(find pmc_gazebo)/map/lab01_cropped.yaml" />
+        <node name="map_server" pkg="map_server" type="map_server" args="$(find pmc_gazebo)/map/lab02_cropped.yaml" />
         <!-- launch amcl localization -->
         <node ns="$(arg ns)" pkg="amcl" type="amcl" name="amcl">
           <param name="use_map_topic"  value="true"/>

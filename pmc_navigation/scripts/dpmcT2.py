@@ -63,7 +63,7 @@ def movea(goalx,goaly,goaltheta):
     r = rospy.Rate(10)
     if(abs(currX-goalx)>0.05 and hpause != True):
         absRotation(0,"map")
-    ts.linear.x = -transVel
+    ts.linear.x = transVel
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
@@ -75,7 +75,7 @@ def movea(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
-        absRotation(-1.57,"map")
+        absRotation(1.57,"map")
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
@@ -117,7 +117,7 @@ def moveb(goalx,goaly,goaltheta):
         r.sleep()
     ts.linear.x = 0.0
     twistPub.publish(ts)
-    ts.linear.x = transVel
+    ts.linear.x = -transVel
     if(abs(currX-goalx)>0.05 and hpause != True):
         absRotation(0,"map")
     while(abs(currX-goalx)>0.05 and hpause != True):
@@ -151,7 +151,7 @@ def movec(goalx,goaly,goaltheta):
     r = rospy.Rate(10)
     if(abs(currX-goalx)>0.05 and hpause != True):
         absRotation(0,"map")
-    ts.linear.x = -transVel
+    ts.linear.x = transVel
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
@@ -162,7 +162,7 @@ def movec(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
-        absRotation(1.57,"map")
+        absRotation(-1.57,"map")
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
@@ -217,11 +217,11 @@ def callback(lmsg):
 def naviflow(req):
     state=req.goal_status
     if(state==1):
-        movea(-0.35,-0.6,0)#-0.6 -0.9
+        movea(0.25,0.58,0)#-0.6 -0.9
         #movea(-0.6,-0.9,0)#-0.6 -0.9
         goal = "A"
     elif(state==3):
-        movec(-0.35,0.6,0) #-0
+        movec(0.25,-0.58,0) #-0
         #movec(-0.6,0.9,0) #-0
         goal = "B"
     else:
@@ -243,5 +243,6 @@ if __name__ == '__main__':
     rospy.wait_for_service('robot_tf_server')
     tfReq = rospy.ServiceProxy('robot_tf_server', RobotTF)
     navi_srv = rospy.Service('triggerNavigating',navigoal, naviflow)
+    print("aaa")
 
     rospy.spin()
