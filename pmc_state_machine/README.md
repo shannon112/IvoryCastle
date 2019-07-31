@@ -43,6 +43,13 @@ Q:What is the state of the staff?
 A:He looks tried.
 A:He working hard now.
 A:He is packaging something.
+
+Q:What items do you deliver?
+A:I deliver the material of camera.
+A:I deliver the completed products.
+
+Q:How many things do you deliver?
+A:I deliver three items.
 ```
 Clear
 ```
