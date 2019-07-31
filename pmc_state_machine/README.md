@@ -27,9 +27,11 @@ Q：What are you doing?
 A：I'm delivering items.
 
 Q：What task are you doing now?
-A:I'm delivering the material of product A.
+A:I'm delivering the material of camera.
 
-#shipping
+Q:How many cameras have been packaged(done)?
+A:There are two at the shipping area.
+
 ```
 IntentWhat
 ```
