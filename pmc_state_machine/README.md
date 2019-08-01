@@ -13,7 +13,7 @@ A
 IntentDelivery
 ```
 Q
-1.Camera have been done.
+1.Camera have been finished.
 2.It's OK to deliver to shipping area.
 3.Please deliver the completed products to shipping area.
 A
