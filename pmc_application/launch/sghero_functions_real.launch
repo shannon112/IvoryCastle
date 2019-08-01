@@ -14,7 +14,7 @@
 	<node name="aiml_tts_google" pkg="ros_aiml" type="aiml_tts_google.py"/>
 
   <!--vocal input related, need isolately run-->
-  <!--node name="aiml_stt_google" pkg="ros_aiml" type="aiml_stt_google.py" output="screen"/-->
+  <node name="aiml_stt_google" pkg="ros_aiml" type="aiml_stt_google.py" output="screen"/>
 
   <!--navigation related-->
   <node name="tfServer" pkg="ira_factory_state_machine" type="tfServer.py"/>
