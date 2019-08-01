@@ -21,9 +21,9 @@ namespace = None
 tagFrame = None
 robotBaseFrame = None
 tfReq = None
-rotateVel = 0.25 #0.10
-transVel = 0.25 #0.05
-angleTH = 0.05 #0.05
+rotateVel = 0.15 #0.10 0.25
+transVel = 0.15 #0.05  0.25
+angleTH = 0.03 #0.05
 nearstTagDist = None
 hpause = False
 rx = None
@@ -217,16 +217,16 @@ def callback(lmsg):
 def naviflow(req):
     state=req.goal_status
     if(state==1):
-        movea(0.25,0.58,0)#-0.6 -0.9
+        movea(0.45,0.65,0)#-0.6 -0.9
         #movea(-0.6,-0.9,0)#-0.6 -0.9
         goal = "A"
     elif(state==3):
-        movec(0.25,-0.58,0) #-0
+        movec(0.45,-0.65,0) #-0
         #movec(-0.6,0.9,0) #-0
         goal = "B"
     else:
         #moveb(0,0,0)
-        moveb(-0.1,0,0)
+        moveb(0,0,0)
         goal = "O"
     return navigoalResponse(
         success=True,
