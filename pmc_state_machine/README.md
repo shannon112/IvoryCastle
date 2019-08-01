@@ -2,9 +2,9 @@
 IntentFind
 ```
 Q
-1.Let's package the camera.
-2.Please give me the material of camera.
-3.Let's do the camera packaging.
+1.Let's package the camera.  (package/camera)  
+2.Please give me the material of camera. (material/camera)  
+3.Let's do the camera packaging. (camera/packaging)  
 A
 1.Ok, I'll pick the material for you.
 2.I will collect the parts of camera.
@@ -13,46 +13,27 @@ A
 IntentDelivery
 ```
 Q
-1.Camera have been finished.
+1.The camera have been finished.
 2.It's OK to deliver to shipping area.
 3.Please deliver the completed products to shipping area.
 A
-1.OK, I'll deliver it to the shipping area.
-2.OK, I will take it.
-3.No problem, I'll do it.
+1.OK, I would deliver it to the shipping area.
+2.Sure, I can do it.
+3.No problem, I am doing it now.
 ```
 Others
 ```
-Q：What are you doing?
-A：I'm delivering items.
+Q： What are you doing?
+A： I'm finding the components of camera.
+A： I'm delivering the material of camera.
 
-Q：What task are you doing now?
-A:I'm delivering the material of camera.
-
-Q:How many cameras have been packaged(done)?
-A:There are two at the shipping area.
-
+A: I'm delivering the completed products which are cameras.
+A: I'm delivering the packaged camera products.
 ```
 IntentWhat
 ```
-Q：What is the status of the environment?
-A:The staff is stand by the table.
-A:There are three areas in this environment.
-
-Q:What is the state of the staff?
-A:He looks tried.
-A:He working hard now.
-A:He is packaging something.
-
-Q:What items do you deliver?
-A:I deliver the material of camera.
-A:I deliver the completed products.
-
-Q:How many things do you deliver?
-A:I deliver three items.
-```
-Clear
-```
+Q： Please tell me what happened.
+A: (image caption response)
 ```
 
 # Communication
