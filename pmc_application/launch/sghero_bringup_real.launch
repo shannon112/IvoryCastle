@@ -116,6 +116,13 @@
       </group>
     </group>
 
+    <!--vocal output related, offline-->
+  	<!--include file="$(find sound_play)/soundplay_node.launch"/>
+  	<node name="aiml_tts_soundplay" pkg="ros_aiml" type="aiml_tts_soundplay.py"/-->
+
+  	<!--vocal output related, online-->
+  	<node name="aiml_tts_google" pkg="ros_aiml" type="aiml_tts_google.py"/>
+
     <!--Gui steering console (Optional)-->
     <node ns="$(arg ns)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
       <param name="default_topic" value="/$(arg ns)/diff_drive_controller/cmd_vel"/>
