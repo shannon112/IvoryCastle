@@ -52,6 +52,5 @@ standalone robot generator launch w/o task nodes
 roslaunch pmc_application neuron_bringup_sim.launch
 roslaunch pmc_application neuron_init_pose.launch       #(optional)
 roslaunch pmc_application neuron_functions_sim.launch
-rosrun ros_aiml aiml_stt_google
 ```
 <img src="https://github.com/shannon112/IvoryCastle/blob/master/pmc_application/result/isolated_generator_result_carto.png" width="800">
