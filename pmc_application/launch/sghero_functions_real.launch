@@ -2,10 +2,6 @@
 <launch>
   <arg name="ns" default="scorpio/mmp0"/>
 
-  <!--assistant related-->
-  <param name="aiml_path" value="$(find ros_aiml)/data" />
-  <node name="aiml_server" pkg="ros_aiml" type="aiml_server.py" output="screen"/>
-
   <!--vocal input related, need isolately run-->
   <node name="aiml_stt_google" pkg="ros_aiml" type="aiml_stt_google.py" output="screen"/>
 
