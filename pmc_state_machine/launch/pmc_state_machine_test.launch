@@ -1,5 +1,5 @@
 <launch>
-  <node name="fake_server" pkg="pmc_state_machine" type="fake_server.py" output="screen"/>
+  <node name="fake_server" pkg="pmc_state_machine" type="fake_server.py"/>
   <node name="intent_transfer_server" pkg="pmc_state_machine" type="intent_transfer_server.py" output="screen"/>
   <node name="main_state_machine" pkg="pmc_state_machine" type="main_state_machine.py" output="screen"/>
   <node name="smach_viewer" pkg="smach_viewer" type="smach_viewer.py"/>

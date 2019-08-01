@@ -50,7 +50,7 @@
 
     <group unless="$(arg carto)">
       <!-- Load pre-mapped map-->
-      <node name="map_server" pkg="map_server" type="map_server" args="$(find pmc_gazebo)/cropped.yaml" />
+      <node name="map_server" pkg="map_server" type="map_server" args="$(find pmc_gazebo)/map/simulation.yaml" />
 
       <!-- launch amcl localization -->
       <node ns="$(arg ns)" pkg="amcl" type="amcl" name="amcl">
