@@ -8,11 +8,11 @@ ros_aiml: https://github.com/jkllbn2563/ros_aiml master
 
 scorpio:  
 IvoryCastle: https://github.com/shannon112/IvoryCastle.git -b pmccontest  
-leg_detector: https://github.com/Herobrixx/people.git -b ros1  
 scorpio: https://github.com/willie5588912/scorpio -b pmc_sghero (simulation with scorpio_ethercat removed)  
-ira_factory: https://github.com/willie5588912/ira_factory  -b  pmc_sghero (scorpio)  
 neronbot: https://github.com/willie5588912/neuronbot  -b  pmc_sghero (multi-bots with move_back removed)  
+ira_factory: https://github.com/willie5588912/ira_factory  -b  pmc_sghero (scorpio)  
 ros_aiml: https://github.com/jkllbn2563/ros_aiml pmc_sghero  
+leg_detector: https://github.com/Herobrixx/people.git -b ros1  
 
 ## icps demo world
 ```
@@ -52,6 +52,6 @@ standalone robot generator launch w/o task nodes
 roslaunch pmc_application neuron_bringup_sim.launch
 roslaunch pmc_application neuron_init_pose.launch       #(optional)
 roslaunch pmc_application neuron_functions_sim.launch
-roslaunch pmc_state_machine pmc_state_machine_test.launch
+rosrun ros_aiml aiml_stt_google
 ```
 <img src="https://github.com/shannon112/IvoryCastle/blob/master/pmc_application/result/isolated_generator_result_carto.png" width="800">
