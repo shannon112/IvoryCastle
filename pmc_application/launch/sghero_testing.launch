@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <arg name="ns" default="scorpio/mmp0"/>
+
+    <!--Load/Spawn robot in real env-->
+    <!--Spawn Controller-->
+    <rosparam ns="$(arg ns)" command="load" file="$(find ira_factory_robot_controller)/config/scorpio/ros_control/real/controllers.yaml"/>
+    <node ns="$(arg ns)" name="diff_controller_spawner" pkg="controller_manager" type="spawner"
+      args="joint_state_controller diff_drive_controller"/>
+
+    <!--Main control node-->
+    <node ns="$(arg ns)" name="scorpio_base_ros_control" pkg="scorpio_base_ros_control" type="scorpio_base_ros_control"
+      output="screen" respawn="false" respawn_delay="3"/>
+
+    <!--Publish robot state-->
+    <arg name="x" default="0.4"/>
+    <arg name="y" default="0.5"/>
+    <arg name="z" default="0.0"/>
+    <param name="$(arg ns)/robot_description" command="python $(find xacro)/xacro.py '$(find scorpio_description)/robots/scorpio.urdf.xacro' ns:=$(arg ns)" />
+    <node ns="$(arg ns)" name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+      <param name="tf_prefix" value="$(arg ns)" />
+    </node>
+
+
+    <!-- correcting the odom -->
+    <node ns="$(arg ns)" name="robot_pose_ekf" pkg="robot_pose_ekf" type="robot_pose_ekf">
+      <param name="output_frame" value="$(arg ns)/odom" />
+      <param name="base_footprint_frame" value="$(arg ns)/base_footprint" />
+      <param name="odom_used" value="true" />
+      <param name="imu_used" value="false" />
+      <param name="vo_used" value="false" />
+      <remap from="odom"     to="diff_drive_controller/odom"/>
+    </node>
+
+    <!--Gui steering console (Optional)-->
+    <node ns="$(arg ns)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+      <param name="default_topic" value="/$(arg ns)/diff_drive_controller/cmd_vel"/>
+      <param name="default_vx_max" value="1.0"/>
+      <param name="default_vx_min" value="-1.0"/>
+    </node>
+
+    <!-- Gui Rviz   -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/sghero_pmc_demo.rviz"/>
+
+</launch>
