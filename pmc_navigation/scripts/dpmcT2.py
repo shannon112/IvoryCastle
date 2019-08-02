@@ -75,7 +75,7 @@ def movea(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
-        absRotation(1.57,"map")
+        absRotation(1.54,"map")
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
@@ -217,16 +217,16 @@ def callback(lmsg):
 def naviflow(req):
     state=req.goal_status
     if(state==1):
-        movea(0.45,0.65,0)#-0.6 -0.9
+        movea(0.53,0.76,0)#-0.6 -0.9
         #movea(-0.6,-0.9,0)#-0.6 -0.9
         goal = "A"
     elif(state==3):
-        movec(0.45,-0.65,0) #-0
+        movec(0.53,-0.76,0) #-0
         #movec(-0.6,0.9,0) #-0
         goal = "B"
     else:
         #moveb(0,0,0)
-        moveb(0,0,0)
+        moveb(0.05,0,0)
         goal = "O"
     return navigoalResponse(
         success=True,
