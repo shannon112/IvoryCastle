@@ -21,7 +21,7 @@ A
 2.Ok, I will deliver them to shipping area.
 3.No problem, I'm going to deliver them.
 ```
-Others
+Others (Query status)
 ```
 Q： What are you doing?
 A： I'm finding the components of camera.
