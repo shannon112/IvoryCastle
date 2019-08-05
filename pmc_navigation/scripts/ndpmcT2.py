@@ -22,7 +22,7 @@ tagFrame = None
 robotBaseFrame = None
 tfReq = None
 rotateVel = 0.20 #0.10 0.25
-finerotateVel = 0.05 #0.10 0.25
+finerotateVel = 0.03 #0.10 0.25
 transVel = 0.15 #0.05  0.25
 angleTH = 0.05 #0.05
 fineangleTH = 0.03 #0.05
@@ -69,8 +69,8 @@ def movea(goalx,goaly,goaltheta):
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
-        if(abs(currX -goalx) < 0.1):
-            ts.linear.x = transVel*0.5
+        if(abs(currX -goalx) < 0.12):
+            ts.linear.x = transVel*0.3
         #print(hpause)
         #print("a:moveing")
         twistPub.publish(ts)
@@ -84,8 +84,8 @@ def movea(goalx,goaly,goaltheta):
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
-        if(abs(currY -goaly) < 0.1):
-            ts.linear.x = transVel*0.5
+        if(abs(currY -goaly) < 0.20):
+            ts.linear.x = transVel*0.3
         #print(hpause)
         #print("a:moveing")
         twistPub.publish(ts)
@@ -118,8 +118,8 @@ def moveb(goalx,goaly,goaltheta):
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
-        if(abs(currY -goaly) < 0.1):
-            ts.linear.x = transVel*0.5
+        if(abs(currY -goaly) < 0.20):
+            ts.linear.x = -transVel*0.3
         #print(hpause)
         #print("b:moveing")
         twistPub.publish(ts)
@@ -133,8 +133,8 @@ def moveb(goalx,goaly,goaltheta):
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
-        if(abs(currX -goalx) < 0.1):
-            ts.linear.x = transVel*0.5
+        if(abs(currX -goalx) < 0.12):
+            ts.linear.x = -transVel*0.3
         #print(hpause)
         #print("b:moveing")
         twistPub.publish(ts)
@@ -167,8 +167,8 @@ def movec(goalx,goaly,goaltheta):
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
-        if(abs(currX -goalx) < 0.1):
-            ts.linear.x = transVel*0.5
+        if(abs(currX -goalx) < 0.12):
+            ts.linear.x = transVel*0.3
         #print("c:moveing")
         twistPub.publish(ts)
         r.sleep()
@@ -181,8 +181,8 @@ def movec(goalx,goaly,goaltheta):
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
-        if(abs(currY -goaly) < 0.1):
-            ts.linear.x = transVel*0.5
+        if(abs(currY -goaly) < 0.20):
+            ts.linear.x = transVel*0.3
         #print("c:moveing")
         twistPub.publish(ts)
         r.sleep()
@@ -267,11 +267,11 @@ def callback(lmsg):
 def naviflow(req):
     state=req.goal_status
     if(state==1):
-        movea(0.45,0.65,0)#-0.6 -0.9
+        movea(0.45,0.75,0)#-0.6 -0.9
         #movea(-0.6,-0.9,0)#-0.6 -0.9
         goal = "A"
     elif(state==3):
-        movec(0.45,-0.65,0) #-0
+        movec(0.45,-0.75,0) #-0
         #movec(-0.6,0.9,0) #-0
         goal = "B"
     else:
