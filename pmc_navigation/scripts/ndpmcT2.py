@@ -79,7 +79,7 @@ def movea(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
-        absRotation(1.4,"map")
+        absRotation(1.45,"map")
         fineRotation(1.57,"map")
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
@@ -128,7 +128,7 @@ def moveb(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = -transVel
     if(abs(currX-goalx)>0.05 and hpause != True):
-        absRotation(0.17,"map")
+        absRotation(0.12,"map")
         fineRotation(0.0,"map")
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
@@ -177,7 +177,7 @@ def moved(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = -transVel
     if(abs(currX-goalx)>0.05 and hpause != True):
-        absRotation(-0.17,"map")
+        absRotation(-0.12,"map")
         fineRotation(0.0,"map")
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
@@ -316,11 +316,11 @@ def callback(lmsg):
 def naviflow(req):
     state=req.goal_status
     if(state==1):
-        movea(0.45,0.75,0)#-0.6 -0.9
+        movea(0.5,0.75,0)#-0.6 -0.9
         #movea(-0.6,-0.9,0)#-0.6 -0.9
         goal = "A"
     elif(state==3):
-        movec(0.45,-0.75,0) #-0
+        movec(0.5,-0.75,0) #-0
         #movec(-0.6,0.9,0) #-0
         goal = "B"
     elif(state==2):
