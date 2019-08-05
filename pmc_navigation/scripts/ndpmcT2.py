@@ -145,6 +145,55 @@ def moveb(goalx,goaly,goaltheta):
         hpausehandler(goalx,goaly,2)
     else:
         return True
+def moved(goalx,goaly,goaltheta):
+    global twistPub, tfReq, transVel ,hpause
+    print("D")
+    ns = rospy.myargv(argv=sys.argv)[1]
+    goal_frame=os.path.join(ns,'base_link')
+    base_frame='/map'
+    resp = tfReq(goal_frame, base_frame)
+    quat = tuple(resp.quat)
+    currY = resp.trans[1]
+    currX= resp.trans[0]
+    print(currX)
+    quat = tuple(resp.quat)
+    currYaw = tf.transformations.euler_from_quaternion(quat)[2]
+    ts = Twist()
+    ts.linear.x = transVel
+    r = rospy.Rate(10)
+    #if(abs(currY-goaly)>0.05 and hpause != True):
+    #   absRotation(1.57,"map")
+    ts.linear.x = -transVel
+    while(abs(currY-goaly)>0.05 and hpause != True):
+        resp = tfReq(goal_frame, base_frame)
+        currY = resp.trans[1]
+        if(abs(currY -goaly) < 0.20):
+            ts.linear.x = -transVel*0.3
+        #print(hpause)
+        #print("b:moveing")
+        twistPub.publish(ts)
+        r.sleep()
+    ts.linear.x = 0.0
+    twistPub.publish(ts)
+    ts.linear.x = -transVel
+    if(abs(currX-goalx)>0.05 and hpause != True):
+        absRotation(-0.17,"map")
+        fineRotation(0.0,"map")
+    while(abs(currX-goalx)>0.05 and hpause != True):
+        resp = tfReq(goal_frame, base_frame)
+        currX = resp.trans[0]
+        if(abs(currX -goalx) < 0.12):
+            ts.linear.x = -transVel*0.3
+        #print(hpause)
+        #print("b:moveing")
+        twistPub.publish(ts)
+        r.sleep()
+    ts.linear.x = 0.0
+    twistPub.publish(ts)
+    if(hpause):
+        hpausehandler(goalx,goaly,2)
+    else:
+        return True
 def movec(goalx,goaly,goaltheta):
     global twistPub, tfReq, transVel ,hpause
     print("C")
@@ -274,8 +323,15 @@ def naviflow(req):
         movec(0.45,-0.75,0) #-0
         #movec(-0.6,0.9,0) #-0
         goal = "B"
-    else:
+    elif(state==2):
         #moveb(0,0,0)
+        moveb(0,0,0)
+        goal = "O"
+    elif(state==4):
+        #moveb(0,0,0)
+        moved(0,0,0)
+        goal = "O"
+    else:
         moveb(0,0,0)
         goal = "O"
     return navigoalResponse(
