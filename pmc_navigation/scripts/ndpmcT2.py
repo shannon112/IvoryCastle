@@ -21,11 +21,11 @@ namespace = None
 tagFrame = None
 robotBaseFrame = None
 tfReq = None
-rotateVel = 0.15 #0.10 0.25
+rotateVel = 0.20 #0.10 0.25
 finerotateVel = 0.05 #0.10 0.25
 transVel = 0.15 #0.05  0.25
-angleTH = 0.03 #0.05
-fineangleTH = 0.01 #0.05
+angleTH = 0.05 #0.05
+fineangleTH = 0.03 #0.05
 nearstTagDist = None
 hpause = False
 rx = None
@@ -69,7 +69,7 @@ def movea(goalx,goaly,goaltheta):
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
-        print(hpause)
+        #print(hpause)
         #print("a:moveing")
         twistPub.publish(ts)
         r.sleep()
@@ -77,12 +77,12 @@ def movea(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
-        absRotation(1.5,"map")
+        absRotation(1.4,"map")
         fineRotation(1.57,"map")
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
-        print(hpause)
+        #print(hpause)
         #print("a:moveing")
         twistPub.publish(ts)
         r.sleep()
@@ -114,7 +114,7 @@ def moveb(goalx,goaly,goaltheta):
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
-        print(hpause)
+        #print(hpause)
         #print("b:moveing")
         twistPub.publish(ts)
         r.sleep()
@@ -122,12 +122,12 @@ def moveb(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = -transVel
     if(abs(currX-goalx)>0.05 and hpause != True):
-        absRotation(0.07,"map")
+        absRotation(0.17,"map")
         fineRotation(0.0,"map")
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
-        print(hpause)
+        #print(hpause)
         #print("b:moveing")
         twistPub.publish(ts)
         r.sleep()
@@ -166,8 +166,8 @@ def movec(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
-        absRotation(-1.50,"map")
-        absRotation(-1.57,"map")
+        absRotation(-1.40,"map")
+        fineRotation(-1.57,"map")
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
@@ -216,6 +216,7 @@ def absRotation(tarAngle, base_frame):
         hpausedegree(tarAngle)
 def fineRotation(tarAngle, base_frame):
     global twistPub, finerotateVel,fineangleTH,tfReq ,hpause
+    print("fine degree")
     ns = rospy.myargv(argv=sys.argv)[1]
     goal_frame=os.path.join(ns,'base_link')
     #base_frame = "charger"
@@ -228,12 +229,12 @@ def fineRotation(tarAngle, base_frame):
     ts = Twist()
     r = rospy.Rate(10)
     #print("rotate",angleDiff)
-    while angleDiff> angleTH and not rospy.is_shutdown() and hpause != True:
+    while angleDiff> fineangleTH and not rospy.is_shutdown() and hpause != True:
       # For a specific range, the robot should turn right
         if tarAngle - currYaw > 3.14 or ((tarAngle - currYaw) < 0 and (tarAngle - currYaw) > -3.14):
-            ts.angular.z = -rotateVel # Turn right
+            ts.angular.z = -finerotateVel # Turn right
         else:
-            ts.angular.z = rotateVel  # Turn left
+            ts.angular.z = finerotateVel  # Turn left
         twistPub.publish(ts)
         resp = tfReq(goal_frame, base_frame)
         quat = tuple(resp.quat)
