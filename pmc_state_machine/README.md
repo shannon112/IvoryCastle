@@ -32,6 +32,10 @@ A: I'm delivering the packaged camera products.
 
 A: I'm waiting for your command.
 ```
+```
+Q: reset current state to blank (要過濾掉的
+A: (No response, but need to change status to blank)
+```
 IntentWhat
 ```
 Q： Please tell me what happened.
