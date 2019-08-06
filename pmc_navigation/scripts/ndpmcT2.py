@@ -32,20 +32,30 @@ rx = None
 ry = None
 rtheta =None
 def hpausehandler(x,y,state):
+    r = rospy.Rate(10)
     while(hpause):
         print("people! waiting")
+        r.sleep()
     if(state==1):
         movea(x,y,0)
     elif(state==3):
         movec(x,y,0)
+    elif(state==4):
+        moved(x,y,0)
     else:
         moveb(x,y,0)
 def hpausedegree(theta):
+    r = rospy.Rate(10)
     while(hpause):
         print("waiting")
+        r.sleep()
     absRotation(theta,"map")
-
-
+def hpausefinedegree(theta):
+    r = rospy.Rate(10)
+    while(hpause):
+        print("waiting")
+        r.sleep()
+    fineRotation(theta,"map")
 
 def movea(goalx,goaly,goaltheta):
     global twistPub, tfReq, transVel ,hpause
@@ -307,7 +317,7 @@ def fineRotation(tarAngle, base_frame):
     ts.angular.z = 0.0
     twistPub.publish(ts)
     if(hpause):
-        hpausedegree(tarAngle)
+        hpausefinedegree(tarAngle)
 
 def callback(lmsg):
     global hpause
