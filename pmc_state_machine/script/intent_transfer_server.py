@@ -39,7 +39,6 @@ def resetStatus(data):
         if data.active_states[0] == "VoiceCommand" and waitingFlag == 0:
             pub = rospy.Publisher('chatter', String, queue_size=10)
             pub.publish(String("reset current state to blank"))
-            print("hi")
             waitingFlag = 1
         elif data.active_states[0] == "VoiceCommand":
             waitingFlag = 1
