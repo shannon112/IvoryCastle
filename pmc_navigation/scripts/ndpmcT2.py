@@ -70,7 +70,7 @@ def movea(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         if(abs(currX -goalx) < 0.12):
-            ts.linear.x = transVel*0.3
+            ts.linear.x = transVel*0.5
         #print(hpause)
         #print("a:moveing")
         twistPub.publish(ts)
@@ -85,7 +85,7 @@ def movea(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         if(abs(currY -goaly) < 0.20):
-            ts.linear.x = transVel*0.3
+            ts.linear.x = transVel*0.5
         #print(hpause)
         #print("a:moveing")
         twistPub.publish(ts)
@@ -119,7 +119,7 @@ def moveb(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         if(abs(currY -goaly) < 0.20):
-            ts.linear.x = -transVel*0.3
+            ts.linear.x = -transVel*0.5
         #print(hpause)
         #print("b:moveing")
         twistPub.publish(ts)
@@ -134,7 +134,7 @@ def moveb(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         if(abs(currX -goalx) < 0.12):
-            ts.linear.x = -transVel*0.3
+            ts.linear.x = -transVel*0.5
         #print(hpause)
         #print("b:moveing")
         twistPub.publish(ts)
@@ -168,7 +168,7 @@ def moved(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         if(abs(currY -goaly) < 0.20):
-            ts.linear.x = -transVel*0.3
+            ts.linear.x = -transVel*0.5
         #print(hpause)
         #print("b:moveing")
         twistPub.publish(ts)
@@ -183,7 +183,7 @@ def moved(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         if(abs(currX -goalx) < 0.12):
-            ts.linear.x = -transVel*0.3
+            ts.linear.x = -transVel*0.5
         #print(hpause)
         #print("b:moveing")
         twistPub.publish(ts)
@@ -217,7 +217,7 @@ def movec(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         if(abs(currX -goalx) < 0.12):
-            ts.linear.x = transVel*0.3
+            ts.linear.x = transVel*0.5
         #print("c:moveing")
         twistPub.publish(ts)
         r.sleep()
@@ -231,7 +231,7 @@ def movec(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         if(abs(currY -goaly) < 0.20):
-            ts.linear.x = transVel*0.3
+            ts.linear.x = transVel*0.5
         #print("c:moveing")
         twistPub.publish(ts)
         r.sleep()
