@@ -5,9 +5,9 @@
   <arg name="ns" default="scorpio/mmp0"/>
 
   <!--load state map (.pbstream)-->
-  <arg name="map_filename" default="$(find pmc_gazebo)/map/fusion.bag.pbstream"/>
+  <arg name="map_filename" default="$(find pmc_gazebo)/map/map.bag.pbstream"/>
   <!--load lua configuration file (.lua)-->
-  <arg name="lua_filename" default="neuronbot_allcarto_locali.lua"/>
+  <arg name="lua_filename" default="sghero_allcarto_locali.lua"/>
 
   <node ns="$(arg ns)" pkg="cartographer_ros" type="cartographer_start_trajectory"
     name="cartographer_start_trajectory_node" args="

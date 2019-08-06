@@ -5,8 +5,6 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /TF1
-        - /TF1/Frames1
         - /Marker1
       Splitter Ratio: 0.706278026
     Tree Height: 326
@@ -75,6 +73,8 @@ Visualization Manager:
         All Enabled: false
         map:
           Value: true
+        odom:
+          Value: false
         scorpio/mmp0/back_hokuyo_link:
           Value: false
         scorpio/mmp0/back_left_wheel:
@@ -104,9 +104,9 @@ Visualization Manager:
         scorpio/mmp0/base_camera_rgb_optical_frame:
           Value: false
         scorpio/mmp0/base_footprint:
-          Value: false
-        scorpio/mmp0/base_link:
           Value: true
+        scorpio/mmp0/base_link:
+          Value: false
         scorpio/mmp0/front_hokuyo_link:
           Value: false
         scorpio/mmp0/front_left_wheel:
@@ -114,8 +114,6 @@ Visualization Manager:
         scorpio/mmp0/front_right_wheel:
           Value: false
         scorpio/mmp0/left_wheel:
-          Value: false
-        scorpio/mmp0/odom:
           Value: false
         scorpio/mmp0/right_wheel:
           Value: false
@@ -126,7 +124,7 @@ Visualization Manager:
       Show Names: false
       Tree:
         map:
-          scorpio/mmp0/odom:
+          odom:
             scorpio/mmp0/base_footprint:
               scorpio/mmp0/base_link:
                 scorpio/mmp0/back_hokuyo_link:
@@ -336,14 +334,14 @@ Visualization Manager:
       Marker Topic: visualization_marker
       Name: Marker
       Namespaces:
-        LEGS: true
+        {}
       Queue Size: 100
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: scorpio/mmp0/odom
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
@@ -363,7 +361,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -1.50999975
+      Angle: -1.50499976
       Class: rviz/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
@@ -373,11 +371,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Scale: 194.418655
+      Scale: 317.800934
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: -0.257976323
-      Y: -0.360180408
+      X: 0.427694172
+      Y: -0.28216666
     Saved: ~
 Window Geometry:
   Displays:
