@@ -43,6 +43,16 @@ A: (image caption response)
 ```
 
 # Communication
+safe
+```
+Be careful, you are very close to me.
+Watch out, I am near you.
+Be careful of your body.
+
+I would wait until you pass through.
+After you.
+I am waiting, you can go first.
+```
 runing
 ```
 roslaunch pmc_state_machine pmc_state_machine_test.launch
