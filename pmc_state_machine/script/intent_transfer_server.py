@@ -42,9 +42,9 @@ def resetStatus(data):
             waitingFlag = 1
         elif data.active_states[0] == "VoiceCommand":
             waitingFlag = 1
-        elif  data.active_states[0] == "NAVI_D":
+        elif  data.active_states[0] == "DELIVERING":
             waitingFlag = 0
-        elif  data.active_states[0] == "NAVI_F":
+        elif  data.active_states[0] == "COLLECTING":
             waitingFlag = 0
 
 def main():
