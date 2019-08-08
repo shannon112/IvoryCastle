@@ -1,0 +1,12 @@
+<launch>
+  <arg name="ns" default="scorpio/mmp0"/>
+
+  <param name="model_path" value="$(find caption_pkg)/src/log_st/model-best.pth" />
+  <param name="infos_path" value="$(find caption_pkg)/src/log_st/infos_st-best.pkl" />
+  <param name="imagenet_weights_path" value="$(find caption_pkg)/src/data/imagenet_weights/resnet101.pth"/>
+  <param name="image_caption_image_topic" value="$(arg ns)/base_camera/rgb/image_raw"/>
+
+  <node name="caption_pmc_server" pkg="caption_pkg" type="caption_pmc_server.py" output="screen"/>
+  <node name="caption_pmc_client" pkg="caption_pkg" type="caption_pmc_client.py" output="screen"/>
+
+</launch>
