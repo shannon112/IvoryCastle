@@ -8,7 +8,7 @@ def executeCaption(req):
     '''
     caption executing
     '''
-    rospy.sleep(10.)
+    rospy.sleep(5.)
     return TriggerResponse(
         success=True,
         message="Caption is executed!"
@@ -18,7 +18,7 @@ def executeGrasping(req):
     '''
     grasping executing
     '''
-    rospy.sleep(10.)
+    rospy.sleep(5.)
     return TriggerResponse(
         success=True,
         message="Grasping is executed!"
@@ -28,7 +28,7 @@ def executePlacing(req):
     '''
     placing executing
     '''
-    rospy.sleep(10.)
+    rospy.sleep(5.)
     return TriggerResponse(
         success=True,
         message="Placing is executed!"
@@ -38,7 +38,7 @@ def executeFetching(req):
     '''
     fetching executing
     '''
-    rospy.sleep(10.)
+    rospy.sleep(5.)
     return TriggerResponse(
         success=True,
         message="Fetching is executed!"
@@ -48,12 +48,21 @@ def executeStacking(req):
     '''
     stacking executing
     '''
-    rospy.sleep(10.)
+    rospy.sleep(5.)
     return TriggerResponse(
         success=True,
         message="Stacking is executed!"
     )
 
+def executeLookforward(req):
+    '''
+    Lookforward executing
+    '''
+    rospy.sleep(5.)
+    return TriggerResponse(
+        success=True,
+        message="Stacking is executed!"
+    )
 
 def main():
     rospy.init_node('fake_server')
@@ -62,6 +71,7 @@ def main():
     s3 = rospy.Service('triggerPlacing', Trigger, executePlacing)
     s4 = rospy.Service('triggerFetching', Trigger, executeFetching)
     s5 = rospy.Service('triggerStacking', Trigger, executeStacking)
+    s6 = rospy.Service('triggerLookforward', Trigger, executeLookforward)
     rospy.spin()
 
 if __name__ == "__main__":

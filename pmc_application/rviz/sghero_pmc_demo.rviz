@@ -5,8 +5,9 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
+        - /Marker1
       Splitter Ratio: 0.706278026
-    Tree Height: 303
+    Tree Height: 326
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -52,89 +53,18 @@ Visualization Manager:
     - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
-      Enabled: true
+      Enabled: false
       Links:
         All Links Enabled: true
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        back_hokuyo_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        back_left_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        back_right_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        base_camera_depth_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        base_camera_depth_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        base_camera_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        base_camera_rgb_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        base_camera_rgb_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        base_footprint:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_hokuyo_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_left_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_right_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
       Name: RobotModel
       Robot Description: scorpio/mmp0/robot_description
       TF Prefix: scorpio/mmp0
       Update Interval: 0
-      Value: true
+      Value: false
       Visual Enabled: true
     - Class: rviz/TF
       Enabled: true
@@ -143,50 +73,50 @@ Visualization Manager:
         All Enabled: false
         map:
           Value: true
+        odom:
+          Value: false
         scorpio/mmp0/back_hokuyo_link:
-          Value: true
+          Value: false
         scorpio/mmp0/back_left_wheel:
-          Value: true
+          Value: false
         scorpio/mmp0/back_right_wheel:
-          Value: true
+          Value: false
         scorpio/mmp0/base_camera_color_frame:
-          Value: true
+          Value: false
         scorpio/mmp0/base_camera_color_optical_frame:
-          Value: true
+          Value: false
         scorpio/mmp0/base_camera_depth_frame:
-          Value: true
+          Value: false
         scorpio/mmp0/base_camera_depth_optical_frame:
-          Value: true
+          Value: false
         scorpio/mmp0/base_camera_infra1_frame:
-          Value: true
+          Value: false
         scorpio/mmp0/base_camera_infra1_optical_frame:
-          Value: true
+          Value: false
         scorpio/mmp0/base_camera_infra2_frame:
-          Value: true
+          Value: false
         scorpio/mmp0/base_camera_infra2_optical_frame:
-          Value: true
+          Value: false
         scorpio/mmp0/base_camera_link:
-          Value: true
+          Value: false
         scorpio/mmp0/base_camera_rgb_frame:
-          Value: true
+          Value: false
         scorpio/mmp0/base_camera_rgb_optical_frame:
-          Value: true
+          Value: false
         scorpio/mmp0/base_footprint:
           Value: true
         scorpio/mmp0/base_link:
-          Value: true
+          Value: false
         scorpio/mmp0/front_hokuyo_link:
-          Value: true
+          Value: false
         scorpio/mmp0/front_left_wheel:
-          Value: true
+          Value: false
         scorpio/mmp0/front_right_wheel:
-          Value: true
+          Value: false
         scorpio/mmp0/left_wheel:
-          Value: true
-        scorpio/mmp0/odom:
-          Value: true
+          Value: false
         scorpio/mmp0/right_wheel:
-          Value: true
+          Value: false
       Marker Scale: 1
       Name: TF
       Show Arrows: true
@@ -194,42 +124,41 @@ Visualization Manager:
       Show Names: false
       Tree:
         map:
-          {}
-        scorpio/mmp0/odom:
-          scorpio/mmp0/base_footprint:
-            scorpio/mmp0/base_link:
-              scorpio/mmp0/back_hokuyo_link:
-                {}
-              scorpio/mmp0/back_left_wheel:
-                {}
-              scorpio/mmp0/back_right_wheel:
-                {}
-              scorpio/mmp0/base_camera_link:
-                scorpio/mmp0/base_camera_color_frame:
-                  scorpio/mmp0/base_camera_color_optical_frame:
-                    {}
-                scorpio/mmp0/base_camera_depth_frame:
-                  scorpio/mmp0/base_camera_depth_optical_frame:
-                    {}
-                scorpio/mmp0/base_camera_infra1_frame:
-                  scorpio/mmp0/base_camera_infra1_optical_frame:
-                    {}
-                scorpio/mmp0/base_camera_infra2_frame:
-                  scorpio/mmp0/base_camera_infra2_optical_frame:
-                    {}
-                scorpio/mmp0/base_camera_rgb_frame:
-                  scorpio/mmp0/base_camera_rgb_optical_frame:
-                    {}
-              scorpio/mmp0/front_hokuyo_link:
-                {}
-              scorpio/mmp0/front_left_wheel:
-                {}
-              scorpio/mmp0/front_right_wheel:
-                {}
-              scorpio/mmp0/left_wheel:
-                {}
-              scorpio/mmp0/right_wheel:
-                {}
+          odom:
+            scorpio/mmp0/base_footprint:
+              scorpio/mmp0/base_link:
+                scorpio/mmp0/back_hokuyo_link:
+                  {}
+                scorpio/mmp0/back_left_wheel:
+                  {}
+                scorpio/mmp0/back_right_wheel:
+                  {}
+                scorpio/mmp0/base_camera_link:
+                  scorpio/mmp0/base_camera_color_frame:
+                    scorpio/mmp0/base_camera_color_optical_frame:
+                      {}
+                  scorpio/mmp0/base_camera_depth_frame:
+                    scorpio/mmp0/base_camera_depth_optical_frame:
+                      {}
+                  scorpio/mmp0/base_camera_infra1_frame:
+                    scorpio/mmp0/base_camera_infra1_optical_frame:
+                      {}
+                  scorpio/mmp0/base_camera_infra2_frame:
+                    scorpio/mmp0/base_camera_infra2_optical_frame:
+                      {}
+                  scorpio/mmp0/base_camera_rgb_frame:
+                    scorpio/mmp0/base_camera_rgb_optical_frame:
+                      {}
+                scorpio/mmp0/front_hokuyo_link:
+                  {}
+                scorpio/mmp0/front_left_wheel:
+                  {}
+                scorpio/mmp0/front_right_wheel:
+                  {}
+                scorpio/mmp0/left_wheel:
+                  {}
+                scorpio/mmp0/right_wheel:
+                  {}
       Update Interval: 0
       Value: true
     - Alpha: 0.699999988
@@ -349,8 +278,8 @@ Visualization Manager:
       Axis: Z
       Channel Name: intensity
       Class: rviz/LaserScan
-      Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color: 255; 0; 255
+      Color Transformer: FlatColor
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -373,20 +302,20 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
+        Max Value: 0
+        Min Value: 0
         Value: true
       Axis: Z
       Channel Name: intensity
       Class: rviz/LaserScan
-      Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color: 0; 255; 255
+      Color Transformer: FlatColor
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
-      Max Color: 255; 255; 255
+      Max Color: 0; 255; 255
       Max Intensity: 999999
-      Min Color: 0; 0; 0
+      Min Color: 0; 0; 255
       Min Intensity: 0
       Name: LaserScan
       Position Transformer: XYZ
@@ -394,17 +323,25 @@ Visualization Manager:
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.00999999978
-      Style: Flat Squares
+      Style: Squares
       Topic: /scorpio/mmp0/front_scan
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: visualization_marker
+      Name: Marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: scorpio/mmp0/odom
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
@@ -424,7 +361,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -1.5599997
+      Angle: -1.50499976
       Class: rviz/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
@@ -434,11 +371,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Scale: 153.587357
+      Scale: 317.800934
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 0.164571434
-      Y: -0.21001178
+      X: 0.427694172
+      Y: -0.28216666
     Saved: ~
 Window Geometry:
   Displays:
@@ -450,7 +387,7 @@ Window Geometry:
     collapsed: false
   North_camera:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000400000000000002080000034dfc020000000bfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006600fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c00610079007301000000310000017d000000e400fffffffb00000006004d004d005001000001b6000001020000001b00fffffffb000000060041004d005201000002b4000000e60000000000000000fb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb00000018004e006f007200740068005f00630061006d00650072006101000002c0000000be0000001b00ffffff000000010000014c0000034dfc0200000006fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fc0000003100000286000000c200fffffffa000000010100000002fb0000000a0049006d0061006700650000000000ffffffff0000000000000000fb0000000a0056006900650077007301000005e30000014c0000012200fffffffb000000180053006f007500740068005f00630061006d00650072006101000002bf000000bf0000001b00fffffffb0000000800440034003300350100000276000001240000000000000000fb0000000a0049006d00610067006501000002cb000000c40000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000072700000046fc0100000002fb0000000800540069006d0065010000000000000727000003de00fffffffb0000000800540069006d00650100000000000004500000000000000000000003c30000034d00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000400000000000002080000035efc020000000bfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006100fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000002800000187000000d700fffffffb00000006004d004d005001000001b5000001080000001600fffffffb000000060041004d005201000002b4000000e60000000000000000fb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb00000018004e006f007200740068005f00630061006d00650072006101000002c3000000c30000001600ffffff000000010000014c0000035efc0200000006fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fc0000002800000295000000ad00fffffffa000000010100000002fb0000000a0049006d0061006700650000000000ffffffff0000000000000000fb0000000a0056006900650077007301000005e30000014c0000010f00fffffffb000000180053006f007500740068005f00630061006d00650072006101000002c3000000c30000001600fffffffb0000000800440034003300350100000276000001240000000000000000fb0000000a0049006d00610067006501000002cb000000c40000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000072700000046fc0100000002fb0000000800540069006d00650100000000000007270000030000fffffffb0000000800540069006d00650100000000000004500000000000000000000003c70000035e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   South_camera:

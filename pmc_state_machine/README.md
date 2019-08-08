@@ -2,26 +2,26 @@
 IntentFind
 ```
 Q
-1.Let's package the camera.  (package/camera)  
-2.Please give me the material of camera. (material/camera)  
-3.Let's do the camera packaging. (camera/packaging)  
+1.Let's assemble the camera pack.  (assemble/camera)  
+2.Let's do the camera pack. (camera/pack)  
+3.Please give me the material of camera. (material/camera)備用  
 A
-1.Ok, I'll pick the material for you.
-2.I will collect the parts of camera.
-3.Sure, I can do it.
+1.Sure, let's do this.
+2.Ok, I will collect all the parts for you.
+3.No problem, I'm going to do it.
 ```
 IntentDelivery
 ```
 Q
-1.The camera have been finished. 
-2.It's OK to deliver to shipping area.
-3.Please deliver the completed products to shipping area.
+1.It's OK to deliver. (to deliver)  
+2.It’s ready to shipping area. (ready to)  
+3.The camera have been finished. (have been finished)備用  
 A
-1.OK, I would deliver it to the shipping area.
-2.Sure, I can do it.
-3.No problem, I am doing it now.
+1.Sure, let's do this.
+2.Ok, I will deliver them to shipping area.
+3.No problem, I'm going to deliver them.
 ```
-Others
+Others (Query status)
 ```
 Q： What are you doing?
 A： I'm finding the components of camera.
@@ -29,6 +29,12 @@ A： I'm delivering the material of camera.
 
 A: I'm delivering the completed products which are cameras.
 A: I'm delivering the packaged camera products.
+
+A: I'm waiting for your command.
+```
+```
+Q: reset current state to blank (要過濾掉的
+A: (No response, but need to change status to blank)
 ```
 IntentWhat
 ```
@@ -37,6 +43,16 @@ A: (image caption response)
 ```
 
 # Communication
+safe
+```
+Be careful, you are very close to me.
+Watch out, I am near you.
+Be careful of your body.
+
+I would wait until you pass through.
+After you.
+I am waiting, you can go first.
+```
 runing
 ```
 roslaunch pmc_state_machine pmc_state_machine_test.launch

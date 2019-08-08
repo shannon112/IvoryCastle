@@ -145,8 +145,8 @@ class StackingBox(smach.State):
             return 'aborted'
 
 
-# define state NaviFind
-class NaviFind(smach.State):
+# define state NavigationC
+class NavigationC(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['prepare_to_go','reach_goal','back_to_home','done'])
         rospy.wait_for_service('/triggerNavigating')
@@ -154,7 +154,7 @@ class NaviFind(smach.State):
         self.state = 0
 
     def execute(self, userdata):
-        rospy.loginfo('Executing state NaviFind')
+        rospy.loginfo('Executing state NavigationC')
         if self.state == 0:
             self.state += 1
             return 'prepare_to_go'
@@ -175,8 +175,8 @@ class NaviFind(smach.State):
             return 'done'
 
 
-# define state NaviDelivery
-class NaviDelivery(smach.State):
+# define state NavigationD
+class NavigationD(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['prepare_to_go','reach_goal','back_to_home','done'])
         rospy.wait_for_service('/triggerNavigating')
@@ -184,7 +184,7 @@ class NaviDelivery(smach.State):
         self.state = 0
 
     def execute(self, userdata):
-        rospy.loginfo('Executing state NaviDelivery')
+        rospy.loginfo('Executing state NavigationD')
         if self.state == 0:
             self.state += 1
             return 'prepare_to_go'
@@ -214,14 +214,14 @@ def main():
     sm_top = smach.StateMachine(outcomes=['demo_done'])
     sis_root = smach_ros.IntrospectionServer('server_pmc', sm_top, '/SM_ROOT')
     sm_naviD = smach.StateMachine(outcomes=['delivering_done'])
-    sis_naviD = smach_ros.IntrospectionServer('server_pmc', sm_naviD, '/SM_ROOT/NAVI_D')
-    sm_naviF = smach.StateMachine(outcomes=['finding_done'])
-    sis_naviF = smach_ros.IntrospectionServer('server_pmc', sm_naviF, '/SM_ROOT/NAVI_F')
+    sis_naviD = smach_ros.IntrospectionServer('server_pmc', sm_naviD, '/SM_ROOT/DELIVERING')
+    sm_naviF = smach.StateMachine(outcomes=['collecting_done'])
+    sis_naviF = smach_ros.IntrospectionServer('server_pmc', sm_naviF, '/SM_ROOT/COLLECTING')
     with sm_top:
         smach.StateMachine.add('VoiceCommand', VoiceCommand(),
                                transitions={'others':'VoiceCommand',
-                                            'find_material':'NAVI_F',
-                                            'delivery_product':'NAVI_D',
+                                            'find_material':'COLLECTING',
+                                            'delivery_product':'DELIVERING',
                                             'what_happened':'ImageCaption',
                                             'all_task_clear':'demo_done',
                                             'aborted':'VoiceCommand'})
@@ -234,47 +234,47 @@ def main():
 
 
         # ************************************************
-        # *********** SM_ROOT/NAVI_F *********************
+        # *********** SM_ROOT/COLLECTING *********************
         # ************************************************
         with sm_naviF:
-            smach.StateMachine.add('NaviFind', NaviFind(),
-                                   transitions={'prepare_to_go':'NaviFind',
+            smach.StateMachine.add('NavigationC', NavigationC(),
+                                   transitions={'prepare_to_go':'NavigationC',
                                                 'reach_goal':'GraspingObject',
                                                 'back_to_home':'PlacingBasket',
-                                                'done':'finding_done'})
+                                                'done':'collecting_done'})
             smach.StateMachine.add('GraspingObject', GraspingObject(),
-                                    transitions={'grasping_done':'NaviFind',
+                                    transitions={'grasping_done':'NavigationC',
                                                  'retry':'GraspingObject',
-                                                 'aborted':'NaviFind',
+                                                 'aborted':'NavigationC',
                                                 })
             smach.StateMachine.add('PlacingBasket', PlacingBasket(),
-                                    transitions={'placing_done':'NaviFind',
+                                    transitions={'placing_done':'NavigationC',
                                                  'retry':'PlacingBasket',
-                                                 'aborted':'NaviFind',
+                                                 'aborted':'NavigationC',
                                                 })
-        smach.StateMachine.add('NAVI_F', sm_naviF, transitions={'finding_done':'VoiceCommand'})
+        smach.StateMachine.add('COLLECTING', sm_naviF, transitions={'collecting_done':'VoiceCommand'})
 
 
         # ************************************************
-        # *********** SM_ROOT/NAVI_D *********************
+        # *********** SM_ROOT/DELIVERING *********************
         # ************************************************
         with sm_naviD:
-            smach.StateMachine.add('NaviDelivery', NaviDelivery(),
+            smach.StateMachine.add('NavigationD', NavigationD(),
                                    transitions={'prepare_to_go':'FetchingBox',
                                                 'reach_goal':'StackingBox',
-                                                'back_to_home':'NaviDelivery',
+                                                'back_to_home':'NavigationD',
                                                 'done':'delivering_done'})
             smach.StateMachine.add('FetchingBox', FetchingBox(),
-                                    transitions={'fetching_done':'NaviDelivery',
+                                    transitions={'fetching_done':'NavigationD',
                                                  'retry':'FetchingBox',
-                                                 'aborted':'NaviDelivery',
+                                                 'aborted':'NavigationD',
                                                 })
             smach.StateMachine.add('StackingBox', StackingBox(),
-                                    transitions={'stacking_done':'NaviDelivery',
+                                    transitions={'stacking_done':'NavigationD',
                                                  'retry':'StackingBox',
-                                                 'aborted':'NaviDelivery',
+                                                 'aborted':'NavigationD',
                                                 })
-        smach.StateMachine.add('NAVI_D', sm_naviD, transitions={'delivering_done':'VoiceCommand'})
+        smach.StateMachine.add('DELIVERING', sm_naviD, transitions={'delivering_done':'VoiceCommand'})
 
     # Execute SMACH plan
     sis_root.start()

@@ -1,4 +1,6 @@
 # IvoryCastle
+<img src="https://static.newmobilelife.com/wp-content/uploads/2017/12/pokemon-go-hoenn-slaking_00.jpg" width="400"/>
+
 ## Dependences
 neronbot:  
 leg_detector: https://github.com/Herobrixx/people.git -b ros1  
