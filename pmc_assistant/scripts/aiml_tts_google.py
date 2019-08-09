@@ -41,7 +41,8 @@ def is_chinese(uchar):
 def get_response(data):
 
 	response = data.data
-	rospy.loginfo("Response ::%s",response)
+	rospy.logwarn("I response:: %s",response)
+	#rospy.loginfo("Response ::%s",response)
 	#local tts
 	#if is_chinese(response)==False:
 		#soundhandle.say(response)
