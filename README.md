@@ -13,7 +13,7 @@ IvoryCastle: https://github.com/shannon112/IvoryCastle.git -b pmccontest
 scorpio: https://github.com/willie5588912/scorpio -b pmc_sghero (simulation with scorpio_ethercat removed)  
 neronbot: https://github.com/willie5588912/neuronbot  -b  pmc_sghero (multi-bots with move_back removed)  
 ira_factory: https://github.com/willie5588912/ira_factory  -b  pmc_sghero (scorpio)  
-ros_aiml: https://github.com/jkllbn2563/ros_aiml pmc_sghero  
+image_caption_PMC: https://github.com/jkllbn2563/image_caption_PMC -b pmc_sghero
 leg_detector: https://github.com/Herobrixx/people.git -b ros1  
 
 ## icps demo world
