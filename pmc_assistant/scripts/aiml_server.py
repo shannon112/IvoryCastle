@@ -47,6 +47,7 @@ def callback(data):
 
 	rospy.logwarn("I heard:: %s",data.data)
 	rospy.logwarn("I response:: %s",response)
+	rospy.logwarn(">>>>>>>>>> press enter to start <<<<<<<<<<<<")
 	response_publisher.publish(response)
 
 def listener():

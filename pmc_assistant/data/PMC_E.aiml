@@ -17,7 +17,7 @@
 
 
 
-
+   
    <category>
       <pattern>_ ASSEMBLE * CAMERA *</pattern>
       <template>
@@ -25,14 +25,14 @@
          <think><set name = "item">camera</set></think>
          <think><set name = "state">IntentFind</set></think>
       <condition name = "state" value = "IntentFind">
-
+            
             <random>
             <li> OK, I will deliver them to the shipping area,and the current state is IntentDelivery </li>
             <li> Sure, let's do this,and the current state is IntentDelivery </li>
             <li> No preblem, I am going to deliver them,and the current state is IntentDelivery </li>
             </random>
       </condition>
-
+         
       </template>
    </category>
 
@@ -43,17 +43,17 @@
          <think><set name = "item">camera</set></think>
          <think><set name = "state">IntentFind</set></think>
       <condition name = "state" value = "IntentFind">
-
+            
             <random>
             <li> OK, I will deliver them to the shipping area,and the current state is IntentDelivery </li>
             <li> Sure, let's do this,and the current state is IntentDelivery </li>
             <li> No preblem, I am going to deliver them,and the current state is IntentDelivery </li>
             </random>
       </condition>
-
+         
       </template>
    </category>
-
+   
    <category>
       <pattern>_ CAMERA PACK</pattern>
       <template>
@@ -61,17 +61,17 @@
          <think><set name = "item">camera</set></think>
          <think><set name = "state">IntentFind</set></think>
       <condition name = "state" value = "IntentFind">
-
+            
             <random>
             <li> OK, I will deliver them to the shipping area,and the current state is IntentDelivery </li>
             <li> Sure, let's do this,and the current state is IntentDelivery </li>
             <li> No preblem, I am going to deliver them,and the current state is IntentDelivery </li>
             </random>
       </condition>
-
+         
       </template>
    </category>
-
+   
 
 
 <category><pattern>_ TASK ARE YOU *</pattern>
@@ -111,29 +111,29 @@
 
 
       </template>
-   </category>
-
+   </category>  
+   
    <category>
       <pattern>_ ITEM</pattern>
       <template>
          <srai>ITEM</srai>
       </template>
    </category>
-
+   
    <category>
       <pattern>_ ITEM</pattern>
       <template>
          <srai>ITEM</srai>
       </template>
    </category>
-
+   
    <category>
       <pattern>ITEM *</pattern>
       <template>
          <srai>ITEM</srai>
       </template>
    </category>
-
+   
    <category>
       <pattern>_ ITEM *</pattern>
       <template>
@@ -169,33 +169,33 @@
             <li> No preblem, I am going to deliver them,and the current state is IntentDelivery </li>
          </random>
       </condition>
-
+        
 
 
       </template>
-   </category>
-
+   </category>  
+   
    <category>
       <pattern>_ DELIVER</pattern>
       <template>
          <srai>DELIVER</srai>
       </template>
    </category>
-
+   
    <category>
       <pattern>_ DELIVER</pattern>
       <template>
          <srai>DELIVER</srai>
       </template>
    </category>
-
+   
    <category>
       <pattern>DELIVER *</pattern>
       <template>
          <srai>DELIVER</srai>
       </template>
    </category>
-
+   
    <category>
       <pattern>_ DELIVER *</pattern>
       <template>
@@ -203,7 +203,7 @@
       </template>
    </category>
 
-
+   
 
 <category>
       <pattern>RESET CURRENT STATE TO BLANK</pattern>
@@ -216,10 +216,10 @@
 <category>
       <pattern>_ ARE YOU DOING</pattern>
       <template>
-
+      
 
       <condition name = "state" value = "">
-         I am waiting for your command
+         I am waiting for your command 
       </condition>
 
       <condition name = "state" value = "IntentDelivery">
@@ -236,9 +236,9 @@
          </random>
       </condition>
       <condition name = "state" value = "Waiting">
-         I am waiting for your command
+         I am waiting for your command 
       </condition>
-
+      
 
 
       </template>
@@ -247,8 +247,22 @@
 
 
 <category><pattern>_ WHAT HAPPENED</pattern>
-<template>OK</template>
+
+<template>
+   <think><set name = "caption">IntentWhat</set> </think>
+      <condition name = "caption" value = "IntentWhat">
+         OK,and the current state is IntentWhat
+      </condition>
+</template>
 </category>
 
-
+   
 </aiml>
+
+
+
+
+
+
+
+
