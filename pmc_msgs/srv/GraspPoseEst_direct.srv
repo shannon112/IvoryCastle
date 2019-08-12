@@ -1,0 +1,4 @@
+geometry_msgs/Point bbox_corner1
+geometry_msgs/Point bbox_corner2
+---
+geometry_msgs/Pose grasp_pose

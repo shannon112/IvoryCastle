@@ -57,6 +57,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
+  detection_PMC_half.srv
+  GraspPoseEst_direct.srv
+  PickPlace.srv
   PoseSrv.srv
 )
 

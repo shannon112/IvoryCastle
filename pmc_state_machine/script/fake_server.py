@@ -3,6 +3,7 @@
 import rospy
 from std_msgs.msg import String
 from std_srvs.srv import Trigger, TriggerResponse
+from pmc_navigation.srv import navigoal, navigoalResponse
 
 def executeCaption(req):
     '''
@@ -64,6 +65,16 @@ def executeLookforward(req):
         message="Stacking is executed!"
     )
 
+def executeNavigating(req):
+    '''
+    navigating executing
+    '''
+    rospy.sleep(5.)
+    return navigoalResponse(
+        success=True,
+        message="Navigating is executed!"
+    )
+
 def main():
     rospy.init_node('fake_server')
     s1 = rospy.Service('triggerCaption', Trigger, executeCaption)
@@ -72,6 +83,7 @@ def main():
     s4 = rospy.Service('triggerFetching', Trigger, executeFetching)
     s5 = rospy.Service('triggerStacking', Trigger, executeStacking)
     s6 = rospy.Service('triggerLookforward', Trigger, executeLookforward)
+    s6 = rospy.Service('triggerNavigating', navigoal, executeNavigating)
     rospy.spin()
 
 if __name__ == "__main__":
