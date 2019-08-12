@@ -136,14 +136,14 @@
 
     <!--Vocal output related, offline-->
     <!--include file="$(find sound_play)/soundplay_node.launch"/>
-    <node name="aiml_tts_soundplay" pkg="ros_aiml" type="aiml_tts_soundplay.py"/-->
+    <node name="aiml_tts_soundplay" pkg="pmc_assistant" type="aiml_tts_soundplay.py"/-->
 
     <!--Vocal output related, online-->
-    <node name="aiml_tts_google" pkg="ros_aiml" type="aiml_tts_google.py"/>
+    <node name="aiml_tts_google" pkg="pmc_assistant" type="aiml_tts_google.py"/>
 
     <!--Assistant related-->
-    <param name="aiml_path" value="$(find ros_aiml)/data" />
-    <node name="aiml_server" pkg="ros_aiml" type="aiml_server.py" output="screen"/>
+    <param name="aiml_path" value="$(find pmc_assistant)/data" />
+    <node name="aiml_server" pkg="pmc_assistant" type="aiml_server.py" output="screen"/>
 
 
     <!--Gui steering console (Optional)-->

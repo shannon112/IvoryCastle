@@ -1,0 +1,17 @@
+<launch>
+
+	<!--assistant related-->
+  <param name="aiml_path" value="$(find pmc_assistant)/data" />
+  <node name="aiml_server" pkg="pmc_assistant" type="aiml_server.py" output="screen"/>
+
+  <!--vocal output related, offline-->
+	<!--include file="$(find sound_play)/soundplay_node.launch"/>
+	<node name="aiml_tts_soundplay" pkg="pmc_assistant" type="aiml_tts_soundplay.py"/-->
+
+	<!--vocal output related, online-->
+	<node name="aiml_tts_google" pkg="pmc_assistant" type="aiml_tts_google.py"/>
+
+  <!--vocal input related, need isolately run-->
+  <node name="aiml_stt_google" pkg="pmc_assistant" type="aiml_stt_google.py" output="screen"/>
+
+</launch>

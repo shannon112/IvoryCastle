@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="1.0">
+<meta name="author" content="Andelf"/>
+<meta name="language" content="zh"/>
+
+<category>
+<pattern>PLEASE SEND THE PACKAGE TO ME</pattern>
+<template>OK,I WILL DELIVER IT</template>
+
+
+</category>
+
+<category>
+
+
+<pattern>* PICK UP * BOX * </pattern>
+<think>      <set name="item">BOX</set>     </think>
+
+<template>OK! We will do it and send it to the <get name="item"/>.
+	
+
+
+
+
+</template>
+
+
+</category>
+
+
+
+<category>
+<pattern>TAIWAN</pattern>
+<template>url:http://wap.baidu.com/s?word=<star index="1" />CAPTICAL OF TAIWAN</template>
+</category>
+<category>
+<pattern>_百度下_</pattern>
+<template>url:http://wap.baidu.com/s?word=<star index="2" /></template>
+</category>
+
+
+<category>
+<pattern>告白氣球</pattern>
+<template>我唱這麼走心，卻走不進你心裡
+</template>
+</category>
+
+
+
+<category>
+<pattern>我好帥</pattern>
+<template>我知道
+</template>
+</category>
+</aiml>
