@@ -5,6 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
+        - /MMP1
         - /Marker1
         - /Marker2
       Splitter Ratio: 0.706278026
@@ -27,7 +28,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: LaserScan
+    SyncSource: MMP
 Toolbars:
   toolButtonStyle: 2
 Visualization Manager:
@@ -72,10 +73,6 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        map:
-          Value: true
-        odom:
-          Value: false
         scorpio/mmp0/back_hokuyo_link:
           Value: false
         scorpio/mmp0/back_left_wheel:
@@ -124,42 +121,7 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        map:
-          odom:
-            scorpio/mmp0/base_footprint:
-              scorpio/mmp0/base_link:
-                scorpio/mmp0/back_hokuyo_link:
-                  {}
-                scorpio/mmp0/back_left_wheel:
-                  {}
-                scorpio/mmp0/back_right_wheel:
-                  {}
-                scorpio/mmp0/base_camera_link:
-                  scorpio/mmp0/base_camera_color_frame:
-                    scorpio/mmp0/base_camera_color_optical_frame:
-                      {}
-                  scorpio/mmp0/base_camera_depth_frame:
-                    scorpio/mmp0/base_camera_depth_optical_frame:
-                      {}
-                  scorpio/mmp0/base_camera_infra1_frame:
-                    scorpio/mmp0/base_camera_infra1_optical_frame:
-                      {}
-                  scorpio/mmp0/base_camera_infra2_frame:
-                    scorpio/mmp0/base_camera_infra2_optical_frame:
-                      {}
-                  scorpio/mmp0/base_camera_rgb_frame:
-                    scorpio/mmp0/base_camera_rgb_optical_frame:
-                      {}
-                scorpio/mmp0/front_hokuyo_link:
-                  {}
-                scorpio/mmp0/front_left_wheel:
-                  {}
-                scorpio/mmp0/front_right_wheel:
-                  {}
-                scorpio/mmp0/left_wheel:
-                  {}
-                scorpio/mmp0/right_wheel:
-                  {}
+        {}
       Update Interval: 0
       Value: true
     - Alpha: 0.699999988
@@ -220,7 +182,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /scorpio/mmp0/base_camera/rgb/image_raw
+      Image Topic: /scorpio/mmp0/camera/color/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
@@ -335,7 +297,7 @@ Visualization Manager:
       Marker Topic: visualization_marker
       Name: Marker
       Namespaces:
-        LEGS: true
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/Marker
@@ -343,9 +305,7 @@ Visualization Manager:
       Marker Topic: /visualization_marker2
       Name: Marker
       Namespaces:
-        LEGS: true
-        LEGS2: true
-        PEOPLE2: true
+        {}
       Queue Size: 100
       Value: true
   Enabled: true
