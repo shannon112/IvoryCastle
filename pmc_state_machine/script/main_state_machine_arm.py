@@ -282,7 +282,7 @@ class Detection(smach.State):
 class Estimation(smach.State):
     def __init__(self):
         smach.State.__init__(self,
-                             outcomes=['success','aborted'],
+                             outcomes=['success','retry','aborted'],
                              input_keys=['mani_task','BBoxs','execNum'],
                              output_keys=['PoseEst'])
         rospy.wait_for_service('/grasping_pose_estimation')
@@ -297,6 +297,9 @@ class Estimation(smach.State):
             BBox = userdata.BBoxs[12:16]
         else:
             return 'aborted'
+        rospy.loginfo(BBox)
+        if BBox == (0., 0., 0., 0.):
+            return 'retry'
         req = GraspPoseEst_directRequest()
         req.bbox_corner1.x = BBox[0]
         req.bbox_corner1.y = BBox[1]
@@ -462,6 +465,7 @@ def main():
                                    remapping={'BBoxs':'sm_arm_bboxs'})
             smach.StateMachine.add('PoseEstimation', Estimation(),
                                    transitions={'success':'PickAndPlace',
+												'retry':'ObjectsDetection',
                                                 'aborted':'task_aborted'},
                                    remapping={'BBoxs':'sm_arm_bboxs',
                                               'execNum':'sm_arm_exec_count',
