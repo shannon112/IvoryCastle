@@ -13,8 +13,15 @@ IvoryCastle: https://github.com/shannon112/IvoryCastle.git -b pmccontest
 scorpio: https://github.com/willie5588912/scorpio -b pmc_sghero (simulation with scorpio_ethercat removed)  
 neronbot: https://github.com/willie5588912/neuronbot  -b  pmc_sghero (multi-bots with move_back removed)  
 ira_factory: https://github.com/willie5588912/ira_factory  -b  pmc_sghero (scorpio)  
-image_caption_PMC: https://github.com/jkllbn2563/image_caption_PMC -b pmc_sghero
+image_caption_PMC: https://github.com/jkllbn2563/image_caption_PMC -b pmc_sghero  
 leg_detector: https://github.com/Herobrixx/people.git -b ros1  
+
+scorpio pmc_sghero_tmp ```run seperately on arm or base with tf_prefix but no moveit ball```  
+scorpio pmc_sghero_merge ```run togather with tf_prefix but no moveit ball```  
+```sh
+roslaunch scorpio_bringup arm_bringup_real.launch  #with tf prefix
+roslaunch scorpio_bringup arm_partial.launch       #without tf prefix 
+```
 
 ## icps demo world
 ```
