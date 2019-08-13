@@ -1,7 +1,21 @@
 # IvoryCastle
 <img src="https://static.newmobilelife.com/wp-content/uploads/2017/12/pokemon-go-hoenn-slaking_00.jpg" width="400"/>
 
+```
+# Main coding file
+scorpio_arm_ros_control/src/hardware_transmission_common.cpp
+void HwTmIntf::update()
+
+# Testing if work
+roslaunch pmc_application sghero_bringup_real_controlonly.launch 
+rosrun scorpio_bringup simple_moving.py 
+
+# Using moveit gui to recovery
+roslaunch scorpio_bringup arm_partial.launch
+```
+
 ## Dependences
+
 neronbot:  
 leg_detector: https://github.com/Herobrixx/people.git -b ros1  
 neronbot: https://github.com/willie5588912/neuronbot  -b  multi-bots  
