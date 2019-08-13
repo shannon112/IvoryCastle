@@ -67,10 +67,10 @@ def humancallback1(hmsg):
     ctopic = Bool()
     ptopic = Bool()
     for i in range(len(hmsg.people)):
-	   if(ppdistance(hmsg.people[i].pos.x,hmsg.people[i].pos.y,currX,currY)<1.6):
+	   if(ppdistance(hmsg.people[i].pos.x,hmsg.people[i].pos.y,currX,currY)<1.4):
             hcaution1 =True
             print("warmimg")
-            if(ppdistance(hmsg.people[i].pos.x,hmsg.people[i].pos.y,currX,currY)<1.2):
+            if(ppdistance(hmsg.people[i].pos.x,hmsg.people[i].pos.y,currX,currY)<1.1):
                 hpause1 = True
                 print("stop")
                 break
