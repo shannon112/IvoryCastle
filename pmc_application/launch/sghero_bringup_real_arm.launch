@@ -1,22 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <launch>
-  <!--include file="$(find scorpio_moveit_config)/launch/scorpio_moveit_execution.launch"/-->
-  <arg name="allow_trajectory_execution" value="true"/>
-  <arg name="fake_execution" default="false"/>
-  <arg name="config" default="true"/>
-  <arg name="info" value="true"/>
-  <!-- Launch move_group -->
-  <include file="$(find scorpio_moveit_config)/launch/move_group.launch">
-    <arg name="allow_trajectory_execution" value="$(arg allow_trajectory_execution)"/>
-    <arg name="fake_execution" value="$(arg fake_execution)"/>
-    <arg name="info" value="$(arg info)"/>
-  </include>
+    <arg name="ns" default="scorpio/mmp0"/>
 
-  <!-- For real execution -->
-  <include file="$(find scorpio_moveit_config)/launch/trajectory_execution.launch.xml"/>
+    <!--Load/Spawn robot in real env-->
+    <!--Spawn Controller-->
+    <!--rosparam ns="$(arg ns)" command="load" file="$(find ira_factory_robot_controller)/config/scorpio/ros_control/real/controllers.yaml"/>
+    <node ns="$(arg ns)" name="diff_controller_spawner" pkg="controller_manager" type="spawner"
+      args="joint_state_controller diff_drive_controller"/-->
+    <group ns="$(arg ns)">
+      <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher">
+        <param name="tf_prefix" value="$(arg ns)"/>
+      </node>
 
-  <!-- Launch moveit rviz -->
-  <include file="$(find scorpio_moveit_config)/launch/moveit_rviz.launch">
-    <arg name="config" value="$(arg config)"/>
-  </include>
+      <param name="robot_description" command="rosrun xacro xacro.py '$(find scorpio_description)/robots/scorpio.urdf.xacro'" />
+
+      <!--arm control-->
+      <rosparam command="load" file="$(find ira_factory_robot_controller)/config/scorpio/ros_control/real/controllers.yaml"/>
+      <!--Spawn Controller-->
+      <node name="scorpio_controller_spawner" pkg="controller_manager" type="spawner"
+        args="joint_state_controller 
+              arm_controller
+              diff_drive_controller"/>
+
+      <!--Main control node-->
+      <node name="scorpio_arm_ros_control" pkg="scorpio_arm_ros_control" type="scorpio_arm_ros_control"
+        output="screen" respawn="true" respawn_delay="3"/>
+      <node name="scorpio_base_ros_control" pkg="scorpio_base_ros_control" type="scorpio_base_ros_control"
+        output="screen" respawn="false" respawn_delay="3"/>
+
+      <!--moveit related-->
+      <arg name="allow_trajectory_execution" value="true"/>
+      <arg name="fake_execution" default="false"/>
+      <arg name="config" default="true"/>
+      <arg name="info" value="true"/>
+      <!-- Launch move_group -->
+      <!--include file="$(find scorpio_moveit_config)/launch/move_group.launch">
+        <arg name="allow_trajectory_execution" value="$(arg allow_trajectory_execution)"/>
+        <arg name="fake_execution" value="$(arg fake_execution)"/>
+        <arg name="info" value="$(arg info)"/>
+      </include-->
+      <!-- For real execution -->
+      <!--include file="$(find scorpio_moveit_config)/launch/trajectory_execution.launch.xml"/-->
+
+    </group>
+
+    <!--Main control node-->
+    <!--node ns="$(arg ns)" name="scorpio_base_ros_control" pkg="scorpio_base_ros_control" type="scorpio_base_ros_control"
+      output="screen" respawn="false" respawn_delay="3"/-->
+
+    <!--Gui steering console (Optional)-->
+    <node ns="$(arg ns)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+      <param name="default_topic" value="/$(arg ns)/diff_drive_controller/cmd_vel"/>
+      <param name="default_vx_max" value="1.0"/>
+      <param name="default_vx_min" value="-1.0"/>
+    </node>
+
+    <!-- Gui Rviz   -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/sghero_pmc_demo.rviz"/>
 
 </launch>
