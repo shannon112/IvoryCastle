@@ -2,6 +2,7 @@
 <launch>
     <arg name="ns" default="scorpio/mmp0"/>
     <arg name="carto" default="false"/>
+    <arg name="slam" default="false"/>
 
     <!-- Spawn gazebo world-->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -25,86 +26,119 @@
     <node ns="$(arg ns)" name="controller_spawner" pkg="controller_manager" type="spawner"
           args="joint_state_controller diff_drive_controller"/>
 
-    <!-- launch gripper -->
-    <node ns="$(arg ns)" name="toyo_chy80_wrapper" pkg="toyo_chy80_wrapper" type="toyo_chy80_wrapper.py"/>
+    <!--SLAM related part-->
+    <group if="$(arg slam)">
+      <group unless="$(arg carto)">
+	      <param name="$(arg ns)/diff_drive_controller/base_frame_id" value="base_footprint"/>
+        <!--Correcting the odom -->
+        <node ns="$(arg ns)" name="robot_pose_ekf" pkg="robot_pose_ekf" type="robot_pose_ekf">
+          <param name="output_frame" value="$(arg ns)/odom" />
+          <param name="base_footprint_frame" value="$(arg ns)/base_footprint" />
+          <param name="odom_used" value="true" />
+          <param name="imu_used" value="false" />
+          <param name="vo_used" value="false" />
+          <remap from="odom"     to="diff_drive_controller/odom"/>
+        </node>
+        <!-- Launch gmapping slam -->
+        <node ns="$(arg ns)" name="slam_gmapping" pkg="gmapping" type="slam_gmapping">
+          <param name="base_frame" value="$(arg ns)/base_footprint"/>
+          <param name="odom_frame" value="$(arg ns)/odom"/>
+          <param name="map_frame" value="map"/>
+          <param name="delta" value="0.02"/>
+          <remap from="scan"  to="back_scan"/>
+          <remap from="map"   to="/map"/>
+        </node>
+      </group>
 
-    <!-- correcting the odom -->
-    <node ns="$(arg ns)" name="robot_pose_ekf" pkg="robot_pose_ekf" type="robot_pose_ekf">
-      <param name="output_frame" value="$(arg ns)/odom" />
-      <param name="base_footprint_frame" value="$(arg ns)/base_footprint" />
-      <param name="odom_used" value="true" />
-      <param name="imu_used" value="false" />
-      <param name="vo_used" value="false" />
-      <remap from="odom"     to="diff_drive_controller/odom"/>
-    </node>
-
-    <!-- launch gmapping slam -->
-    <!--node ns="$(arg ns)" name="slam_gmapping" pkg="gmapping" type="slam_gmapping">
-      <param name="base_frame" value="$(arg ns)/base_footprint"/>
-      <param name="odom_frame" value="$(arg ns)/odom"/>
-      <param name="map_frame" value="map"/>
-      <param name="delta" value="0.02"/>
-      <remap from="scan"                      to="front_scan"/>
-      <remap from="map"			                  to="/map"/>
-    </node-->
-
-    <group unless="$(arg carto)">
-      <!-- Load pre-mapped map-->
-      <node name="map_server" pkg="map_server" type="map_server" args="$(find pmc_gazebo)/map/simulation.yaml" />
-
-      <!-- launch amcl localization -->
-      <node ns="$(arg ns)" pkg="amcl" type="amcl" name="amcl">
-        <param name="use_map_topic"  value="true"/>
-        <param name="odom_model_type"  value="diff"/>
-        <param name="odom_frame_id"  value="$(arg ns)/odom"/>
-        <param name="base_frame_id"  value="$(arg ns)/base_footprint"/>
-        <param name="initial_pose_x" value="0.0"/>
-        <param name="initial_pose_y" value="0.0"/>
-        <param name="initial_pose_a" value="0.0"/>
-        <param name="initial_cov_xx"  value="0.1"/>
-        <param name="initial_cov_yy"  value="0.1"/>
-        <param name="initial_cov_aa"  value="0.0872"/>
-        <param name="min_particles"  value="100"/>
-        <param name="max_particles"  value="500"/>
-        <remap from="map"            to="/map"/>
-        <remap from="scan"           to="front_scan"/>
-      </node>
-    </group>
-
-    <!-- launch Cartographer slam -->
-    <!--arg name="lua_filename" default="neuronbot_allcarto.lua"/-->
-    <!--arg name="map_filename" default="$(find pmc_gazebo)/map/fusion.bag.pbstream"/-->
-    <!--node ns="$(arg ns)" name="cartographer_node" pkg="cartographer_ros"
-        type="cartographer_node" args="
-            -configuration_directory $(find pmc_application)/config
-            -configuration_basename $(arg lua_filename)"
-        output="screen">
-      <remap from="imu" to="imu" />
-      <remap from="scan" to="front_scan" />
-    </node-->
-
-    <group if="$(arg carto)">
-      <!--launch cartographer localization-->
-      <arg name="lua_filename_local" default="neuronbot_allcarto_locali.lua"/>
-      <arg name="map_filename" default="$(find pmc_gazebo)/map/fusion.bag.pbstream"/>
-      <node ns="$(arg ns)" name="cartographer" pkg="cartographer_ros"
-          type="cartographer_node" args="
-              -configuration_directory $(find pmc_application)/config
-              -configuration_basename $(arg lua_filename_local)
-              -load_state_filename $(arg map_filename)
-              -start_trajectory_with_default_topics=false"
-          output="screen">
+      <group if="$(arg carto)">
+	      <param name="$(arg ns)/diff_drive_controller/base_frame_id" value="$(arg ns)/base_footprint"/>
+	      <!-- Launch Cartographer slam -->
+        <arg name="lua_filename" default="sghero_allcarto.lua"/>
+        <node ns="$(arg ns)" name="cartographer_node" pkg="cartographer_ros"
+            type="cartographer_node" args="
+                -configuration_directory $(find pmc_application)/config
+                -configuration_basename $(arg lua_filename)"
+            output="screen">
           <remap from="imu" to="imu" />
           <remap from="scan" to="front_scan" />
-      </node>
-
-      <!--launch cartographer grid map transformer-->
-      <node ns="$(arg ns)" name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
-          type="cartographer_occupancy_grid_node" args="-resolution 0.05">
-        <remap from="map" to="/map" />
-      </node>
+          <remap from="odom"     to="diff_drive_controller/odom"/>
+        </node>
+        <!--Launch cartographer grid map transformer-->
+        <node ns="$(arg ns)" name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
+            type="cartographer_occupancy_grid_node" args="-resolution 0.05">
+          <remap from="map" to="/map" />
+        </node>
+      </group>
     </group>
 
+    <!--Localization related part-->
+    <group unless="$(arg slam)">
+      <group unless="$(arg carto)">
+	      <param name="$(arg ns)/diff_drive_controller/base_frame_id" value="base_footprint"/>
+        <!--Correcting the odom -->
+        <node ns="$(arg ns)" name="robot_pose_ekf" pkg="robot_pose_ekf" type="robot_pose_ekf">
+          <param name="output_frame" value="$(arg ns)/odom" />
+          <param name="base_footprint_frame" value="$(arg ns)/base_footprint" />
+          <param name="odom_used" value="true" />
+          <param name="imu_used" value="false" />
+          <param name="vo_used" value="false" />
+          <remap from="odom"     to="diff_drive_controller/odom"/>
+        </node>
+        <!-- Load pre-mapped map-->
+        <node name="map_server" pkg="map_server" type="map_server" args="$(find pmc_gazebo)/map/simulation.yaml" />
+        <!-- Launch amcl localization -->
+        <node ns="$(arg ns)" pkg="amcl" type="amcl" name="amcl">
+          <param name="use_map_topic"  value="true"/>
+          <param name="odom_model_type"  value="diff"/>
+          <param name="odom_frame_id"  value="$(arg ns)/odom"/>
+          <param name="base_frame_id"  value="$(arg ns)/base_footprint"/>
+          <param name="initial_pose_x" value="0.0"/>
+          <param name="initial_pose_y" value="0.0"/>
+          <param name="initial_pose_a" value="0.0"/>
+          <param name="initial_cov_xx"  value="0.1"/>
+          <param name="initial_cov_yy"  value="0.1"/>
+          <param name="initial_cov_aa"  value="0.0872"/>
+          <param name="min_particles"  value="100"/>
+          <param name="max_particles"  value="500"/>
+          <remap from="map"            to="/map"/>
+          <remap from="scan"           to="back_scan"/>
+        </node>
+      </group>
+
+      <group if="$(arg carto)">
+        <!--Launch cartographer localization-->
+	      <param name="$(arg ns)/diff_drive_controller/base_frame_id" value="$(arg ns)/base_footprint"/>
+        <arg name="lua_filename_local" default="sghero_allcarto_locali.lua"/>
+        <arg name="map_filename" default="$(find pmc_gazebo)/map/fusion.bag.pbstream"/>
+        <node ns="$(arg ns)" name="cartographer" pkg="cartographer_ros"
+            type="cartographer_node" args="
+                -configuration_directory $(find pmc_application)/config
+                -configuration_basename $(arg lua_filename_local)
+                -load_state_filename $(arg map_filename)
+                -start_trajectory_with_default_topics=false"
+            output="screen">
+            <remap from="imu" to="imu" />
+            <remap from="scan" to="front_scan" />
+            <remap from="odom"     to="diff_drive_controller/odom"/>
+        </node>
+        <!--Launch cartographer grid map transformer-->
+        <node ns="$(arg ns)" name="cartographer_occupancy_grid_node" pkg="cartographer_ros"
+            type="cartographer_occupancy_grid_node" args="-resolution 0.05">
+          <remap from="map" to="/map" />
+        </node>
+      </group>
+    </group>
+
+    <!--Vocal output related, offline-->
+    <!--include file="$(find sound_play)/soundplay_node.launch"/>
+    <node name="aiml_tts_soundplay" pkg="pmc_assistant" type="aiml_tts_soundplay.py"/-->
+
+    <!--Vocal output related, online-->
+    <node name="aiml_tts_google" pkg="pmc_assistant" type="aiml_tts_google.py"/>
+
+    <!--Assistant related-->
+    <param name="aiml_path" value="$(find pmc_assistant)/data" />
+    <node name="aiml_server" pkg="pmc_assistant" type="aiml_server.py" output="screen"/>
 
     <!--Gui steering console (Optional)-->
     <node ns="$(arg ns)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
