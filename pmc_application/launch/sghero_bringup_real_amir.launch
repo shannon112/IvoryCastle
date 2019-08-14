@@ -4,52 +4,32 @@
     <arg name="carto" default="false"/>
     <arg name="slam" default="false"/>
 
-    <!--Load/Spawn robot in real env-->
-    <!--Spawn Controller-->
-    <!--rosparam ns="$(arg ns)" command="load" file="$(find ira_factory_robot_controller)/config/scorpio/ros_control/real/controllers.yaml"/>
-    <node ns="$(arg ns)" name="diff_controller_spawner" pkg="controller_manager" type="spawner"
-      args="joint_state_controller diff_drive_controller"/-->
     <group ns="$(arg ns)">
+      <!--Spawn Robot-->
+      <param name="robot_description" command="rosrun xacro xacro.py '$(find scorpio_description)/robots/scorpio.urdf.xacro'" />
       <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher">
         <param name="tf_prefix" value="$(arg ns)"/>
       </node>
 
-      <param name="robot_description" command="rosrun xacro xacro.py '$(find scorpio_description)/robots/scorpio.urdf.xacro'" />
-
-      <!--arm control-->
-      <rosparam command="load" file="$(find ira_factory_robot_controller)/config/scorpio/ros_control/real/controllers.yaml"/>
       <!--Spawn Controller-->
-      <node name="scorpio_arm_controller_spawner" pkg="controller_manager" type="spawner"
-        args="joint_state_controller arm_controller diff_drive_controller"/>
-      <!--Main control node-->
-      <node name="scorpio_arm_ros_control" pkg="scorpio_arm_ros_control" type="scorpio_arm_ros_control"
+      <rosparam command="load" file="$(find ira_factory_robot_controller)/config/scorpio/ros_control/real/controllers.yaml"/>
+      <node name="scorpio_controller_spawner" pkg="controller_manager" type="spawner"
+        args="joint_state_controller
+              arm_controller
+              diff_drive_controller"/>
+
+      <!--Main control node 8 axis-->
+      <node name="scorpio_all_ros_control" pkg="scorpio_arm_ros_control" type="scorpio_arm_ros_control"
         output="screen" respawn="true" respawn_delay="3"/>
 
       <!--moveit related-->
-      <arg name="allow_trajectory_execution" value="true"/>
-      <arg name="fake_execution" default="false"/>
-      <arg name="config" default="true"/>
-      <arg name="info" value="true"/>
-      <!-- Launch move_group -->
       <include file="$(find scorpio_moveit_config)/launch/move_group.launch">
-        <arg name="allow_trajectory_execution" value="$(arg allow_trajectory_execution)"/>
-        <arg name="fake_execution" value="$(arg fake_execution)"/>
-        <arg name="info" value="$(arg info)"/>
+        <arg name="allow_trajectory_execution" value="true"/>
+        <arg name="fake_execution" value="false"/>
+        <arg name="info" value="true"/>
       </include>
-      <!-- For real execution -->
       <include file="$(find scorpio_moveit_config)/launch/trajectory_execution.launch.xml"/>
-
     </group>
-
-    <!--Main control node-->
-    <node ns="$(arg ns)" name="scorpio_base_ros_control" pkg="scorpio_base_ros_control" type="scorpio_base_ros_control"
-      output="screen" respawn="false" respawn_delay="3"/>
-
-    <!--Publish robot state-->
-    <!--param name="$(arg ns)/robot_description" command="python $(find xacro)/xacro.py '$(find scorpio_description)/robots/scorpio.urdf.xacro'" />
-    <node ns="$(arg ns)" name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
-      <param name="tf_prefix" value="$(arg ns)" />
-    </node-->
 
     <!--Laser ros driver-->
     <include ns="$(arg ns)" file="$(find scorpio_bringup)/launch/real/hokuyo.launch">
@@ -172,9 +152,6 @@
     <!--Assistant related-->
     <param name="aiml_path" value="$(find pmc_assistant)/data" />
     <node name="aiml_server" pkg="pmc_assistant" type="aiml_server.py" output="screen"/>
-
-    <!--Moveit related-->
-    <!--include ns="$(arg ns)" file="$(find scorpio_moveit_config)/launch/scorpio_moveit_execution.launch"/-->
 
     <!--Gui steering console (Optional)-->
     <node ns="$(arg ns)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">

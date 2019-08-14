@@ -4,20 +4,16 @@
     <arg name="carto" default="true"/>
     <arg name="slam" default="false"/>
 
-    <!--Load/Spawn robot in real env-->
     <!--Spawn Controller-->
     <rosparam ns="$(arg ns)" command="load" file="$(find ira_factory_robot_controller)/config/scorpio/ros_control/real/controllers.yaml"/>
     <node ns="$(arg ns)" name="diff_controller_spawner" pkg="controller_manager" type="spawner"
       args="joint_state_controller diff_drive_controller"/>
 
-    <!--Main control node-->
+    <!--Main base control node-->
     <node ns="$(arg ns)" name="scorpio_base_ros_control" pkg="scorpio_base_ros_control" type="scorpio_base_ros_control"
       output="screen" respawn="false" respawn_delay="3"/>
 
     <!--Publish robot state-->
-    <arg name="x" default="0.0"/>
-    <arg name="y" default="0.0"/>
-    <arg name="z" default="0.0"/>
     <param name="$(arg ns)/robot_description" command="python $(find xacro)/xacro.py '$(find scorpio_description)/robots/scorpio.urdf.xacro' ns:=$(arg ns)" />
     <node ns="$(arg ns)" name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
       <param name="tf_prefix" value="$(arg ns)" />
@@ -33,9 +29,10 @@
       <arg name="tf_prefix" value="$(arg ns)/base_camera"/>
     </include>
 
+    <!--SLAM related part-->
     <group if="$(arg slam)">
       <group unless="$(arg carto)">
-	<param name="$(arg ns)/diff_drive_controller/base_frame_id" value="base_footprint"/>
+	      <param name="$(arg ns)/diff_drive_controller/base_frame_id" value="base_footprint"/>
         <!--Correcting the odom -->
         <node ns="$(arg ns)" name="robot_pose_ekf" pkg="robot_pose_ekf" type="robot_pose_ekf">
           <param name="output_frame" value="$(arg ns)/odom" />
@@ -57,8 +54,8 @@
       </group>
 
       <group if="$(arg carto)">
-	<param name="$(arg ns)/diff_drive_controller/base_frame_id" value="$(arg ns)/base_footprint"/>
-	<!-- Launch Cartographer slam -->
+	      <param name="$(arg ns)/diff_drive_controller/base_frame_id" value="$(arg ns)/base_footprint"/>
+	      <!-- Launch Cartographer slam -->
         <arg name="lua_filename" default="sghero_allcarto.lua"/>
         <node ns="$(arg ns)" name="cartographer_node" pkg="cartographer_ros"
             type="cartographer_node" args="
@@ -77,9 +74,10 @@
       </group>
     </group>
 
+    <!--Localization related part-->
     <group unless="$(arg slam)">
       <group unless="$(arg carto)">
-	<param name="$(arg ns)/diff_drive_controller/base_frame_id" value="base_footprint"/>
+	      <param name="$(arg ns)/diff_drive_controller/base_frame_id" value="base_footprint"/>
         <!--Correcting the odom -->
         <node ns="$(arg ns)" name="robot_pose_ekf" pkg="robot_pose_ekf" type="robot_pose_ekf">
           <param name="output_frame" value="$(arg ns)/odom" />
@@ -112,7 +110,7 @@
 
       <group if="$(arg carto)">
         <!--Launch cartographer localization-->
-	<param name="$(arg ns)/diff_drive_controller/base_frame_id" value="$(arg ns)/base_footprint"/>
+	      <param name="$(arg ns)/diff_drive_controller/base_frame_id" value="$(arg ns)/base_footprint"/>
         <arg name="lua_filename_local" default="sghero_allcarto_locali.lua"/>
         <arg name="map_filename" default="$(find pmc_gazebo)/map/map.bag.pbstream"/>
         <node ns="$(arg ns)" name="cartographer" pkg="cartographer_ros"
