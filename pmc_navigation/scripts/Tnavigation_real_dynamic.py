@@ -75,13 +75,13 @@ def movea(goalx,goaly,goaltheta):
     ts.linear.x = transVel
     r = rospy.Rate(10)
     if(abs(currX-goalx)>0.05 and hpause != True):
-        fineRotation(3.14,"map")
-    ts.linear.x = -transVel
+        fineRotation(0,"map")
+    ts.linear.x = transVel
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         if(abs(currX -goalx) < 0.12):
-            ts.linear.x = -abs(currX -goalx)*k-0.02
+            ts.linear.x = abs(currX -goalx)*k+0.02
         #print(hpause)
         #print("a:moveing")
         twistPub.publish(ts)
@@ -90,7 +90,7 @@ def movea(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = -transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
-        absRotation(-1.69,"map")
+        absRotation(-1.45,"map")
         fineRotation(-1.57,"map")
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
@@ -137,15 +137,15 @@ def moveb(goalx,goaly,goaltheta):
         r.sleep()
     ts.linear.x = 0.0
     twistPub.publish(ts)
-    ts.linear.x = transVel
+    ts.linear.x = -transVel
     if(abs(currX-goalx)>0.05 and hpause != True):
-        absRotation(-3.02,"map")
-        fineRotation(-3.14,"map")
+        absRotation(-0.12,"map")
+        fineRotation(0,"map")
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         if(abs(currX -goalx) < 0.12):
-            ts.linear.x = abs(currX -goalx)*k+0.02
+            ts.linear.x = -abs(currX -goalx)*k-0.02
         #print(hpause)
         #print("b:moveing")
         twistPub.publish(ts)
@@ -174,27 +174,27 @@ def moved(goalx,goaly,goaltheta):
     r = rospy.Rate(10)
     #if(abs(currY-goaly)>0.05 and hpause != True):
     #   absRotation(1.57,"map")
-    ts.linear.x = transVel
+    ts.linear.x = -transVel
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         if(abs(currY -goaly) < 0.20):
-            ts.linear.x = abs(currY -goaly)*k*0.7+0.02
+            ts.linear.x = -abs(currY -goaly)*k*0.7-0.02
         #print(hpause)
         #print("b:moveing")
         twistPub.publish(ts)
         r.sleep()
     ts.linear.x = 0.0
     twistPub.publish(ts)
-    ts.linear.x = transVel
+    ts.linear.x = -transVel
     if(abs(currX-goalx)>0.05 and hpause != True):
-        absRotation(3.02,"map")
-        fineRotation(3.14,"map")
+        absRotation(-0.12,"map")
+        fineRotation(0,"map")
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         if(abs(currX -goalx) < 0.12):
-            ts.linear.x = abs(currX -goalx)*k+0.02 
+            ts.linear.x = -abs(currX -goalx)*k-0.02 
         #print(hpause)
         #print("b:moveing")
         twistPub.publish(ts)
@@ -222,27 +222,27 @@ def movec(goalx,goaly,goaltheta):
     ts.linear.x = -transVel
     r = rospy.Rate(10)
     if(abs(currX-goalx)>0.05 and hpause != True):
-        fineRotation(3.14,"map")
-    ts.linear.x = -transVel
+        fineRotation(0,"map")
+    ts.linear.x = transVel
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         if(abs(currX -goalx) < 0.12):
-            ts.linear.x = -abs(currX -goalx)*k-0.02
+            ts.linear.x = abs(currX -goalx)*k+0.02
         #print("c:moveing")
         twistPub.publish(ts)
         r.sleep()
     ts.linear.x = 0.0
     twistPub.publish(ts)
-    ts.linear.x = -transVel
+    ts.linear.x = transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
-        absRotation(1.69,"map")
-        fineRotation(1.57,"map")
+        absRotation(-1.45,"map")
+        fineRotation(-1.57,"map")
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         if(abs(currY -goaly) < 0.20):
-            ts.linear.x = -abs(currY -goaly)*k*0.7-0.02
+            ts.linear.x = abs(currY -goaly)*k*0.7+0.02
         #print("c:moveing")
         twistPub.publish(ts)
         r.sleep()
@@ -327,11 +327,11 @@ def callback(lmsg):
 def naviflow(req):
     state=req.goal_status
     if(state==1):
-        movea(0.5,0.75,0)#-0.6 -0.9
+        movea(0.6,0.75,0)#-0.6 -0.9
         #movea(-0.6,-0.9,0)#-0.6 -0.9
         goal = "A"
     elif(state==3):
-        movec(0.5,-0.75,0) #-0
+        movec(0.65,-0.75,0) #-0
         #movec(-0.6,0.9,0) #-0
         goal = "B"
     elif(state==2):
