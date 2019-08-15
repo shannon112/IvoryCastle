@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
     <arg name="ns" default="scorpio/mmp0"/>
-    <arg name="carto" default="false"/>
+    <arg name="carto" default="true"/>
     <arg name="slam" default="false"/>
 
     <group ns="$(arg ns)">
@@ -39,6 +39,7 @@
     <!--Camera ros driver-->
     <include ns="$(arg ns)" file="$(find realsense2_camera)/launch/rs_camera.launch">
       <arg name="tf_prefix" value="$(arg ns)/base_camera"/>
+      <arg name="filters"   value="pointcloud"/>
     </include>
 
     <group if="$(arg slam)">
@@ -162,5 +163,8 @@
 
     <!-- Gui Rviz   -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/sghero_pmc_demo.rviz"/>
+
+    <!-- Gui arm -->
+    <node ns="$(arg ns)" name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"/>
 
 </launch>

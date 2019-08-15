@@ -6,12 +6,12 @@
   <node name="aiml_stt_google" pkg="pmc_assistant" type="aiml_stt_google.py" output="screen"/>
 
   <!--image caption related-->
-  <param name="model_path" value="$(find caption_pkg)/src/log_st/model-best.pth" />
+  <!--param name="model_path" value="$(find caption_pkg)/src/log_st/model-best.pth" />
   <param name="infos_path" value="$(find caption_pkg)/src/log_st/infos_st-best.pkl" />
   <param name="imagenet_weights_path" value="$(find caption_pkg)/src/data/imagenet_weights/resnet101.pth"/>
   <param name="image_caption_image_topic" value="$(arg ns)/base_camera/rgb/image_raw"/>
   <node name="caption_pmc_server" pkg="caption_pkg" type="caption_pmc_server.py"/>
-  <node name="caption_pmc_client" pkg="caption_pkg" type="caption_pmc_client.py" output="screen"/>
+  <node name="caption_pmc_client" pkg="caption_pkg" type="caption_pmc_client.py" output="screen"/-->
 
   <!--navigation related-->
   <node name="tfServer" pkg="ira_factory_state_machine" type="tfServer.py"/>
