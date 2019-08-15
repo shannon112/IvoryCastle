@@ -92,7 +92,7 @@ def movea(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = -transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
-        if(abs(currYaw+1.45)>0.3):
+        if(currYaw>-1.44):
             absRotation(-1.45,"map")
         fineRotation(-1.57,"map")
     while(abs(currY-goaly)>0.05 and hpause != True):
@@ -144,7 +144,7 @@ def moveb(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = -transVel
     if(abs(currX-goalx)>0.05 and hpause != True):
-        if(abs(currYaw+0.12)>0.3):
+        if(currYaw<-0.12):
              absRotation(-0.12,"map")
         fineRotation(0,"map")
     while(abs(currX-goalx)>0.05 and hpause != True):
@@ -196,7 +196,7 @@ def moved(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = -transVel
     if(abs(currX-goalx)>0.05 and hpause != True):
-        if(abs(currYaw+0.12)>0.3):
+        if(currYaw<-0.12):
             absRotation(-0.12,"map")
         fineRotation(0,"map")
     while(abs(currX-goalx)>0.05 and hpause != True):
@@ -245,7 +245,7 @@ def movec(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
-        if(abs(currYaw+1.45)>0.3):
+        if(currYaw>-1.45):
             absRotation(-1.45,"map")
         fineRotation(-1.57,"map")
     while(abs(currY-goaly)>0.05 and hpause != True):
