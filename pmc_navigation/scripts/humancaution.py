@@ -33,18 +33,23 @@ hcaution2 =False
 currX = 10
 currY = 10
 currYaw=None
+count = 0
 def problempub():
-    global hpause1,hpause2, hcaution1,hcaution2 ,CPub ,PPub
+    global hpause1,hpause2, hcaution1,hcaution2 ,CPub ,PPub, count
     ctopic = Bool()
     ptopic = Bool()
+    ptopic.data = True
     if(hcaution1==True or hcaution2 ==True):
         ctopic.data = True
     else:
         ctopic.data = False
     if(hpause1==True or hpause2 ==True):
         ptopic.data = True
-    else:
+        count = 0
+    elif(count==5):
         ptopic.data = False
+    else:
+    	count+=1
     CPub.publish(ctopic)
     PPub.publish(ptopic)
 
