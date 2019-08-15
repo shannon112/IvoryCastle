@@ -5,6 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
+        - /TF1
       Splitter Ratio: 0.706278026
     Tree Height: 446
   - Class: rviz/Selection
@@ -25,7 +26,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: MMP
+    SyncSource: ""
 Toolbars:
   toolButtonStyle: 2
 Visualization Manager:
@@ -70,48 +71,22 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        map:
-          Value: true
-        odom:
-          Value: true
         scorpio/mmp0/arm_base_link:
-          Value: true
-        scorpio/mmp0/axis1_link:
-          Value: true
-        scorpio/mmp0/axis2_link:
-          Value: true
-        scorpio/mmp0/axis3_link:
-          Value: true
-        scorpio/mmp0/axis4_link:
-          Value: true
-        scorpio/mmp0/axis5_link:
-          Value: true
+          Value: false
         scorpio/mmp0/axis6_link:
-          Value: true
+          Value: false
         scorpio/mmp0/back_hokuyo_link:
           Value: false
         scorpio/mmp0/back_left_wheel:
           Value: false
         scorpio/mmp0/back_right_wheel:
           Value: false
-        scorpio/mmp0/base_camera_color_frame:
-          Value: false
-        scorpio/mmp0/base_camera_color_optical_frame:
-          Value: false
         scorpio/mmp0/base_camera_depth_frame:
           Value: false
         scorpio/mmp0/base_camera_depth_optical_frame:
           Value: false
-        scorpio/mmp0/base_camera_infra1_frame:
-          Value: false
-        scorpio/mmp0/base_camera_infra1_optical_frame:
-          Value: false
-        scorpio/mmp0/base_camera_infra2_frame:
-          Value: false
-        scorpio/mmp0/base_camera_infra2_optical_frame:
-          Value: false
         scorpio/mmp0/base_camera_link:
-          Value: true
+          Value: false
         scorpio/mmp0/base_camera_rgb_frame:
           Value: false
         scorpio/mmp0/base_camera_rgb_optical_frame:
@@ -121,7 +96,7 @@ Visualization Manager:
         scorpio/mmp0/base_link:
           Value: false
         scorpio/mmp0/eef_link:
-          Value: true
+          Value: false
         scorpio/mmp0/front_hokuyo_link:
           Value: false
         scorpio/mmp0/front_left_wheel:
@@ -130,6 +105,8 @@ Visualization Manager:
           Value: false
         scorpio/mmp0/left_wheel:
           Value: false
+        scorpio/mmp0/odom:
+          Value: true
         scorpio/mmp0/right_wheel:
           Value: false
       Marker Scale: 1
@@ -138,51 +115,27 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        map:
-          odom:
-            scorpio/mmp0/base_footprint:
-              scorpio/mmp0/base_link:
-                scorpio/mmp0/arm_base_link:
-                  scorpio/mmp0/axis1_link:
-                    scorpio/mmp0/axis2_link:
-                      scorpio/mmp0/axis3_link:
-                        scorpio/mmp0/axis4_link:
-                          scorpio/mmp0/axis5_link:
-                            scorpio/mmp0/axis6_link:
-                              scorpio/mmp0/base_camera_link:
-                                scorpio/mmp0/base_camera_color_frame:
-                                  scorpio/mmp0/base_camera_color_optical_frame:
-                                    {}
-                                scorpio/mmp0/base_camera_depth_frame:
-                                  scorpio/mmp0/base_camera_depth_optical_frame:
-                                    {}
-                                scorpio/mmp0/base_camera_infra1_frame:
-                                  scorpio/mmp0/base_camera_infra1_optical_frame:
-                                    {}
-                                scorpio/mmp0/base_camera_infra2_frame:
-                                  scorpio/mmp0/base_camera_infra2_optical_frame:
-                                    {}
-                                scorpio/mmp0/base_camera_rgb_frame:
-                                  scorpio/mmp0/base_camera_rgb_optical_frame:
-                                    {}
-                              scorpio/mmp0/eef_link:
-                                {}
-                scorpio/mmp0/back_hokuyo_link:
-                  {}
-                scorpio/mmp0/back_left_wheel:
-                  {}
-                scorpio/mmp0/back_right_wheel:
-                  {}
-                scorpio/mmp0/front_hokuyo_link:
-                  {}
-                scorpio/mmp0/front_left_wheel:
-                  {}
-                scorpio/mmp0/front_right_wheel:
-                  {}
-                scorpio/mmp0/left_wheel:
-                  {}
-                scorpio/mmp0/right_wheel:
-                  {}
+        scorpio/mmp0/odom:
+          scorpio/mmp0/base_footprint:
+            scorpio/mmp0/base_link:
+              scorpio/mmp0/arm_base_link:
+                {}
+              scorpio/mmp0/back_hokuyo_link:
+                {}
+              scorpio/mmp0/back_left_wheel:
+                {}
+              scorpio/mmp0/back_right_wheel:
+                {}
+              scorpio/mmp0/front_hokuyo_link:
+                {}
+              scorpio/mmp0/front_left_wheel:
+                {}
+              scorpio/mmp0/front_right_wheel:
+                {}
+              scorpio/mmp0/left_wheel:
+                {}
+              scorpio/mmp0/right_wheel:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 0.699999988
@@ -379,7 +332,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: map
+    Fixed Frame: scorpio/mmp0/base_link
     Frame Rate: 30
   Name: root
   Tools:

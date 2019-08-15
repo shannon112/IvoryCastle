@@ -14,7 +14,7 @@
         ...
         -configuration_directory '$(find pmc_application)/config'
         -configuration_basename '$(arg lua_filename)'
-        -initial_pose '{to_trajectory_id = 0, relative_pose = { translation = { 0, 0, 0}, rotation = {0., 0., 3.1415, } } }'"
+        -initial_pose '{to_trajectory_id = 0, relative_pose = { translation = { 0, 0, 0}, rotation = {0., 0., 0., } } }'"
     output="screen">
   </node>
 </launch>
