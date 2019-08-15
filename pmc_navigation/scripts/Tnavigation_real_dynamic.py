@@ -80,6 +80,8 @@ def movea(goalx,goaly,goaltheta):
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
+        quat = tuple(resp.quat)
+        currYaw = tf.transformations.euler_from_quaternion(quat)[2]
         if(abs(currX -goalx) < 0.12):
             ts.linear.x = abs(currX -goalx)*k+0.02
         #print(hpause)
@@ -90,7 +92,8 @@ def movea(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = -transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
-        absRotation(-1.45,"map")
+        if(abs(currYaw+1.45)>0.3):
+            absRotation(-1.45,"map")
         fineRotation(-1.57,"map")
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
@@ -129,6 +132,8 @@ def moveb(goalx,goaly,goaltheta):
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
+        quat = tuple(resp.quat)
+        currYaw = tf.transformations.euler_from_quaternion(quat)[2]
         if(abs(currY -goaly) < 0.20):
             ts.linear.x = abs(currY -goaly)*k*0.7+0.02
         #print(hpause)
@@ -139,7 +144,8 @@ def moveb(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = -transVel
     if(abs(currX-goalx)>0.05 and hpause != True):
-        absRotation(-0.12,"map")
+        if(abs(currYaw+0.12)>0.3):
+             absRotation(-0.12,"map")
         fineRotation(0,"map")
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
@@ -178,6 +184,8 @@ def moved(goalx,goaly,goaltheta):
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
+        quat = tuple(resp.quat)
+        currYaw = tf.transformations.euler_from_quaternion(quat)[2]
         if(abs(currY -goaly) < 0.20):
             ts.linear.x = -abs(currY -goaly)*k*0.7-0.02
         #print(hpause)
@@ -188,7 +196,8 @@ def moved(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = -transVel
     if(abs(currX-goalx)>0.05 and hpause != True):
-        absRotation(-0.12,"map")
+        if(abs(currYaw+0.12)>0.3):
+            absRotation(-0.12,"map")
         fineRotation(0,"map")
     while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
@@ -236,11 +245,14 @@ def movec(goalx,goaly,goaltheta):
     twistPub.publish(ts)
     ts.linear.x = transVel
     if(abs(currY-goaly)>0.05 and hpause != True):
-        absRotation(-1.45,"map")
+        if(abs(currYaw+1.45)>0.3):
+            absRotation(-1.45,"map")
         fineRotation(-1.57,"map")
     while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
+        quat = tuple(resp.quat)
+        currYaw = tf.transformations.euler_from_quaternion(quat)[2]
         if(abs(currY -goaly) < 0.20):
             ts.linear.x = abs(currY -goaly)*k*0.7+0.02
         #print("c:moveing")
