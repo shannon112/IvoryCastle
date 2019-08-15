@@ -165,6 +165,6 @@
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/sghero_pmc_demo.rviz"/>
 
     <!-- Gui arm -->
-    <!--node ns="$(arg ns)" name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"-->
+    <!--node ns="$(arg ns)" name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"/-->
 
 </launch>

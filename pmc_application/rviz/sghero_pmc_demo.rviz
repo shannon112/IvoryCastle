@@ -5,7 +5,6 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /TF1
       Splitter Ratio: 0.706278026
     Tree Height: 446
   - Class: rviz/Selection
@@ -26,7 +25,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: LaserScan
 Toolbars:
   toolButtonStyle: 2
 Visualization Manager:
@@ -73,6 +72,16 @@ Visualization Manager:
         All Enabled: false
         scorpio/mmp0/arm_base_link:
           Value: false
+        scorpio/mmp0/axis1_link:
+          Value: true
+        scorpio/mmp0/axis2_link:
+          Value: true
+        scorpio/mmp0/axis3_link:
+          Value: true
+        scorpio/mmp0/axis4_link:
+          Value: true
+        scorpio/mmp0/axis5_link:
+          Value: true
         scorpio/mmp0/axis6_link:
           Value: false
         scorpio/mmp0/back_hokuyo_link:
@@ -81,12 +90,24 @@ Visualization Manager:
           Value: false
         scorpio/mmp0/back_right_wheel:
           Value: false
+        scorpio/mmp0/base_camera_color_frame:
+          Value: false
+        scorpio/mmp0/base_camera_color_optical_frame:
+          Value: false
         scorpio/mmp0/base_camera_depth_frame:
           Value: false
         scorpio/mmp0/base_camera_depth_optical_frame:
           Value: false
-        scorpio/mmp0/base_camera_link:
+        scorpio/mmp0/base_camera_infra1_frame:
           Value: false
+        scorpio/mmp0/base_camera_infra1_optical_frame:
+          Value: false
+        scorpio/mmp0/base_camera_infra2_frame:
+          Value: false
+        scorpio/mmp0/base_camera_infra2_optical_frame:
+          Value: false
+        scorpio/mmp0/base_camera_link:
+          Value: true
         scorpio/mmp0/base_camera_rgb_frame:
           Value: false
         scorpio/mmp0/base_camera_rgb_optical_frame:
@@ -94,9 +115,9 @@ Visualization Manager:
         scorpio/mmp0/base_footprint:
           Value: true
         scorpio/mmp0/base_link:
-          Value: false
+          Value: true
         scorpio/mmp0/eef_link:
-          Value: false
+          Value: true
         scorpio/mmp0/front_hokuyo_link:
           Value: false
         scorpio/mmp0/front_left_wheel:
@@ -105,8 +126,6 @@ Visualization Manager:
           Value: false
         scorpio/mmp0/left_wheel:
           Value: false
-        scorpio/mmp0/odom:
-          Value: true
         scorpio/mmp0/right_wheel:
           Value: false
       Marker Scale: 1
@@ -115,27 +134,49 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        scorpio/mmp0/odom:
-          scorpio/mmp0/base_footprint:
-            scorpio/mmp0/base_link:
-              scorpio/mmp0/arm_base_link:
-                {}
-              scorpio/mmp0/back_hokuyo_link:
-                {}
-              scorpio/mmp0/back_left_wheel:
-                {}
-              scorpio/mmp0/back_right_wheel:
-                {}
-              scorpio/mmp0/front_hokuyo_link:
-                {}
-              scorpio/mmp0/front_left_wheel:
-                {}
-              scorpio/mmp0/front_right_wheel:
-                {}
-              scorpio/mmp0/left_wheel:
-                {}
-              scorpio/mmp0/right_wheel:
-                {}
+        scorpio/mmp0/base_footprint:
+          scorpio/mmp0/base_link:
+            scorpio/mmp0/arm_base_link:
+              scorpio/mmp0/axis1_link:
+                scorpio/mmp0/axis2_link:
+                  scorpio/mmp0/axis3_link:
+                    scorpio/mmp0/axis4_link:
+                      scorpio/mmp0/axis5_link:
+                        scorpio/mmp0/axis6_link:
+                          scorpio/mmp0/base_camera_link:
+                            scorpio/mmp0/base_camera_color_frame:
+                              scorpio/mmp0/base_camera_color_optical_frame:
+                                {}
+                            scorpio/mmp0/base_camera_depth_frame:
+                              scorpio/mmp0/base_camera_depth_optical_frame:
+                                {}
+                            scorpio/mmp0/base_camera_infra1_frame:
+                              scorpio/mmp0/base_camera_infra1_optical_frame:
+                                {}
+                            scorpio/mmp0/base_camera_infra2_frame:
+                              scorpio/mmp0/base_camera_infra2_optical_frame:
+                                {}
+                            scorpio/mmp0/base_camera_rgb_frame:
+                              scorpio/mmp0/base_camera_rgb_optical_frame:
+                                {}
+                          scorpio/mmp0/eef_link:
+                            {}
+            scorpio/mmp0/back_hokuyo_link:
+              {}
+            scorpio/mmp0/back_left_wheel:
+              {}
+            scorpio/mmp0/back_right_wheel:
+              {}
+            scorpio/mmp0/front_hokuyo_link:
+              {}
+            scorpio/mmp0/front_left_wheel:
+              {}
+            scorpio/mmp0/front_right_wheel:
+              {}
+            scorpio/mmp0/left_wheel:
+              {}
+            scorpio/mmp0/right_wheel:
+              {}
       Update Interval: 0
       Value: true
     - Alpha: 0.699999988
@@ -353,25 +394,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 2.78500986
+      Distance: 4.43852711
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: 0.44793272
+        Y: 0.618649721
+        Z: -8.34465027e-07
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.275398821
+      Pitch: 0.470399022
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 1.32539785
+      Yaw: 0.757231772
     Saved: ~
 Window Geometry:
   Displays:
