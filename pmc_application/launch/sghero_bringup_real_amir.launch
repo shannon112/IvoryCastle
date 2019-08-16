@@ -154,6 +154,14 @@
     <param name="aiml_path" value="$(find pmc_assistant)/data" />
     <node name="aiml_server" pkg="pmc_assistant" type="aiml_server.py" output="screen"/>
 
+    <!--navigation related-->
+    <node name="tfServer" pkg="ira_factory_state_machine" type="tfServer.py"/>
+    <node name="Tnavigation_real_dynamic" pkg="pmc_navigation" type="Tnavigation_real_dynamic.py" args="$(arg ns)"/>
+    <node pkg="leg_detector" type="leg_detector" name="leg_detector" args="scan:=$(arg ns)/front_scan $(find leg_detector)/config/trained_leg_detector.yaml"/>
+    <node pkg="leg_detector" type="leg_detector2" name="leg_detector2" args="scan:=$(arg ns)/back_scan $(find leg_detector)/config/trained_leg_detector.yaml"/>
+    <node name="humancaution" pkg="pmc_navigation" type="humancaution.py" args="$(arg ns)"/>
+    <!--node name="humancaution_chatter" pkg="pmc_navigation" type="humancaution_chatter.py"/-->
+
     <!--Gui steering console (Optional)-->
     <node ns="$(arg ns)" name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
       <param name="default_topic" value="/$(arg ns)/diff_drive_controller/cmd_vel"/>
