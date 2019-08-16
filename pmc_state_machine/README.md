@@ -43,6 +43,10 @@ A: (image caption response)
 ```
 
 # Communication
+object recognition
+```
+rosservice call /object_detection_willie "{}" 
+```
 safe
 ```
 Be careful, you are very close to me.
