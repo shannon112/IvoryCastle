@@ -1,17 +1,28 @@
 # IvoryCastle
 <img src="https://static.newmobilelife.com/wp-content/uploads/2017/12/pokemon-go-hoenn-slaking_00.jpg" width="400"/>  <img src="http://res.pokemon.name/common/pokemon/pgl/288.00.png" width="200"/><img src="https://tw.portal-pokemon.com/play/resources/pokedex/img/pm/25ecd635b6ac9803e574229c886ede9a2f1fbd38.png" width="200"/>
 
-```
-# Main coding file
+```sh
+# Main control loop
 scorpio_arm_ros_control/src/hardware_transmission_common.cpp
 void HwTmIntf::update()
 
-# Testing if work
-roslaunch pmc_application sghero_bringup_real_controlonly.launch 
-rosrun scorpio_bringup simple_moving.py 
+# Testing: calibrate translation and rotation of base
+roslaunch pmc_application sghero_testing.launch 
 
-# Using moveit gui to recovery
-roslaunch scorpio_bringup arm_partial.launch
+# Testing: Simple get end point, and make arm to move to assigned point or init pose (w/ tf_prefix)
+roslaunch pmc_application sghero_bringup_real_controlonly.launch 
+rosrun scorpio_bringup getcurrentpose.py
+rosrun scorpio_bringup simple_moving.py 
+rosrun scorpio_arm_ros_control init_pose.py
+
+# Testing: Using moveit gui to move (w/o tf_prefix)
+roslaunch pmc_application sghero_bringup_real_armball.launch
+
+# Integration demo
+roslaunch pmc_application sghero_bringup_real_amir.launch 
+(roslaunch pmc_application sghero_bringup_real_amr.launch)
+(roslaunch pmc_application sghero_init_pose.launch)
+roslaunch pmc_application sghero_functions.launch 
 ```
 
 ## Dependences
