@@ -34,20 +34,13 @@ ira_factory: https://github.com/willie5588912/ira_factory  -b  multibots
 ros_aiml: https://github.com/jkllbn2563/ros_aiml master
 
 scorpio:  
-IvoryCastle: https://github.com/shannon112/IvoryCastle.git -b pmccontest  
-scorpio: https://github.com/willie5588912/scorpio -b pmc_sghero (simulation with scorpio_ethercat removed)  
+IvoryCastle: https://github.com/shannon112/IvoryCastle -b pmccontest  
+scorpio: https://github.com/willie5588912/scorpio -b pmc_sghero_merge (simulation with scorpio_ethercat removed)  
 neronbot: https://github.com/willie5588912/neuronbot  -b  pmc_sghero (multi-bots with move_back removed)  
 ira_factory: https://github.com/willie5588912/ira_factory  -b  pmc_sghero (scorpio)  
 image_caption_PMC: https://github.com/jkllbn2563/image_caption_PMC -b pmc_sghero  
-robot_arm_PMC: https://github.com/jkllbn2563/robot_arm_PMC/tree/PMC_two_object
-leg_detector: https://github.com/Herobrixx/people.git -b ros1  
-
-scorpio pmc_sghero_tmp ```run seperately on arm or base with tf_prefix but no moveit ball```  
-scorpio pmc_sghero_merge ```run togather with tf_prefix but no moveit ball```  
-```sh
-roslaunch scorpio_bringup arm_bringup_real.launch  #with tf prefix
-roslaunch scorpio_bringup arm_partial.launch       #without tf prefix 
-```
+robot_arm_PMC: https://github.com/jkllbn2563/robot_arm_PMC -b PMC_ONE
+leg_detector: https://github.com/Herobrixx/people -b ros1  
 
 ## icps demo world
 ```
