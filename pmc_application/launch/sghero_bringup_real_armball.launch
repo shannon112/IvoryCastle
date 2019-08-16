@@ -1,0 +1,13 @@
+<launch>
+  <arg name="ns" default="/scorpio/mmp0"/>
+  <arg name="model" default="$(find scorpio_description)/robots/scorpio.urdf.xacro"/>
+
+  <group ns="$(arg ns)">
+    <node pkg="robot_state_publisher" type="robot_state_publisher"  name="robot_state_publisher"/>
+
+    <param name="robot_description" command="rosrun xacro xacro.py $(arg model)" />
+    <include file="$(find scorpio_moveit_config)/launch/scorpio_moveit_execution.launch"/>
+    <include file="$(find scorpio_arm_ros_control)/launch/scorpio_arm_ros_control.launch"/>
+
+  </group>
+</launch>
