@@ -1,17 +1,28 @@
 # IvoryCastle
-<img src="https://static.newmobilelife.com/wp-content/uploads/2017/12/pokemon-go-hoenn-slaking_00.jpg" width="400"/>
+<img src="https://static.newmobilelife.com/wp-content/uploads/2017/12/pokemon-go-hoenn-slaking_00.jpg" width="400"/>  <img src="http://res.pokemon.name/common/pokemon/pgl/288.00.png" width="200"/><img src="https://tw.portal-pokemon.com/play/resources/pokedex/img/pm/25ecd635b6ac9803e574229c886ede9a2f1fbd38.png" width="200"/>
 
-```
-# Main coding file
+```sh
+# Main control loop
 scorpio_arm_ros_control/src/hardware_transmission_common.cpp
 void HwTmIntf::update()
 
-# Testing if work
-roslaunch pmc_application sghero_bringup_real_controlonly.launch 
-rosrun scorpio_bringup simple_moving.py 
+# Testing: calibrate translation and rotation of base
+roslaunch pmc_application sghero_testing.launch 
 
-# Using moveit gui to recovery
-roslaunch scorpio_bringup arm_partial.launch
+# Testing: Simple get end point, and make arm to move to assigned point or init pose (w/ tf_prefix)
+roslaunch pmc_application sghero_bringup_real_controlonly.launch 
+rosrun scorpio_bringup getcurrentpose.py
+rosrun scorpio_bringup simple_moving.py 
+rosrun scorpio_arm_ros_control init_pose.py
+
+# Testing: Using moveit gui to move (w/o tf_prefix)
+roslaunch pmc_application sghero_bringup_real_armball.launch
+
+# Integration demo
+roslaunch pmc_application sghero_bringup_real_amir.launch 
+(roslaunch pmc_application sghero_bringup_real_amr.launch)
+(roslaunch pmc_application sghero_init_pose.launch)
+roslaunch pmc_application sghero_functions.launch 
 ```
 
 ## Dependences
@@ -23,20 +34,13 @@ ira_factory: https://github.com/willie5588912/ira_factory  -b  multibots
 ros_aiml: https://github.com/jkllbn2563/ros_aiml master
 
 scorpio:  
-IvoryCastle: https://github.com/shannon112/IvoryCastle.git -b pmccontest  
-scorpio: https://github.com/willie5588912/scorpio -b pmc_sghero (simulation with scorpio_ethercat removed)  
+IvoryCastle: https://github.com/shannon112/IvoryCastle -b pmccontest  
+scorpio: https://github.com/willie5588912/scorpio -b pmc_sghero_merge (simulation with scorpio_ethercat removed)  
 neronbot: https://github.com/willie5588912/neuronbot  -b  pmc_sghero (multi-bots with move_back removed)  
 ira_factory: https://github.com/willie5588912/ira_factory  -b  pmc_sghero (scorpio)  
 image_caption_PMC: https://github.com/jkllbn2563/image_caption_PMC -b pmc_sghero  
-robot_arm_PMC: https://github.com/jkllbn2563/robot_arm_PMC/tree/PMC_two_object
-leg_detector: https://github.com/Herobrixx/people.git -b ros1  
-
-scorpio pmc_sghero_tmp ```run seperately on arm or base with tf_prefix but no moveit ball```  
-scorpio pmc_sghero_merge ```run togather with tf_prefix but no moveit ball```  
-```sh
-roslaunch scorpio_bringup arm_bringup_real.launch  #with tf prefix
-roslaunch scorpio_bringup arm_partial.launch       #without tf prefix 
-```
+robot_arm_PMC: https://github.com/jkllbn2563/robot_arm_PMC -b PMC_ONE  
+leg_detector: https://github.com/Herobrixx/people -b ros1  
 
 ## icps demo world
 ```
