@@ -192,16 +192,16 @@ class SetDefault(smach.State):
             userdata.objectNum=3
             ps = [Pose(), Pose(), Pose(), Pose()]
             # take picture at A station
-            ps[0].position.x = -0.419; ps[0].position.y = 0.687; ps[0].position.z = 0.964
-            ps[0].orientation.x = -0.701; ps[0].orientation.y = 0.712; ps[0].orientation.z = 0.0; ps[0].orientation.w = 0.0
+            ps[0].position.x = -0.381; ps[0].position.y = 0.680; ps[0].position.z = 0.952
+            ps[0].orientation.x =  -0.715; ps[0].orientation.y = 0.699; ps[0].orientation.z = -0.005; ps[0].orientation.w = 0.033
             userdata.attackPose = ps[0]
             # place on amir
-            ps[1].position.x = 0.153; ps[1].position.y = -0.039; ps[1].position.z = 0.403
-            ps[1].orientation.x = 0.311; ps[1].orientation.y = 0.950; ps[1].orientation.z = 0.0; ps[1].orientation.w = 0.0
-            ps[2].position.x = 0.153; ps[2].position.y = -0.179; ps[2].position.z = 0.403
-            ps[2].orientation.x = 0.311; ps[2].orientation.y = 0.950; ps[2].orientation.z = 0.0; ps[2].orientation.w = 0.0
-            ps[3].position.x = 0.013; ps[3].position.y = -0.179; ps[3].position.z = 0.403
-            ps[3].orientation.x = 0.311; ps[3].orientation.y = 0.950; ps[3].orientation.z = 0.0; ps[3].orientation.w = 0.0
+            ps[1].position.x = 0.161; ps[1].position.y = -0.046; ps[1].position.z = 0.401
+            ps[1].orientation.x = 0.320; ps[1].orientation.y = 0.947; ps[1].orientation.z = -0.041; ps[1].orientation.w = 0.004
+            ps[2].position.x = 0.022; ps[2].position.y = -0.186; ps[2].position.z = 0.401
+            ps[2].orientation.x = 0.320; ps[2].orientation.y = 0.947; ps[2].orientation.z = -0.041; ps[2].orientation.w = 0.004
+            ps[3].position.x = 0.161; ps[3].position.y = -0.186; ps[3].position.z = 0.401
+            ps[3].orientation.x = 0.320; ps[3].orientation.y = 0.947; ps[3].orientation.z = -0.041; ps[3].orientation.w = 0.004
             userdata.placePose = ps[1:]
             return 'attack'
         
@@ -209,12 +209,12 @@ class SetDefault(smach.State):
             userdata.objectNum=0
             ps = [Pose(), Pose()]
             # grasp from amir
-            ps[0].position.x = 0.053; ps[0].position.y = -0.109; ps[0].position.z = 0.403
-            ps[1].orientation.x = -1.0; ps[1].orientation.y = -0.0; ps[1].orientation.z = 0.0; ps[1].orientation.w = 0.0
+            ps[0].position.x = 0.020; ps[0].position.y = -0.113; ps[0].position.z = 0.319
+            ps[0].orientation.x = -0.999; ps[0].orientation.y = -0.042; ps[0].orientation.z = 0.004; ps[0].orientation.w = 0.013
             userdata.pickPose = [ps[0]]
             # place on B station
-            ps[1].position.x = -0.750; ps[1].position.y = 0.122; ps[1].position.z = 0.675
-            ps[1].orientation.x = -1.0; ps[1].orientation.y = -0.0; ps[1].orientation.z = 0.0; ps[1].orientation.w = 0.0
+            ps[1].position.x = -0.727; ps[1].position.y = 0.299; ps[1].position.z = 0.602
+            ps[1].orientation.x = -0.999; ps[1].orientation.y = -0.042; ps[1].orientation.z = 0.004; ps[1].orientation.w = 0.013
             userdata.placePose = [ps[1]]
             return 'pickplace'
         
@@ -222,12 +222,12 @@ class SetDefault(smach.State):
             userdata.objectNum=1
             ps = [Pose(), Pose()]
             # take picture at B station
-            ps[1].position.x = -0.750; ps[1].position.y = 0.122; ps[1].position.z = 0.875
-            ps[1].orientation.x = -1.0; ps[1].orientation.y = -0.0; ps[1].orientation.z = 0.0; ps[1].orientation.w = 0.0
+            ps[0].position.x = -0.727; ps[0].position.y = 0.299; ps[0].position.z = 0.802
+            ps[0].orientation.x = -0.999; ps[0].orientation.y = -0.042; ps[0].orientation.z = 0.004; ps[0].orientation.w = 0.013
             userdata.attackPose = ps[0]
             # place on amir
-            ps[0].position.x = 0.083; ps[0].position.y = -0.109; ps[0].position.z = 0.403
-            ps[1].orientation.x = -1.0; ps[1].orientation.y = -0.0; ps[1].orientation.z = 0.0; ps[1].orientation.w = 0.0
+            ps[1].position.x = 0.090; ps[1].position.y = -0.112; ps[1].position.z = 0.319
+            ps[1].orientation.x = 0.075; ps[1].orientation.y = -0.996; ps[1].orientation.z = 0.051; ps[1].orientation.w = 0.017
             userdata.placePose = [ps[1]]
             return 'attack'
         
@@ -235,12 +235,12 @@ class SetDefault(smach.State):
             userdata.objectNum=1
             ps = [Pose(), Pose()]
             # take picture at C station
-            ps[0].position.x = -0.158; ps[0].position.y = 0.648; ps[0].position.z = 0.928
-            ps[0].orientation.x = -0.728; ps[0].orientation.y = 0.682; ps[0].orientation.z = -0.007; ps[0].orientation.w = 0.067
+            ps[0].position.x = -0.119; ps[0].position.y = 0.650; ps[0].position.z = 0.947
+            ps[0].orientation.x = -0.700; ps[0].orientation.y = 0.714; ps[0].orientation.z = -0.011; ps[0].orientation.w = 0.027
             userdata.attackPose = ps[0]
             # grasp from amir
-            ps[0].position.x = 0.083; ps[0].position.y = -0.109; ps[0].position.z = 0.403
-            ps[1].orientation.x = -1.0; ps[1].orientation.y = -0.0; ps[1].orientation.z = 0.0; ps[1].orientation.w = 0.0
+            ps[1].position.x = 0.090; ps[1].position.y = -0.112; ps[1].position.z = 0.319
+            ps[1].orientation.x = 0.075; ps[1].orientation.y = -0.996; ps[1].orientation.z = 0.051; ps[1].orientation.w = 0.017
             userdata.pickPose = [ps[1]]
             return 'attack'
         else:
@@ -359,8 +359,8 @@ class TaskEnd(smach.State):
                              output_keys=['execNumOut'])
         self.AttackingSrv = rospy.ServiceProxy('/attacking', PoseSrv)
         self.InitPose = Pose()
-        self.InitPose.position.x = -0.568; self.InitPose.position.y = 0.132; self.InitPose.position.z = 0.906
-        self.InitPose.orientation.x = -0.920; self.InitPose.orientation.y = 0.0; self.InitPose.orientation.z = 0.388; self.InitPose.orientation.w = 0.0
+        self.InitPose.position.x = -0.563; self.InitPose.position.y = 0.097; self.InitPose.position.z = 1.322
+        self.InitPose.orientation.x = -0.831; self.InitPose.orientation.y = -0.021; self.InitPose.orientation.z = 0.556; self.InitPose.orientation.w = 0.018
         
     def execute(self, userdata):
         rospy.loginfo('Executing state TaskEnd')
