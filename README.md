@@ -39,7 +39,7 @@ scorpio: https://github.com/willie5588912/scorpio -b pmc_sghero_merge (simulatio
 neronbot: https://github.com/willie5588912/neuronbot  -b  pmc_sghero (multi-bots with move_back removed)  
 ira_factory: https://github.com/willie5588912/ira_factory  -b  pmc_sghero (scorpio)  
 image_caption_PMC: https://github.com/jkllbn2563/image_caption_PMC -b pmc_sghero  
-robot_arm_PMC: https://github.com/jkllbn2563/robot_arm_PMC -b PMC_ONE
+robot_arm_PMC: https://github.com/jkllbn2563/robot_arm_PMC -b PMC_ONE  
 leg_detector: https://github.com/Herobrixx/people -b ros1  
 
 ## icps demo world
