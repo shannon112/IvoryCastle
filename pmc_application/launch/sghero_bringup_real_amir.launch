@@ -42,6 +42,11 @@
       <arg name="filters"   value="pointcloud"/>
     </include>
 
+    <!--Gripper driver-->
+    <param name="gripper_device" default="/dev/gripper" />
+    <node name="gripper_control_server" pkg="robotiq_2f_gripper_control" type="Robotiq2FGripperRtuNode.py"/>
+    <node name="gripper_control_client" pkg="robotiq_2f_gripper_control" type="gripper_ser.py"/>
+
     <group if="$(arg slam)">
       <group unless="$(arg carto)">
 	      <param name="$(arg ns)/diff_drive_controller/base_frame_id" value="base_footprint"/>
