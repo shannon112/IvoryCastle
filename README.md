@@ -24,6 +24,7 @@ roslaunch pmc_application sghero_bringup_real_amir.launch
 (roslaunch pmc_application sghero_init_pose.launch)
 roslaunch pmc_application sghero_functions.launch 
 ```
+<img src=https://pre00.deviantart.net/3d42/th/pre/i/2019/041/b/4/one_punch_man_class_s_by_vegito5001-dczfcdn.png width="840"/>
 
 ## Dependences
 
