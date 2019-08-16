@@ -1,5 +1,5 @@
 # IvoryCastle
-<img src="https://static.newmobilelife.com/wp-content/uploads/2017/12/pokemon-go-hoenn-slaking_00.jpg" width="400"/>
+<img src="https://static.newmobilelife.com/wp-content/uploads/2017/12/pokemon-go-hoenn-slaking_00.jpg" width="400"/>  <img src="http://res.pokemon.name/common/pokemon/pgl/288.00.png" width="200"/><img src="https://tw.portal-pokemon.com/play/resources/pokedex/img/pm/25ecd635b6ac9803e574229c886ede9a2f1fbd38.png" width="200"/>
 
 ```
 # Main coding file
