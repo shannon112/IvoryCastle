@@ -22,16 +22,16 @@ class VoiceCommand(smach.State):
         result = self.triggerVCommand_service(TriggerRequest())
 
         if result.success:
-            if result.message == "Others":
+            if result.message == 'Others':
                 rospy.sleep(2.)
                 return 'others'
-            elif result.message == "IntentFind":
+            elif result.message == 'IntentFind':
                 return 'find_material'
-            elif result.message == "IntentDelivery":
+            elif result.message == 'IntentDelivery':
                 return 'delivery_product'
-            elif result.message == "IntentWhat":
+            elif result.message == 'IntentWhat':
                 return 'what_happened'
-            elif result.message == "Clear":
+            elif result.message == 'Clear':
                 return 'all_task_clear'
             else:
                 return 'others'
@@ -188,7 +188,7 @@ class SetDefault(smach.State):
         rospy.loginfo('Current task is %s', userdata.mani_task)
         
         ### TODO: Set these default parameters ###
-        if userdata.mani_task == "grasp":
+        if userdata.mani_task == 'grasp':
             userdata.objectNum=3
             ps = [Pose(), Pose(), Pose(), Pose()]
             # take picture at A station
@@ -205,7 +205,7 @@ class SetDefault(smach.State):
             userdata.placePose = ps[1:]
             return 'attack'
         
-        elif userdata.mani_task == "place":
+        elif userdata.mani_task == 'place':
             userdata.objectNum=0
             ps = [Pose(), Pose()]
             # grasp from amir
@@ -218,7 +218,7 @@ class SetDefault(smach.State):
             userdata.placePose = [ps[1]]
             return 'pickplace'
         
-        elif userdata.mani_task == "fetch":
+        elif userdata.mani_task == 'fetch':
             userdata.objectNum=1
             ps = [Pose(), Pose()]
             # take picture at B station
@@ -231,7 +231,7 @@ class SetDefault(smach.State):
             userdata.placePose = [ps[1]]
             return 'attack'
         
-        elif userdata.mani_task == "stack":
+        elif userdata.mani_task == 'stack':
             userdata.objectNum=1
             ps = [Pose(), Pose()]
             # take picture at C station
@@ -251,16 +251,26 @@ class Attacking(smach.State):
     def __init__(self):
         smach.State.__init__(self,
                              outcomes=['success','aborted'],
-                             input_keys=['attackPose'])
+                             input_keys=['mani_task','attackPose'])
         rospy.wait_for_service('/attacking')
         self.AttackingSrv = rospy.ServiceProxy('/attacking', PoseSrv)
 
     def execute(self, userdata):
         rospy.loginfo('Executing state Attacking')
-        result = self.AttackingSrv(userdata.attackPose)
+        req = PoseSrvRequest()
+        req.pose = userdata.attackPose
+        if userdata.mani_task == 'grasp':
+            req.str_box_ind = 'a'
+        elif userdata.mani_task == 'fetch':
+            req.str_box_ind = 'b'
+        elif userdata.mani_task == 'stack':
+            req.str_box_ind = 'c'
+        else:
+            return 'aborted'
+        result = self.AttackingSrv(req)
         if result.result:
             return 'success'
-        return 'aborted'        
+        return 'aborted'
 
 #define state objects Detection
 class Detection(smach.State):
@@ -291,9 +301,9 @@ class Estimation(smach.State):
     def execute(self, userdata):
         rospy.loginfo('Executing state pose Estimation')
         BBox = []
-        if userdata.mani_task == "grasp":
+        if userdata.mani_task == 'grasp':
             BBox = userdata.BBoxs[userdata.execNum*4:userdata.execNum*4+4]
-        elif userdata.mani_task == "fetch" or userdata.mani_task == "stack":
+        elif userdata.mani_task == 'fetch' or userdata.mani_task == 'stack':
             BBox = userdata.BBoxs[12:16]
         else:
             return 'aborted'
@@ -317,21 +327,25 @@ class PicknPlace(smach.State):
                              input_keys=['mani_task','pickPose','placePose','estPose','execNum'])
         rospy.wait_for_service('/pick_and_place')
         self.PickPlaceSrv = rospy.ServiceProxy('/pick_and_place', PickPlace)
-        
+            
     def execute(self, userdata):
         rospy.loginfo('Executing state pose PickPlace')
         req = PickPlaceRequest()
-        if userdata.mani_task == "place":
-            rospy.loginfo(userdata.pickPose)
-            rospy.loginfo(userdata.placePose)
+        req.pick_pose = userdata.estPose
+        req.place_pose = userdata.placePose[userdata.execNum]
+        if userdata.mani_task == 'grasp':
+            req.str_box_ind = 'a'
+        elif userdata.mani_task == 'place':
+            req.str_box_ind = 'b'
             req.pick_pose = userdata.pickPose[userdata.execNum]
-            req.place_pose = userdata.placePose[userdata.execNum]
-        elif userdata.mani_task == "stack":
+        elif userdata.mani_task == 'fetch':
+            req.str_box_ind = 'b'
+        elif userdata.mani_task == 'stack':
+            req.str_box_ind = 'c'
             req.pick_pose = userdata.pickPose[userdata.execNum]
             req.place_pose = userdata.estPose
         else:
-            req.pick_pose = userdata.estPose
-            req.place_pose = userdata.placePose[userdata.execNum]
+            return 'aborted'
         result = self.PickPlaceSrv(req)
         if not result.result:
             return 'aborted'
@@ -343,22 +357,38 @@ class TaskEnd(smach.State):
                              outcomes=['graspdone','placedone','fetchdone','stackdone','continue','aborted'],
                              input_keys=['mani_task','objectNum','execNumIn'],
                              output_keys=['execNumOut'])
+        self.AttackingSrv = rospy.ServiceProxy('/attacking', PoseSrv)
+        self.InitPose = Pose()
+        self.InitPose.position.x = 11.0; self.InitPose.position.y = 11.0; self.InitPose.position.z = 11.0
+        self.InitPose.orientation.x = 11.0; self.InitPose.orientation.y = 11.0; self.InitPose.orientation.z = 11.0; self.InitPose.orientation.w = 11.0
         
     def execute(self, userdata):
         rospy.loginfo('Executing state TaskEnd')
+        req = PoseSrvRequest()
+        req.pose = self.InitPose
         if userdata.objectNum > userdata.execNumIn+1:
             userdata.execNumOut = userdata.execNumIn+1
             return 'continue'
         else:
+            status = ''
             userdata.execNumOut = 0
-            if userdata.mani_task == "grasp":
-                return 'graspdone'
-            if userdata.mani_task == "place":
-                return 'placedone'
-            if userdata.mani_task == "fetch":
-                return 'fetchdone'
-            if userdata.mani_task == "stack":
-                return 'stackdone'
+            if userdata.mani_task == 'grasp':
+                req.str_box_ind = 'a'
+                status = 'graspdone'
+            elif userdata.mani_task == 'place':
+                req.str_box_ind = 'b'
+                status = 'placedone'
+            elif userdata.mani_task == 'fetch':
+                req.str_box_ind = 'b'
+                status = 'fetchdone'
+            elif userdata.mani_task == 'stack':
+                req.str_box_ind = 'c'
+                status = 'stackdone'
+            else:
+                return 'aborted'
+            result = self.AttackingSrv(req)
+            if result.result:
+                return status
         return 'aborted'
 
 def main():

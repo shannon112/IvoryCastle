@@ -1,4 +1,5 @@
 geometry_msgs/Pose pick_pose
 geometry_msgs/Pose place_pose
+string str_box_ind
 ---
 bool result
