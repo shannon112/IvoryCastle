@@ -25,7 +25,7 @@ def listen():
 
 		#r.recognize_google(audio,language='en-US')
 		#pub.publish(r.recognize_google(audio,language='zh-TW').encode('utf-8'))
-		rospy.logwarn("I heard:: %s",r.recognize_google(audio,language='en-US'))
+		#rospy.logwarn("I heard:: %s",r.recognize_google(audio,language='en-US'))
 		pub.publish(r.recognize_google(audio,language='en-US'))
 
 		rate.sleep()
