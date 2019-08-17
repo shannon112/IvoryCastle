@@ -77,7 +77,7 @@ def movea(goalx,goaly,goaltheta):
     if(abs(currX-goalx)>0.05 and hpause != True):
         fineRotation(0,"map")
     ts.linear.x = transVel
-    while(currX-goalx<-0.03 and hpause != True):
+    while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         quat = tuple(resp.quat)
@@ -95,7 +95,7 @@ def movea(goalx,goaly,goaltheta):
         if(currYaw>-1.44):
             absRotation(-1.45,"map")
         fineRotation(-1.57,"map")
-    while(currY-goaly<-0.03 and hpause != True):
+    while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         if(abs(currY -goaly) < 0.20):
@@ -129,7 +129,7 @@ def moveb(goalx,goaly,goaltheta):
     #if(abs(currY-goaly)>0.05 and hpause != True):
     #   absRotation(1.57,"map")
     ts.linear.x = transVel
-    while(currY-goaly>0.03 and hpause != True):
+    while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         quat = tuple(resp.quat)
@@ -147,7 +147,7 @@ def moveb(goalx,goaly,goaltheta):
         if(currYaw<-0.12):
              absRotation(-0.12,"map")
         fineRotation(0,"map")
-    while(currX-goalx>0.03 and hpause != True):
+    while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         if(abs(currX -goalx) < 0.12):
@@ -181,7 +181,7 @@ def moved(goalx,goaly,goaltheta):
     #if(abs(currY-goaly)>0.05 and hpause != True):
     #   absRotation(1.57,"map")
     ts.linear.x = -transVel
-    while(currY-goaly<-0.03 and hpause != True):
+    while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         quat = tuple(resp.quat)
@@ -199,7 +199,7 @@ def moved(goalx,goaly,goaltheta):
         if(currYaw<-0.12):
             absRotation(-0.12,"map")
         fineRotation(0,"map")
-    while(currX-goalx>0.05 and hpause != True):
+    while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         if(abs(currX -goalx) < 0.12):
@@ -233,7 +233,7 @@ def movec(goalx,goaly,goaltheta):
     if(abs(currX-goalx)>0.05 and hpause != True):
         fineRotation(0,"map")
     ts.linear.x = transVel
-    while(currX-goalx<-0.03 and hpause != True):
+    while(abs(currX-goalx)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         if(abs(currX -goalx) < 0.12):
@@ -248,7 +248,7 @@ def movec(goalx,goaly,goaltheta):
         if(currYaw>-1.45):
             absRotation(-1.45,"map")
         fineRotation(-1.57,"map")
-    while(currY-goaly>0.03 and hpause != True):
+    while(abs(currY-goaly)>0.05 and hpause != True):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         quat = tuple(resp.quat)
