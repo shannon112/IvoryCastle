@@ -366,6 +366,7 @@ class TaskEnd(smach.State):
         rospy.loginfo('Executing state TaskEnd')
         req = PoseSrvRequest()
         req.pose = self.InitPose
+        req.str_box_ind = 'i'
         if userdata.objectNum > userdata.execNumIn+1:
             userdata.execNumOut = userdata.execNumIn+1
             return 'continue'
@@ -373,16 +374,12 @@ class TaskEnd(smach.State):
             status = ''
             userdata.execNumOut = 0
             if userdata.mani_task == 'grasp':
-                req.str_box_ind = 'a'
                 status = 'graspdone'
             elif userdata.mani_task == 'place':
-                req.str_box_ind = 'b'
                 status = 'placedone'
             elif userdata.mani_task == 'fetch':
-                req.str_box_ind = 'b'
                 status = 'fetchdone'
             elif userdata.mani_task == 'stack':
-                req.str_box_ind = 'c'
                 status = 'stackdone'
             else:
                 return 'aborted'
@@ -502,7 +499,7 @@ def main():
                                               'PoseEst':'sm_arm_est_pose'})
             smach.StateMachine.add('PickAndPlace', PicknPlace(),
                                    transitions={'success':'TaskEnd',
-                                                'aborted':'task_aborted'},
+                                                'aborted':'PickAndPlace'},
                                    remapping={'pickPose':'sm_arm_pck_pose',
                                               'placePose':'sm_arm_plc_pose',
                                               'estPose':'sm_arm_est_pose',
