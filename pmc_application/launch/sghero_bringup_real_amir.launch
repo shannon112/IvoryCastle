@@ -43,7 +43,7 @@
     </include>
 
     <!--Gripper driver-->
-    <param name="gripper_device" default="/dev/gripper" />
+    <param name="gripper_device" value="/dev/gripper" />
     <node name="gripper_control_server" pkg="robotiq_2f_gripper_control" type="Robotiq2FGripperRtuNode.py"/>
     <node name="gripper_control_client" pkg="robotiq_2f_gripper_control" type="gripper_ser.py"/>
 
