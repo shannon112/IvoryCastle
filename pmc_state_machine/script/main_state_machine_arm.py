@@ -358,6 +358,7 @@ class TaskEnd(smach.State):
                              input_keys=['mani_task','objectNum','execNumIn'],
                              output_keys=['execNumOut'])
         self.AttackingSrv = rospy.ServiceProxy('/attacking', PoseSrv)
+        self.InitPub = rospy.Publisher('InitTrig', String, queue_size=10)
         self.InitPose = Pose()
         self.InitPose.position.x = -0.563; self.InitPose.position.y = 0.097; self.InitPose.position.z = 1.322
         self.InitPose.orientation.x = -0.831; self.InitPose.orientation.y = -0.021; self.InitPose.orientation.z = 0.556; self.InitPose.orientation.w = 0.018
@@ -385,6 +386,7 @@ class TaskEnd(smach.State):
                 return 'aborted'
             result = self.AttackingSrv(req)
             if result.result:
+                self.InitPub.publish(String("aa"))
                 return status
         return 'aborted'
 
