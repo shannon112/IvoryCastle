@@ -34,6 +34,7 @@ rtheta =None
 k = 1
 turn =True
 def hpausehandler(x,y,state):
+    global hpause
     r = rospy.Rate(10)
     while(hpause):
         print("people! waiting")
@@ -47,12 +48,14 @@ def hpausehandler(x,y,state):
     else:
         moveb(x,y,0)
 def hpausedegree(theta):
+    global hpause
     r = rospy.Rate(10)
     while(hpause):
         print("waiting")
         r.sleep()
     absRotation(theta,"map")
 def hpausefinedegree(theta):
+    global hpause
     r = rospy.Rate(10)
     while(hpause):
         print("waiting")
