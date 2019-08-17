@@ -32,6 +32,7 @@ rx = None
 ry = None
 rtheta =None
 k = 1
+turn =True
 def hpausehandler(x,y,state):
     r = rospy.Rate(10)
     while(hpause):
@@ -59,7 +60,7 @@ def hpausefinedegree(theta):
     fineRotation(theta,"map")
 
 def movea(goalx,goaly,goaltheta):
-    global twistPub, tfReq, transVel, hpause, k
+    global twistPub, tfReq, transVel, hpause, k ,turn
     print("A")
     ns = rospy.myargv(argv=sys.argv)[1]
     goal_frame=os.path.join(ns,'base_link')
@@ -77,7 +78,7 @@ def movea(goalx,goaly,goaltheta):
     if(abs(currX-goalx)>0.05 and hpause != True):
         fineRotation(0,"map")
     ts.linear.x = transVel
-    while(currX-goalx<-0.03 and hpause != True):
+    while(currX-goalx<-0.03 and hpause != True and turn):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         quat = tuple(resp.quat)
@@ -91,7 +92,8 @@ def movea(goalx,goaly,goaltheta):
     ts.linear.x = 0.0
     twistPub.publish(ts)
     ts.linear.x = -transVel
-    if(abs(currY-goaly)>0.05 and hpause != True):
+    if(abs(currY-goaly)>0.05 and hpause != True and currX-goalx>-0.03):
+        turn =False
         if(currYaw>-1.44):
             absRotation(-1.45,"map")
         fineRotation(-1.57,"map")
@@ -109,9 +111,10 @@ def movea(goalx,goaly,goaltheta):
     if(hpause):
         hpausehandler(goalx,goaly,1)
     else:
+        turn = True
         return True
 def moveb(goalx,goaly,goaltheta):
-    global twistPub, tfReq, transVel ,hpause, k
+    global twistPub, tfReq, transVel ,hpause, k ,turn
     print("B")
     ns = rospy.myargv(argv=sys.argv)[1]
     goal_frame=os.path.join(ns,'base_link')
@@ -129,7 +132,7 @@ def moveb(goalx,goaly,goaltheta):
     #if(abs(currY-goaly)>0.05 and hpause != True):
     #   absRotation(1.57,"map")
     ts.linear.x = transVel
-    while(currY-goaly>0.03 and hpause != True):
+    while(currY-goaly>0.03 and hpause != True and turn):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         quat = tuple(resp.quat)
@@ -143,7 +146,8 @@ def moveb(goalx,goaly,goaltheta):
     ts.linear.x = 0.0
     twistPub.publish(ts)
     ts.linear.x = -transVel
-    if(abs(currX-goalx)>0.05 and hpause != True):
+    if(abs(currX-goalx)>0.05 and hpause != True and currY-goaly<0.03):
+        turn = False
         if(currYaw<-0.12):
              absRotation(-0.12,"map")
         fineRotation(0,"map")
@@ -161,9 +165,10 @@ def moveb(goalx,goaly,goaltheta):
     if(hpause):
         hpausehandler(goalx,goaly,2)
     else:
+        turn = True
         return True
 def moved(goalx,goaly,goaltheta):
-    global twistPub, tfReq, transVel ,hpause, k
+    global twistPub, tfReq, transVel ,hpause, k ,turn
     print("D")
     ns = rospy.myargv(argv=sys.argv)[1]
     goal_frame=os.path.join(ns,'base_link')
@@ -181,7 +186,7 @@ def moved(goalx,goaly,goaltheta):
     #if(abs(currY-goaly)>0.05 and hpause != True):
     #   absRotation(1.57,"map")
     ts.linear.x = -transVel
-    while(currY-goaly<-0.03 and hpause != True):
+    while(currY-goaly<-0.03 and hpause != True and turn):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         quat = tuple(resp.quat)
@@ -195,7 +200,8 @@ def moved(goalx,goaly,goaltheta):
     ts.linear.x = 0.0
     twistPub.publish(ts)
     ts.linear.x = -transVel
-    if(abs(currX-goalx)>0.05 and hpause != True):
+    if(abs(currX-goalx)>0.05 and hpause != True and currY-goaly > -0.03):
+        turn =False
         if(currYaw<-0.12):
             absRotation(-0.12,"map")
         fineRotation(0,"map")
@@ -213,9 +219,10 @@ def moved(goalx,goaly,goaltheta):
     if(hpause):
         hpausehandler(goalx,goaly,2)
     else:
+        turn =True
         return True
 def movec(goalx,goaly,goaltheta):
-    global twistPub, tfReq, transVel ,hpause, k
+    global twistPub, tfReq, transVel ,hpause, k ,turn
     print("C")
     ns = rospy.myargv(argv=sys.argv)[1]
     goal_frame=os.path.join(ns,'base_link')
@@ -233,7 +240,7 @@ def movec(goalx,goaly,goaltheta):
     if(abs(currX-goalx)>0.05 and hpause != True):
         fineRotation(0,"map")
     ts.linear.x = transVel
-    while(currX-goalx<-0.03 and hpause != True):
+    while(currX-goalx<-0.03 and hpause != True and turn):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         if(abs(currX -goalx) < 0.12):
@@ -244,7 +251,8 @@ def movec(goalx,goaly,goaltheta):
     ts.linear.x = 0.0
     twistPub.publish(ts)
     ts.linear.x = transVel
-    if(abs(currY-goaly)>0.05 and hpause != True):
+    if(abs(currY-goaly)>0.05 and hpause != True and currX-goalx >-0.03):
+        turn =False
         if(currYaw>-1.45):
             absRotation(-1.45,"map")
         fineRotation(-1.57,"map")
@@ -263,6 +271,7 @@ def movec(goalx,goaly,goaltheta):
     if(hpause):
         hpausehandler(goalx,goaly,3)
     else:
+        turn =True
         return True
 
 
