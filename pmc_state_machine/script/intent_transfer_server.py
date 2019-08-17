@@ -47,14 +47,32 @@ def resetStatus(data):
         elif  data.active_states[0] == "COLLECTING":
             waitingFlag = 0
 
+def print_chatter(data):
+    chatter = data.data
+    rospy.logwarn("I heard:: %s",chatter)
+
+def print_response(data):
+    response = data.data
+    rospy.logwarn("I response:: %s",response)
+
 def main():
     rospy.init_node('intent_transfer_server')
+
     # subscribing /Intent continuously and call service once when change
     rospy.Subscriber('/Intent', String, storeIntent)
+
     # subscribing /server_pmc/smach/container_status and pub to /chatter once when change
     rospy.Subscriber('/server_pmc/smach/container_status', SmachContainerStatus, resetStatus)
+
+    # main service
     s = rospy.Service('triggerVCommand', Trigger, sendingVCommand)
+
+    # print to screen
+    rospy.Subscriber("/chatter",String, print_chatter)
+    rospy.Subscriber("/response",String, print_response)
+
     rospy.spin()
+
 
 if __name__ == "__main__":
     main()
