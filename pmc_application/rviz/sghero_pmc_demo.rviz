@@ -7,6 +7,7 @@ Panels:
         - /Global Options1
         - /TF1
         - /TF1/Frames1
+        - /PointCloud21
       Splitter Ratio: 0.706278026
     Tree Height: 446
   - Class: rviz/Selection
@@ -72,12 +73,18 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        map:
-          Value: true
-        odom:
-          Value: false
         scorpio/mmp0/arm_base_link:
           Value: false
+        scorpio/mmp0/axis1_link:
+          Value: true
+        scorpio/mmp0/axis2_link:
+          Value: true
+        scorpio/mmp0/axis3_link:
+          Value: true
+        scorpio/mmp0/axis4_link:
+          Value: true
+        scorpio/mmp0/axis5_link:
+          Value: true
         scorpio/mmp0/axis6_link:
           Value: false
         scorpio/mmp0/back_hokuyo_link:
@@ -86,6 +93,10 @@ Visualization Manager:
           Value: false
         scorpio/mmp0/back_right_wheel:
           Value: false
+        scorpio/mmp0/base_camera_aligned_depth_to_color_frame:
+          Value: true
+        scorpio/mmp0/base_camera_aligned_depth_to_infra1_frame:
+          Value: true
         scorpio/mmp0/base_camera_color_frame:
           Value: false
         scorpio/mmp0/base_camera_color_optical_frame:
@@ -130,13 +141,37 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        map:
-          odom:
-            {}
         scorpio/mmp0/base_footprint:
           scorpio/mmp0/base_link:
             scorpio/mmp0/arm_base_link:
-              {}
+              scorpio/mmp0/axis1_link:
+                scorpio/mmp0/axis2_link:
+                  scorpio/mmp0/axis3_link:
+                    scorpio/mmp0/axis4_link:
+                      scorpio/mmp0/axis5_link:
+                        scorpio/mmp0/axis6_link:
+                          scorpio/mmp0/base_camera_link:
+                            scorpio/mmp0/base_camera_aligned_depth_to_color_frame:
+                              scorpio/mmp0/base_camera_color_optical_frame:
+                                {}
+                            scorpio/mmp0/base_camera_aligned_depth_to_infra1_frame:
+                              scorpio/mmp0/base_camera_infra1_optical_frame:
+                                {}
+                            scorpio/mmp0/base_camera_color_frame:
+                              {}
+                            scorpio/mmp0/base_camera_depth_frame:
+                              scorpio/mmp0/base_camera_depth_optical_frame:
+                                {}
+                            scorpio/mmp0/base_camera_infra1_frame:
+                              {}
+                            scorpio/mmp0/base_camera_infra2_frame:
+                              scorpio/mmp0/base_camera_infra2_optical_frame:
+                                {}
+                            scorpio/mmp0/base_camera_rgb_frame:
+                              scorpio/mmp0/base_camera_rgb_optical_frame:
+                                {}
+                          scorpio/mmp0/eef_link:
+                            {}
             scorpio/mmp0/back_hokuyo_link:
               {}
             scorpio/mmp0/back_left_wheel:
@@ -304,8 +339,7 @@ Visualization Manager:
       Marker Topic: visualization_marker
       Name: Marker
       Namespaces:
-        LEGS: true
-        PEOPLE: true
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/Marker
@@ -313,8 +347,7 @@ Visualization Manager:
       Marker Topic: /visualization_marker2
       Name: Marker
       Namespaces:
-        LEGS2: true
-        PEOPLE2: true
+        {}
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -342,7 +375,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.00999999978
       Style: Flat Squares
-      Topic: /scorpio/mmp0/camera/depth/color/points
+      Topic: /scorpio/mmp0/camera/depth_registered/points
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -387,10 +420,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 1.54539812
+      Pitch: 0.445399225
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 0.517232001
+      Yaw: 3.15223193
     Saved: ~
 Window Geometry:
   Displays:

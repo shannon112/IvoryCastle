@@ -20,5 +20,5 @@
   <node name="recognition_client" pkg="robot_arm_PMC" type="client_launch.py"/>
 
   <!--state machine-->
-  <include file="$(find pmc_state_machine)/launch/pmc_state_machine_test.launch"/>
+  <include file="$(find pmc_state_machine)/launch/pmc_state_machine_test_arm.launch"/>
 </launch>
