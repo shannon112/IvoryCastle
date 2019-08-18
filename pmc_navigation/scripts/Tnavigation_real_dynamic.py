@@ -106,7 +106,7 @@ def movea(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         if(abs(currY -goaly) < 0.20):
-            ts.linear.x = -abs(currY -goaly)*k*0.7-0.02 
+            ts.linear.x = -abs(currY -goaly)*k*0.7-0.02
         #print(hpause)
         #print("a:moveing")
         twistPub.publish(ts)
@@ -218,7 +218,7 @@ def moved(goalx,goaly,goaltheta):
         resp = tfReq(goal_frame, base_frame)
         currX = resp.trans[0]
         if(abs(currX -goalx) < 0.12):
-            ts.linear.x = -abs(currX -goalx)*k-0.02 
+            ts.linear.x = -abs(currX -goalx)*k-0.02
         #print(hpause)
         #print("b:moveing")
         twistPub.publish(ts)
@@ -233,7 +233,7 @@ def moved(goalx,goaly,goaltheta):
         return True
 def movec(goalx,goaly,goaltheta):
     global twistPub, tfReq, transVel ,hpause, k ,turn, turn2
-    print("C")
+    print("aC")
     ns = rospy.myargv(argv=sys.argv)[1]
     goal_frame=os.path.join(ns,'base_link')
     base_frame='/map'
@@ -268,6 +268,7 @@ def movec(goalx,goaly,goaltheta):
         fineRotation(-1.57,"map")
     while(currY-goaly>0.03 and hpause != True):
         turn2 =False
+        print("aaaa",turn2)
         resp = tfReq(goal_frame, base_frame)
         currY = resp.trans[1]
         quat = tuple(resp.quat)
