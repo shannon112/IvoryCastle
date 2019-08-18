@@ -5,6 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
+        - /TF1
         - /TF1/Frames1
       Splitter Ratio: 0.706278026
     Tree Height: 446
@@ -88,7 +89,7 @@ Visualization Manager:
         scorpio/mmp0/axis5_link:
           Value: true
         scorpio/mmp0/axis6_link:
-          Value: false
+          Value: true
         scorpio/mmp0/back_hokuyo_link:
           Value: false
         scorpio/mmp0/back_left_wheel:
@@ -137,6 +138,8 @@ Visualization Manager:
           Value: false
         scorpio/mmp0/right_wheel:
           Value: false
+        tf_help:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
@@ -172,6 +175,8 @@ Visualization Manager:
                             scorpio/mmp0/base_camera_rgb_frame:
                               scorpio/mmp0/base_camera_rgb_optical_frame:
                                 {}
+                            tf_help:
+                              {}
                           scorpio/mmp0/eef_link:
                             {}
             scorpio/mmp0/back_hokuyo_link:
@@ -341,7 +346,11 @@ Visualization Manager:
       Marker Topic: visualization_marker
       Name: Marker
       Namespaces:
-        {}
+        corner1: true
+        corner2: true
+        my_namespace: true
+        origin: true
+        trans: true
       Queue Size: 100
       Value: true
     - Class: rviz/Marker
@@ -407,7 +416,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 3.02473187
+      Distance: 2.43330932
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -422,10 +431,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.46039921
+      Pitch: 0.365399599
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 3.13723183
+      Yaw: 3.1372323
     Saved: ~
 Window Geometry:
   Displays:

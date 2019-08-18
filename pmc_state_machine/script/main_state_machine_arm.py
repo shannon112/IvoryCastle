@@ -396,8 +396,6 @@ class TaskEnd(smach.State):
                 return 'aborted'
             result = self.AttackingSrv(req)
             if result.result:
-                while True:
-                    a = 1
                 return status
         return 'aborted'
 

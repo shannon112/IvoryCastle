@@ -112,7 +112,6 @@ def pickPlace(req):
 
 if __name__ == '__main__':
   rospy.init_node('neuronbot_test_server')
-  print ("C")
   #alignment_srv = rospy.Service('alignment_trigger', Alignment, alignment)
   #trigger1_srv = rospy.Service('triggerPlacing', Trigger, trigger)
   #trigger2_srv = rospy.Service('triggerFetching', Trigger, trigger)
