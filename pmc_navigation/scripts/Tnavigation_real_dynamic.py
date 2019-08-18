@@ -261,7 +261,8 @@ def movec(goalx,goaly,goaltheta):
     ts.linear.x = 0.0
     twistPub.publish(ts)
     ts.linear.x = transVel
-    if(abs(currY-goaly)>0.05 and hpause != True and currX-goalx >-0.03 and turn2):
+    if((abs(currY-goaly)>0.05) and (hpause != True) and (currX-goalx >-0.03) and (turn2)):
+        print("bbbbb",turn2)
         turn =False
         if(currYaw>-1.45):
             absRotation(-1.45,"map")

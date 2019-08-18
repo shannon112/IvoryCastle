@@ -5,9 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /TF1
         - /TF1/Frames1
-        - /PointCloud21
       Splitter Ratio: 0.706278026
     Tree Height: 446
   - Class: rviz/Selection
@@ -73,6 +71,10 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
+        camera_link:
+          Value: true
+        neuronbot/mmp0/base_footprint:
+          Value: true
         scorpio/mmp0/arm_base_link:
           Value: false
         scorpio/mmp0/axis1_link:
@@ -420,10 +422,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.445399225
+      Pitch: 0.46039921
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 3.15223193
+      Yaw: 3.13723183
     Saved: ~
 Window Geometry:
   Displays:
