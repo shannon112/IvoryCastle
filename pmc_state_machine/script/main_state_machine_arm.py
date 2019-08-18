@@ -318,6 +318,7 @@ class Estimation(smach.State):
         req.bbox_corner2.y = BBox[3]
         result = self.DetectionSrv(req)
         userdata.PoseEst = result.grasp_pose
+
         return 'success'
 
 #define state PickPlace
@@ -326,12 +327,17 @@ class PicknPlace(smach.State):
         smach.State.__init__(self,
                              outcomes=['success','aborted'],
                              input_keys=['mani_task','pickPose','placePose','estPose','execNum'])
+        #rospy.wait_for_service('/attacking_pose')
+        #self.PickPlaceSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
         rospy.wait_for_service('/pick_and_place')
         self.PickPlaceSrv = rospy.ServiceProxy('/pick_and_place', PickPlace)
 
     def execute(self, userdata):
         rospy.loginfo('Executing state pose PickPlace')
         req = PickPlaceRequest()
+        #req = PoseSrvRequest()
+        #req.pose = userdata.estPose
+        #req.pose.position.z = userdata.estPose.position.z
         req.pick_pose = userdata.estPose
         req.place_pose = userdata.placePose[userdata.execNum]
         if userdata.mani_task == 'grasp':
@@ -348,6 +354,8 @@ class PicknPlace(smach.State):
         else:
             return 'aborted'
         result = self.PickPlaceSrv(req)
+        rospy.logwarn(req.pick_pose)
+        rospy.logwarn(req.place_pose)
         if not result.result:
             return 'aborted'
         return 'success'
@@ -359,15 +367,14 @@ class TaskEnd(smach.State):
                              input_keys=['mani_task','objectNum','execNumIn'],
                              output_keys=['execNumOut'])
         self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
-        self.InitPub = rospy.Publisher('InitTrig', String, queue_size=10)
+        self.InitPub = rospy.Publisher('/scorpio/mmp0/InitTrig', String, queue_size=10)
         self.InitPose = Pose()
-        self.InitPose.position.x = -0.563; self.InitPose.position.y = 0.097; self.InitPose.position.z = 1.322
-        self.InitPose.orientation.x = -0.831; self.InitPose.orientation.y = -0.021; self.InitPose.orientation.z = 0.556; self.InitPose.orientation.w = 0.018
+        self.InitPose.position.x = -0.603; self.InitPose.position.y = 0.097; self.InitPose.position.z = 1.322
+        self.InitPose.orientation.x = -0.891; self.InitPose.orientation.y = -0.030; self.InitPose.orientation.z = 0.453; self.InitPose.orientation.w = 0.023
 
     def execute(self, userdata):
         rospy.loginfo('Executing state TaskEnd')
-        while True:
-            a = 1
+        self.InitPub.publish(String("trig"))
         req = PoseSrvRequest()
         req.pose = self.InitPose
         req.str_box_ind = 'i'
@@ -389,7 +396,8 @@ class TaskEnd(smach.State):
                 return 'aborted'
             result = self.AttackingSrv(req)
             if result.result:
-                self.InitPub.publish(String("aa"))
+                while True:
+                    a = 1
                 return status
         return 'aborted'
 
@@ -515,7 +523,7 @@ def main():
                                                 'fetchdone':'fetching_done',
                                                 'stackdone':'stacking_done',
                                                 'continue':'SetDefaultParams',
-                                                'aborted':'task_aborted'},
+                                                'aborted':'TaskEnd'},
                                    remapping={'objectNum':'sm_arm_object_count',
                                               'execNumIn':'sm_arm_exec_count',
                                               'execNumOut':'sm_arm_exec_count'})
