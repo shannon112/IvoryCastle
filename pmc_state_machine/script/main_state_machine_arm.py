@@ -374,7 +374,7 @@ class TaskEnd(smach.State):
 
     def execute(self, userdata):
         rospy.loginfo('Executing state TaskEnd')
-        self.InitPub.publish(String("trig"))
+        #self.InitPub.publish(String("trig"))
         req = PoseSrvRequest()
         req.pose = self.InitPose
         req.str_box_ind = 'i'
