@@ -6,18 +6,10 @@
   <node name="aiml_stt_google" pkg="pmc_assistant" type="aiml_stt_google.py" output="screen"/>
 
   <!--image caption related-->
-  <!--param name="caption_model_path" value="$(find caption_pkg)/src/log_st/model-best.pth" />
-  <param name="infos_path" value="$(find caption_pkg)/src/log_st/infos_st-best.pkl" />
-  <param name="imagenet_weights_path" value="$(find caption_pkg)/src/data/imagenet_weights/resnet101.pth"/>
-  <param name="image_caption_image_topic" value="$(arg ns)/base_camera/rgb/image_raw"/>
-  <node name="caption_pmc_server" pkg="caption_pkg" type="caption_pmc_server.py"/>
-  <node name="caption_pmc_client" pkg="caption_pkg" type="caption_pmc_client.py" output="screen"/-->
+  <include file="$(find pmc_recognition)/launch/start_object_recognition.launch"/>
 
   <!--object recognition related-->
-  <param name="recognition_model_path" value="$(find robot_arm_PMC)/src/ssd_mobilenet_v1_coco_2017_11_17/output_inference_graph_v7.pb/frozen_inference_graph.pb" />
-  <param name="label_path" value="$(find robot_arm_PMC)/src/data/label_map.pbtxt" />
-  <node name="recognition_server" pkg="robot_arm_PMC" type="server_launch.py"/>
-  <node name="recognition_client" pkg="robot_arm_PMC" type="client_launch.py"/>
+  <include file="$(find pmc_caption)/launch/start_image_caption.launch"/>
 
   <!--state machine-->
   <include file="$(find pmc_state_machine)/launch/pmc_state_machine_test_arm.launch"/>
