@@ -28,7 +28,7 @@ def pubWarning():
     if not cautionFlag and not pauseFlag:
         pass #peace
     elif cautionFlag and not pauseFlag:
-        if (time.time() - cautionTime > 12) and (time.time() - pauseTime > 12):
+        if (time.time() - cautionTime > 10) and (time.time() - pauseTime > 10):
             style = random.randint(1,2)
             if style == 1:
                 pub.publish(String("Be careful, you are very close to me."))
@@ -37,7 +37,7 @@ def pubWarning():
             cautionTime = time.time()
             pass #caution
     else:
-        if time.time() - pauseTime > 12:
+        if time.time() - pauseTime > 10:
             style = random.randint(1,2)
             if style == 1:
                 pub.publish(String("I would wait until you pass through."))
