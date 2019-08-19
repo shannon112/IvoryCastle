@@ -29,6 +29,9 @@
         <arg name="info" value="true"/>
       </include>
       <include file="$(find scorpio_moveit_config)/launch/trajectory_execution.launch.xml"/>
+      <include file="$(find scorpio_moveit_config)/launch/moveit_rviz.launch">
+        <arg name="config" value="true"/>
+      </include>
     </group>
 
     <!--Laser ros driver-->
@@ -186,11 +189,6 @@
 
     <!-- Gui Rviz   -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/sghero_pmc_demo.rviz"/>
-
-    <!-- Gui Moveit Rviz -->
-    <include file="$(find scorpio_moveit_config)/launch/moveit_rviz.launch">
-      <arg name="config" value="$(arg config)"/>
-    </include>
 
     <!-- Gui arm -->
     <node ns="$(arg ns)" name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"/>
