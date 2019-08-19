@@ -67,7 +67,7 @@ def movea(goalx,goaly,goaltheta):
     global twistPub, tfReq, transVel, hpause, k ,turn ,turn2
     print("A")
     ns = rospy.myargv(argv=sys.argv)[1]
-    goal_frame=os.path.join(ns,'base_link')
+    goal_frame=os.path.join('base_link')
     base_frame='/map'
     resp = tfReq(goal_frame, base_frame)
     quat = tuple(resp.quat)
@@ -123,7 +123,7 @@ def moveb(goalx,goaly,goaltheta):
     global twistPub, tfReq, transVel ,hpause, k ,turn, turn2
     print("B")
     ns = rospy.myargv(argv=sys.argv)[1]
-    goal_frame=os.path.join(ns,'base_link')
+    goal_frame=os.path.join('base_link')
     base_frame='/map'
     resp = tfReq(goal_frame, base_frame)
     quat = tuple(resp.quat)
@@ -179,7 +179,7 @@ def moved(goalx,goaly,goaltheta):
     global twistPub, tfReq, transVel ,hpause, k ,turn, turn2
     print("D")
     ns = rospy.myargv(argv=sys.argv)[1]
-    goal_frame=os.path.join(ns,'base_link')
+    goal_frame=os.path.join('base_link')
     base_frame='/map'
     resp = tfReq(goal_frame, base_frame)
     quat = tuple(resp.quat)
@@ -235,7 +235,7 @@ def movec(goalx,goaly,goaltheta):
     global twistPub, tfReq, transVel ,hpause, k ,turn, turn2
     print("aC")
     ns = rospy.myargv(argv=sys.argv)[1]
-    goal_frame=os.path.join(ns,'base_link')
+    goal_frame=os.path.join('base_link')
     base_frame='/map'
     resp = tfReq(goal_frame, base_frame)
     quat = tuple(resp.quat)
@@ -290,7 +290,7 @@ def movec(goalx,goaly,goaltheta):
 def absRotation(tarAngle, base_frame):
     global twistPub, rotateVel, angleTH,tfReq ,hpause
     ns = rospy.myargv(argv=sys.argv)[1]
-    goal_frame=os.path.join(ns,'base_link')
+    goal_frame=os.path.join('base_link')
     #base_frame = "charger"
     resp = tfReq(goal_frame , base_frame)
     quat = tuple(resp.quat)
@@ -323,7 +323,7 @@ def fineRotation(tarAngle, base_frame):
     global twistPub, finerotateVel,fineangleTH,tfReq ,hpause
     print("fine degree")
     ns = rospy.myargv(argv=sys.argv)[1]
-    goal_frame=os.path.join(ns,'base_link')
+    goal_frame=os.path.join('base_link')
     #base_frame = "charger"
     resp = tfReq(goal_frame , base_frame)
     quat = tuple(resp.quat)

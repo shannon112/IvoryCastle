@@ -60,7 +60,7 @@ def ppdistance(x1,y1,x2,y2):
 def humancallback1(hmsg):
     global hpause1 , hcaution1 ,CPub ,PPub ,tfReq ,currX ,currY ,currYaw
     ns = rospy.myargv(argv=sys.argv)[1]
-    link = os.path.join(ns,'base_link')
+    link = os.path.join('base_link')
     resp = tfReq(link,"/map")
     quat = tuple(resp.quat)
     currYaw = tf.transformations.euler_from_quaternion(quat)[2]
