@@ -105,10 +105,15 @@ def pickPlace(req):
   print('    place_pose = (x, y, z) = ({}, {}, {})'.format(
     req.place_pose.position.x, req.place_pose.position.y, req.place_pose.position.z))
   print('    at station {}'.format(req.str_box_ind))
+  if req.str_box_ind[1] == '2':
+    print ('skipped pick')
   rospy.sleep(1)
   print('[Pick & Place] Pick and place completed.')
   print('============ Above Scenario Completed ==========\n')
-  return PickPlaceResponse(True)
+  res = PickPlaceResponse()
+  res.result = False
+  res.state = 'place'
+  return res
 
 if __name__ == '__main__':
   rospy.init_node('neuronbot_test_server')

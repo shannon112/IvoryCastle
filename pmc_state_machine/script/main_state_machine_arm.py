@@ -3,7 +3,7 @@
 import rospy
 import smach
 import smach_ros
-from std_msgs.msg import String
+from std_msgs.msg import String, Bool
 from geometry_msgs.msg import Pose
 from std_srvs.srv import Trigger, TriggerRequest
 from pmc_navigation.srv import navigoal
@@ -181,13 +181,17 @@ class SetDefault(smach.State):
         smach.State.__init__(self,
                              outcomes=['attack','pickplace','aborted'],
                              input_keys=['mani_task'],
-                             output_keys=['attackPose','pickPose','placePose','objectNum'])
+                             output_keys=['initPose','attackPose','pickPose','placePose','objectNum'])
 
     def execute(self, userdata):
         rospy.loginfo('Executing state SetDefault')
         rospy.loginfo('Current task is %s', userdata.mani_task)
 
         ### TODO: Set these default parameters ###
+        psInit = Pose()
+        psInit.position.x = -0.603; psInit.position.y = 0.097; psInit.position.z = 1.322
+        psInit.orientation.x = -0.891; psInit.orientation.y = -0.030; psInit.orientation.z = 0.453; psInit.orientation.w = 0.023
+        userdata.initPose = psInit
         if userdata.mani_task == 'grasp':
             userdata.objectNum=1
             ps = [Pose(), Pose(), Pose(), Pose()]
@@ -251,13 +255,18 @@ class Attacking(smach.State):
     def __init__(self):
         smach.State.__init__(self,
                              outcomes=['success','aborted'],
-                             input_keys=['mani_task','attackPose'])
+                             input_keys=['mani_task','initPose','attackPose'])
         rospy.wait_for_service('/attacking_pose')
         self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
 
     def execute(self, userdata):
         rospy.loginfo('Executing state Attacking')
         req = PoseSrvRequest()
+        req.pose = userdata.initPose
+        req.str_box_ind = 'i'
+        result = self.AttackingSrv(req)
+        if not result.result:
+            return 'aborted'
         req.pose = userdata.attackPose
         if userdata.mani_task == 'grasp':
             req.str_box_ind = 'a'
@@ -326,18 +335,22 @@ class PicknPlace(smach.State):
     def __init__(self):
         smach.State.__init__(self,
                              outcomes=['success','aborted'],
-                             input_keys=['mani_task','pickPose','placePose','estPose','execNum'])
-        #rospy.wait_for_service('/attacking_pose')
-        #self.PickPlaceSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
+                             input_keys=['mani_task','initPose','pickPose','placePose','estPose','execNum'])
+        rospy.wait_for_service('/attacking_pose')
+        self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
         rospy.wait_for_service('/pick_and_place')
         self.PickPlaceSrv = rospy.ServiceProxy('/pick_and_place', PickPlace)
+        self.pick = True
 
     def execute(self, userdata):
         rospy.loginfo('Executing state pose PickPlace')
+        req = PoseSrvRequest()
+        req.pose = userdata.initPose
+        req.str_box_ind = 'i'
+        result = self.AttackingSrv(req)
+        if not result.result:
+            return 'aborted'
         req = PickPlaceRequest()
-        #req = PoseSrvRequest()
-        #req.pose = userdata.estPose
-        #req.pose.position.z = userdata.estPose.position.z
         req.pick_pose = userdata.estPose
         req.place_pose = userdata.placePose[userdata.execNum]
         if userdata.mani_task == 'grasp':
@@ -353,30 +366,36 @@ class PicknPlace(smach.State):
             req.place_pose = userdata.estPose
         else:
             return 'aborted'
+        if self.pick:
+            req.str_box_ind += '1'
+        else:
+            req.str_box_ind += '2'
         result = self.PickPlaceSrv(req)
-        rospy.logwarn(req.pick_pose)
-        rospy.logwarn(req.place_pose)
-        if not result.result:
-            return 'aborted'
-        return 'success'
+        #rospy.logwarn(req.pick_pose)
+        #rospy.logwarn(req.place_pose)
+        if result.result:
+            self.pick = True
+            return 'success'
+        else:
+            self.pick = True
+            if result.state == 'place':
+                self.pick = False
+        return 'aborted'
 
 class TaskEnd(smach.State):
     def __init__(self):
         smach.State.__init__(self,
                              outcomes=['graspdone','placedone','fetchdone','stackdone','continue','aborted'],
-                             input_keys=['mani_task','objectNum','execNumIn'],
+                             input_keys=['initPose','mani_task','objectNum','execNumIn'],
                              output_keys=['execNumOut'])
         self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
         self.InitPub = rospy.Publisher('/scorpio/mmp0/InitTrig', String, queue_size=10)
-        self.InitPose = Pose()
-        self.InitPose.position.x = -0.603; self.InitPose.position.y = 0.097; self.InitPose.position.z = 1.322
-        self.InitPose.orientation.x = -0.891; self.InitPose.orientation.y = -0.030; self.InitPose.orientation.z = 0.453; self.InitPose.orientation.w = 0.023
 
     def execute(self, userdata):
         rospy.loginfo('Executing state TaskEnd')
         #self.InitPub.publish(String("trig"))
         req = PoseSrvRequest()
-        req.pose = self.InitPose
+        req.pose = userdata.initPose
         req.str_box_ind = 'i'
         if userdata.objectNum > userdata.execNumIn+1:
             userdata.execNumOut = userdata.execNumIn+1
@@ -477,6 +496,7 @@ def main():
         # ************************************************
         # *********** SM_ROOT/MANIPULATION ***************
         # ************************************************
+        sm_arm.userdata.sm_arm_ini_pose = Pose()
         sm_arm.userdata.sm_arm_atk_pose = Pose()
         sm_arm.userdata.sm_arm_pck_pose = []
         sm_arm.userdata.sm_arm_plc_pose = []
@@ -490,14 +510,16 @@ def main():
                                    transitions={'attack':'PoseAttacking',
                                                 'pickplace':'PickAndPlace',
                                                 'aborted':'task_aborted'},
-                                   remapping={'attackPose':'sm_arm_atk_pose',
+                                   remapping={'initPose':'sm_arm_ini_pose',
+											  'attackPose':'sm_arm_atk_pose',
                                               'pickPose':'sm_arm_pck_pose',
                                               'placePose':'sm_arm_plc_pose',
                                               'objectNum':'sm_arm_object_count'})
             smach.StateMachine.add('PoseAttacking', Attacking(),
                                    transitions={'success':'ObjectsDetection',
                                                 'aborted':'PoseAttacking'},
-                                   remapping={'attackPose':'sm_arm_atk_pose'})
+                                   remapping={'initPose':'sm_arm_ini_pose',
+											  'attackPose':'sm_arm_atk_pose'})
             smach.StateMachine.add('ObjectsDetection', Detection(),
                                    transitions={'success':'PoseEstimation'},
                                    remapping={'BBoxs':'sm_arm_bboxs'})
@@ -511,7 +533,8 @@ def main():
             smach.StateMachine.add('PickAndPlace', PicknPlace(),
                                    transitions={'success':'TaskEnd',
                                                 'aborted':'PickAndPlace'},
-                                   remapping={'pickPose':'sm_arm_pck_pose',
+                                   remapping={'initPose':'sm_arm_ini_pose',
+											  'pickPose':'sm_arm_pck_pose',
                                               'placePose':'sm_arm_plc_pose',
                                               'estPose':'sm_arm_est_pose',
                                               'execNum':'sm_arm_exec_count'})
@@ -522,7 +545,8 @@ def main():
                                                 'stackdone':'stacking_done',
                                                 'continue':'SetDefaultParams',
                                                 'aborted':'TaskEnd'},
-                                   remapping={'objectNum':'sm_arm_object_count',
+                                   remapping={'initPose':'sm_arm_ini_pose',
+											  'objectNum':'sm_arm_object_count',
                                               'execNumIn':'sm_arm_exec_count',
                                               'execNumOut':'sm_arm_exec_count'})
 
