@@ -4,7 +4,7 @@
   <param name="caption_model_path" value="$(find caption_pkg)/src/log_st_v5/model-best.pth" />
   <param name="infos_path" value="$(find caption_pkg)/src/log_st_v5/infos_st-best.pkl" />
   <param name="imagenet_weights_path" value="$(find caption_pkg)/src/data/imagenet_weights/resnet101.pth"/>
-  <param name="image_caption_image_topic" value="$(arg ns)/camera/color/image_raw"/>
+  <param name="image_caption_image_topic" value="/camera/color/image_raw"/>
 
   <node name="caption_pmc_server" pkg="caption_pkg" type="caption_pmc_server.py" output="screen"/>
   <node name="caption_pmc_client" pkg="caption_pkg" type="caption_pmc_client.py" output="screen"/>

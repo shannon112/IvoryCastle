@@ -77,7 +77,7 @@ def executeNavigating(req):
 
 def main():
     rospy.init_node('fake_server')
-    #s1 = rospy.Service('triggerCaption', Trigger, executeCaption)
+    s1 = rospy.Service('triggerCaption', Trigger, executeCaption)
     #s2 = rospy.Service('triggerGrasping', Trigger, executeGrasping)
     #s3 = rospy.Service('triggerPlacing', Trigger, executePlacing)
     #s4 = rospy.Service('triggerFetching', Trigger, executeFetching)

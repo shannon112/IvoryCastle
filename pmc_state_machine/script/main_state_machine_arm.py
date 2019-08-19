@@ -367,7 +367,7 @@ class TaskEnd(smach.State):
                              input_keys=['mani_task','objectNum','execNumIn'],
                              output_keys=['execNumOut'])
         self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
-        self.InitPub = rospy.Publisher('/scorpio/mmp0/InitTrig', String, queue_size=10)
+        self.InitPub = rospy.Publisher('/InitTrig', String, queue_size=10)
         self.InitPose = Pose()
         self.InitPose.position.x = -0.603; self.InitPose.position.y = 0.097; self.InitPose.position.z = 1.322
         self.InitPose.orientation.x = -0.891; self.InitPose.orientation.y = -0.030; self.InitPose.orientation.z = 0.453; self.InitPose.orientation.w = 0.023

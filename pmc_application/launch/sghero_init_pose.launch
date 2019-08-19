@@ -8,7 +8,7 @@
   <!--load lua configuration file (.lua)-->
   <arg name="lua_filename" default="sghero_allcarto_locali.lua"/>
 
-  <node ns="$(arg ns)" pkg="cartographer_ros" type="cartographer_start_trajectory"
+  <node pkg="cartographer_ros" type="cartographer_start_trajectory"
     name="cartographer_start_trajectory_node" args="
         ...
         -configuration_directory '$(find pmc_application)/config'
