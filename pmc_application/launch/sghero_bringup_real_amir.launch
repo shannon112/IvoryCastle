@@ -42,7 +42,7 @@
       <arg name="filters"   value="pointcloud"/>
     </include-->
     <include ns="$(arg ns)" file="$(find realsense2_camera)/launch/rs_rgbd.launch">
-      <!--arg name="tf_prefix" value="$(arg ns)/base_camera"/-->
+      <arg name="tf_prefix" value="base_camera"/>
     </include>
 
     <!--Gripper driver-->
@@ -74,7 +74,7 @@
       </group>
 
       <group if="$(arg carto)">
-	      <param name="$(arg ns)/diff_drive_controller/base_frame_id" value="$(arg ns)/base_footprint"/>
+	      <param name="$(arg ns)/diff_drive_controller/base_frame_id" value="base_footprint"/>
 	      <!-- Launch Cartographer slam -->
         <arg name="lua_filename" default="sghero_allcarto.lua"/>
         <node ns="$(arg ns)" name="cartographer_node" pkg="cartographer_ros"
@@ -129,7 +129,7 @@
 
       <group if="$(arg carto)">
         <!--Launch cartographer localization-->
-	      <param name="$(arg ns)/diff_drive_controller/base_frame_id" value="$(arg ns)/base_footprint"/>
+	      <param name="$(arg ns)/diff_drive_controller/base_frame_id" value="base_footprint"/>
         <arg name="lua_filename_local" default="sghero_allcarto_locali.lua"/>
         <arg name="map_filename" default="$(find pmc_gazebo)/map/map.bag.pbstream"/>
         <node ns="$(arg ns)" name="cartographer" pkg="cartographer_ros"
@@ -152,7 +152,8 @@
     </group>
 
     <!-- four action pose-->
-    <include file="$(find haf_grasping)/launch/haf_grasping.launch"/>
+    <rosparam command="load" file="$(find haf_grasping)/config/config.yaml" />
+    <node name="calc_grasppoints_svm_action_server" pkg="haf_grasping" type="calc_grasppoints_action_server"/>
     <node name="attack_pose" pkg="arm_plan" type="attack_pose.py"/>
     <node name="pick_place_ser" pkg="arm_plan" type="pick_place_ser.py"/>
     <node name="test_haf_client" pkg="haf_grasping" type="test_haf_client"/>
@@ -185,6 +186,11 @@
 
     <!-- Gui Rviz   -->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/sghero_pmc_demo.rviz"/>
+
+    <!-- Gui Moveit Rviz -->
+    <include file="$(find scorpio_moveit_config)/launch/moveit_rviz.launch">
+      <arg name="config" value="$(arg config)"/>
+    </include>
 
     <!-- Gui arm -->
     <node ns="$(arg ns)" name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"/>

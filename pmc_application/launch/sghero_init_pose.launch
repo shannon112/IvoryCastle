@@ -1,5 +1,4 @@
 <!--rosservice call /finish_trajectory 1-->
-<!--rosrun cartographer_ros cartographer_start_trajectory ... -configuration_directory '/home/shannon/Documents/ros-kinetic/src/neuronbot_cartographer_navigation/config' -configuration_basename 'neuronbot_seperate_locali.lua' -initial_pose '{to_trajectory_id = 0, relative_pose = { translation = { 1, 1, 0}, rotation = {0., 0., 0., } } }'-->
 
 <launch>
   <arg name="ns" default="scorpio/mmp0"/>
