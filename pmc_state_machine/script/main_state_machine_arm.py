@@ -391,8 +391,8 @@ class TaskEnd(smach.State):
                              outcomes=['graspdone','placedone','fetchdone','stackdone','continue','aborted'],
                              input_keys=['initPose','mani_task','objectNum','execNumIn'],
                              output_keys=['execNumOut'])
+        rospy.wait_for_service('/attacking_pose')
         self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
-        self.InitPub = rospy.Publisher('/scorpio/mmp0/InitTrig', String, queue_size=10)
 
     def execute(self, userdata):
         rospy.loginfo('Executing state TaskEnd')

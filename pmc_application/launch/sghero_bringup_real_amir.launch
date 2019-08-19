@@ -34,10 +34,6 @@
     <include file="$(find scorpio_bringup)/launch/real/hokuyo.launch"/>
 
     <!--Camera ros driver-->
-    <!--include ns="$(arg ns)" file="$(find realsense2_camera)/launch/rs_camera.launch">
-      <arg name="tf_prefix" value="$(arg ns)/base_camera"/>
-      <arg name="filters"   value="pointcloud"/>
-    </include-->
     <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
       <arg name="tf_prefix" value="base_camera"/>
     </include>

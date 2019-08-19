@@ -5,7 +5,6 @@ import smach
 import smach_ros
 from std_srvs.srv import Trigger
 from geometry_msgs.msg import Pose 
-from neuronbot_msgs.srv import Alignment, ObjDetectionWithName, GraspPoseEst_direct, PickPlace
 from pmc_msgs.srv import PoseSrv
 from smach_ros import ServiceState
 
@@ -16,24 +15,7 @@ class GraspMachine(smach.StateMachine):
 	def __init__(self):
 		global objName
 		smach.StateMachine.__init__(self, outcomes = ['temp'])
-		self.userdata.objName = objName 
-		self.userdata.pc = None
-		self.userdata.bboxCorner1 = None
-		self.userdata.bboxCorner2 = None
-		self.userdata.attackPose = None
-		self.userdata.graspPose = None
-		self.userdata.stackPose = None
 		
-		### Fixed positions ###
-		# take picture at C station
-		attack_ps = Pose()
-		attack_ps.position.x = -2.0; attack_ps.position.y = -2.0; attack_ps.position.z = -2.5 #TODO
-		self.userdata.attackPose = attack_ps
-		# grasp from amir
-		grasp_ps = Pose()
-		grasp_ps.position.x = -1.0; grasp_ps.position.y = -1.0; grasp_ps.position.z = -10.0 #TODO
-		self.userdata.graspPose = grasp_ps
-		#############################
 
 		with self:
 			smach.StateMachine.add('IDLE0000',
