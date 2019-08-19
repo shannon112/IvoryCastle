@@ -388,7 +388,7 @@ if __name__ == '__main__':
     rospy.init_node('pmcT', anonymous=True)
     rospy.Subscriber("/pause", Bool, callback)
     ns = rospy.myargv(argv=sys.argv)[1]
-    cmdVelTopic=os.path.join(ns,'diff_drive_controller','cmd_vel')
+    cmdVelTopic=os.path.join('diff_drive_controller','cmd_vel')
     twistPub = rospy.Publisher(cmdVelTopic, Twist, queue_size=1)
     rospy.wait_for_service('robot_tf_server')
     tfReq = rospy.ServiceProxy('robot_tf_server', RobotTF)
