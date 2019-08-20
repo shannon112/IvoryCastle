@@ -326,6 +326,8 @@ class Estimation(smach.State):
         req.bbox_corner2.x = BBox[2]
         req.bbox_corner2.y = BBox[3]
         result = self.DetectionSrv(req)
+        if result.grasp_pose.position.x == 0.0 and  result.grasp_pose.position.y == 0.0 and result.grasp_pose.position.z == 0.0:
+            return 'retry'
         userdata.PoseEst = result.grasp_pose
 
         return 'success'
