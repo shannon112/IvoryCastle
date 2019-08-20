@@ -3,6 +3,7 @@
     <arg name="ns" default="scorpio/mmp0"/>
     <arg name="carto" default="true"/>
     <arg name="slam" default="false"/>
+    <arg name="rviz" default="false"/>
 
     <!--Spawn Robot-->
     <param name="robot_description" command="rosrun xacro xacro.py '$(find scorpio_description)/robots/scorpio.urdf.xacro'" />
@@ -26,9 +27,6 @@
       <arg name="info" value="true"/>
     </include>
     <include file="$(find scorpio_moveit_config)/launch/trajectory_execution.launch.xml"/>
-    <include file="$(find scorpio_moveit_config)/launch/moveit_rviz.launch">
-      <arg name="config" value="true"/>
-    </include>
 
     <!--Laser ros driver-->
     <include file="$(find scorpio_bringup)/launch/real/hokuyo.launch"/>
@@ -177,10 +175,18 @@
       <param name="default_vx_min" value="-1.0"/>
     </node>
 
-    <!-- Gui Rviz   -->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/sghero_pmc_demo.rviz"/>
 
-    <!-- Gui arm -->
-    <node name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"/>
+    <group if="$(arg rviz)">
+      <!-- Gui Rviz   -->
+      <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/sghero_pmc_demo.rviz"/>
+
+      <!-- Gui Moveit-->
+      <include file="$(find scorpio_moveit_config)/launch/moveit_rviz.launch">
+        <arg name="config" value="true"/>
+      </include>
+
+      <!-- Gui arm -->
+      <node name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"/>
+    </group>
 
 </launch>
