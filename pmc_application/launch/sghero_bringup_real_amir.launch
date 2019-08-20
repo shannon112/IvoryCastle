@@ -175,18 +175,16 @@
       <param name="default_vx_min" value="-1.0"/>
     </node>
 
+    <!-- Gui arm (Optional)-->
+    <node name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"/>
 
     <group if="$(arg rviz)">
       <!-- Gui Rviz   -->
       <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/sghero_pmc_demo.rviz"/>
-
       <!-- Gui Moveit-->
       <include file="$(find scorpio_moveit_config)/launch/moveit_rviz.launch">
         <arg name="config" value="true"/>
       </include>
-
-      <!-- Gui arm -->
-      <node name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"/>
     </group>
 
 </launch>
