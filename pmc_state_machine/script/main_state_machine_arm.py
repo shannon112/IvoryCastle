@@ -200,12 +200,12 @@ class SetDefault(smach.State):
             ps[0].orientation.x =  -0.715; ps[0].orientation.y = 0.699; ps[0].orientation.z = -0.005; ps[0].orientation.w = 0.033
             userdata.attackPose = ps[0]
             # place on amir
-            ps[1].position.x = 0.161; ps[1].position.y = -0.046; ps[1].position.z = 0.401
-            ps[1].orientation.x = 0.320; ps[1].orientation.y = 0.947; ps[1].orientation.z = -0.041; ps[1].orientation.w = 0.004
-            ps[2].position.x = 0.022; ps[2].position.y = -0.186; ps[2].position.z = 0.401
-            ps[2].orientation.x = 0.320; ps[2].orientation.y = 0.947; ps[2].orientation.z = -0.041; ps[2].orientation.w = 0.004
-            ps[3].position.x = 0.161; ps[3].position.y = -0.186; ps[3].position.z = 0.401
-            ps[3].orientation.x = 0.320; ps[3].orientation.y = 0.947; ps[3].orientation.z = -0.041; ps[3].orientation.w = 0.004
+            ps[1].position.x = 0.016; ps[1].position.y = -0.175; ps[1].position.z = 0.295
+            ps[1].orientation.x = -0.374; ps[1].orientation.y = -0.928; ps[1].orientation.z = -0.003; ps[1].orientation.w = 0.007
+            ps[2].position.x = 0.016; ps[2].position.y = -0.175; ps[2].position.z = 0.295
+            ps[2].orientation.x = -0.374; ps[2].orientation.y = -0.928; ps[2].orientation.z = -0.003; ps[2].orientation.w = 0.007
+            ps[3].position.x = 0.016; ps[3].position.y = -0.175; ps[3].position.z = 0.295
+            ps[3].orientation.x = -0.374; ps[3].orientation.y = -0.928; ps[3].orientation.z = -0.003; ps[3].orientation.w = 0.007
             userdata.placePose = ps[1:]
             return 'attack'
 
@@ -213,8 +213,8 @@ class SetDefault(smach.State):
             userdata.objectNum=0
             ps = [Pose(), Pose()]
             # grasp from amir
-            ps[0].position.x = 0.020; ps[0].position.y = -0.113; ps[0].position.z = 0.319
-            ps[0].orientation.x = -0.999; ps[0].orientation.y = -0.042; ps[0].orientation.z = 0.004; ps[0].orientation.w = 0.013
+            ps[0].position.x = 0.021; ps[0].position.y = -0.110; ps[0].position.z = 0.269
+            ps[0].orientation.x = 0.042; ps[0].orientation.y = -0.999; ps[0].orientation.z = -0.011; ps[0].orientation.w = 0.007
             userdata.pickPose = [ps[0]]
             # place on B station
             ps[1].position.x = -0.727; ps[1].position.y = 0.299; ps[1].position.z = 0.602
@@ -230,8 +230,8 @@ class SetDefault(smach.State):
             ps[0].orientation.x = -0.999; ps[0].orientation.y = -0.042; ps[0].orientation.z = 0.004; ps[0].orientation.w = 0.013
             userdata.attackPose = ps[0]
             # place on amir
-            ps[1].position.x = 0.090; ps[1].position.y = -0.112; ps[1].position.z = 0.319
-            ps[1].orientation.x = 0.075; ps[1].orientation.y = -0.996; ps[1].orientation.z = 0.051; ps[1].orientation.w = 0.017
+            ps[1].position.x = 0.090; ps[1].position.y = -0.112; ps[1].position.z = 0.235
+            ps[1].orientation.x = 0.042; ps[1].orientation.y = -0.999; ps[1].orientation.z = -0.011; ps[1].orientation.w = 0.007
             userdata.placePose = [ps[1]]
             return 'attack'
 
@@ -239,8 +239,8 @@ class SetDefault(smach.State):
             userdata.objectNum=1
             ps = [Pose(), Pose()]
             # take picture at C station
-            ps[0].position.x = -0.119; ps[0].position.y = 0.650; ps[0].position.z = 0.947
-            ps[0].orientation.x = -0.700; ps[0].orientation.y = 0.714; ps[0].orientation.z = -0.011; ps[0].orientation.w = 0.027
+            ps[0].position.x = -0.181; ps[0].position.y = 0.680; ps[0].position.z = 0.847
+            ps[0].orientation.x =  -0.715; ps[0].orientation.y = 0.699; ps[0].orientation.z = -0.005; ps[0].orientation.w = 0.033
             userdata.attackPose = ps[0]
             # grasp from amir
             ps[1].position.x = 0.090; ps[1].position.y = -0.112; ps[1].position.z = 0.319
@@ -338,8 +338,8 @@ class PicknPlace(smach.State):
         smach.State.__init__(self,
                              outcomes=['success','aborted'],
                              input_keys=['mani_task','initPose','pickPose','placePose','estPose','execNum'])
-        rospy.wait_for_service('/attacking_pose')
-        self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
+        #rospy.wait_for_service('/attacking_pose')
+        #self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
         rospy.wait_for_service('/pick_and_place')
         self.PickPlaceSrv = rospy.ServiceProxy('/pick_and_place', PickPlace)
         self.pick = True
