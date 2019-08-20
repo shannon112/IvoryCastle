@@ -9,6 +9,7 @@ from std_srvs.srv import Trigger, TriggerRequest
 from pmc_navigation.srv import navigoal
 from pmc_msgs.srv import detection_PMC_half, GraspPoseEst_direct, PickPlace, PoseSrv
 from pmc_msgs.srv import detection_PMC_halfRequest, GraspPoseEst_directRequest, PickPlaceRequest, PoseSrvRequest
+from haf_grasping.srv import BBoxCenter, BBoxCenterRequest
 
 # define state VoiceCommand
 class VoiceCommand(smach.State):
@@ -337,11 +338,13 @@ class PicknPlace(smach.State):
     def __init__(self):
         smach.State.__init__(self,
                              outcomes=['success','restart','aborted'],
-                             input_keys=['mani_task','initPose','pickPose','placePose','estPose','execNum'])
+                             input_keys=['mani_task','initPose','pickPose','placePose','estPose','execNum','BBoxs'])
         #rospy.wait_for_service('/attacking_pose')
         #self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
         rospy.wait_for_service('/pick_and_place')
         self.PickPlaceSrv = rospy.ServiceProxy('/pick_and_place', PickPlace)
+        rospy.wait_for_service('/PC_center')
+        self.PCCenterSrv = rospy.ServiceProxy('/PC_center', BBoxCenter)
         self.restart = 0
         self.pick = True
 
@@ -364,10 +367,14 @@ class PicknPlace(smach.State):
         elif userdata.mani_task == 'fetch':
             req.str_box_ind = 'b'
         elif userdata.mani_task == 'stack':
+            reqCenter = BBoxCenterRequest()
+            req.bboxx = (BBox[0] + BBox[2])/2
+            req.bboxy = (BBox[1] + BBox[3])/2
+            resCenter = self.PCCenterSrv(req)
             req.str_box_ind = 'c'
             req.pick_pose = userdata.pickPose[userdata.execNum]
-            req.place_pose.position.x = userdata.estPose.position.x
-            req.place_pose.position.y = userdata.estPose.position.y
+            req.place_pose.position.x = resCenter.centerx
+            req.place_pose.position.y = resCenter.centery
             req.place_pose.position.z = userdata.estPose.position.z + 0.05
             req.place_pose.orientation = userdata.estPose.orientation
         else:
@@ -549,7 +556,8 @@ def main():
 											  'pickPose':'sm_arm_pck_pose',
                                               'placePose':'sm_arm_plc_pose',
                                               'estPose':'sm_arm_est_pose',
-                                              'execNum':'sm_arm_exec_count'})
+                                              'execNum':'sm_arm_exec_count',
+                                              'BBoxs':'sm_arm_bboxs'})
             smach.StateMachine.add('TaskEnd', TaskEnd(),
                                    transitions={'graspdone':'grasping_done',
                                                 'placedone':'placing_done',
