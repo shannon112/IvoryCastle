@@ -213,8 +213,8 @@ class SetDefault(smach.State):
             userdata.objectNum=0
             ps = [Pose(), Pose()]
             # grasp from amir
-            ps[1].position.x = 0.086; ps[1].position.y = -0.105; ps[1].position.z = 0.269
-            ps[1].orientation.x = -0.374; ps[1].orientation.y = -0.928; ps[1].orientation.z = -0.003; ps[1].orientation.w = 0.007
+            ps[0].position.x = 0.086; ps[0].position.y = -0.105; ps[0].position.z = 0.269
+            ps[0].orientation.x = -0.374; ps[0].orientation.y = -0.928; ps[0].orientation.z = -0.003; ps[0].orientation.w = 0.007
             userdata.pickPose = [ps[0]]
             # place on B station
             ps[1].position.x = -0.727; ps[1].position.y = 0.299; ps[1].position.z = 0.602
@@ -226,7 +226,7 @@ class SetDefault(smach.State):
             userdata.objectNum=1
             ps = [Pose(), Pose()]
             # take picture at B station
-            ps[0].position.x = -0.727; ps[0].position.y = 0.299; ps[0].position.z = 0.802
+            ps[0].position.x = -0.707; ps[0].position.y = 0.299; ps[0].position.z = 0.650
             ps[0].orientation.x = -0.999; ps[0].orientation.y = -0.042; ps[0].orientation.z = 0.004; ps[0].orientation.w = 0.013
             userdata.attackPose = ps[0]
             # place on amir
@@ -336,12 +336,13 @@ class Estimation(smach.State):
 class PicknPlace(smach.State):
     def __init__(self):
         smach.State.__init__(self,
-                             outcomes=['success','aborted'],
+                             outcomes=['success','restart','aborted'],
                              input_keys=['mani_task','initPose','pickPose','placePose','estPose','execNum'])
         #rospy.wait_for_service('/attacking_pose')
         #self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
         rospy.wait_for_service('/pick_and_place')
         self.PickPlaceSrv = rospy.ServiceProxy('/pick_and_place', PickPlace)
+        self.restart = 0
         self.pick = True
 
     def execute(self, userdata):
@@ -380,8 +381,13 @@ class PicknPlace(smach.State):
         #rospy.logwarn(req.place_pose)
         if result.result:
             self.pick = True
+            self.restart = 0
             return 'success'
         else:
+            self.restart += 1
+            if self.restart > 2:
+                self.restart = 0
+                return 'restart'
             self.pick = True
             if result.state == 'place':
                 self.pick = False
@@ -537,6 +543,7 @@ def main():
                                               'PoseEst':'sm_arm_est_pose'})
             smach.StateMachine.add('PickAndPlace', PicknPlace(),
                                    transitions={'success':'TaskEnd',
+                                                'restart':'ObjectsDetection',
                                                 'aborted':'PickAndPlace'},
                                    remapping={'initPose':'sm_arm_ini_pose',
 											  'pickPose':'sm_arm_pck_pose',
