@@ -71,8 +71,7 @@
         <node name="cartographer_node" pkg="cartographer_ros"
             type="cartographer_node" args="
                 -configuration_directory $(find pmc_application)/config
-                -configuration_basename $(arg lua_filename)"
-            output="screen">
+                -configuration_basename $(arg lua_filename)">
           <remap from="imu" to="imu" />
           <remap from="scan" to="front_scan" />
           <remap from="odom"     to="diff_drive_controller/odom"/>
@@ -128,8 +127,7 @@
                 -configuration_directory $(find pmc_application)/config
                 -configuration_basename $(arg lua_filename_local)
                 -load_state_filename $(arg map_filename)
-                -start_trajectory_with_default_topics=false"
-            output="screen">
+                -start_trajectory_with_default_topics=false">
             <remap from="imu" to="imu" />
             <remap from="scan" to="front_scan" />
             <remap from="odom"     to="diff_drive_controller/odom"/>
@@ -147,7 +145,7 @@
     <node name="calc_grasppoints_svm_action_server" pkg="haf_grasping" type="calc_grasppoints_action_server"/>
     <node name="attack_pose" pkg="arm_plan" type="attack_pose.py"/>
     <node name="pick_place_ser" pkg="arm_plan" type="pick_place_ser.py"/>
-    <node name="test_haf_client" pkg="haf_grasping" type="test_haf_client"/>
+    <node name="test_haf_client" pkg="haf_grasping" type="test_haf_client" output="screen"/>
 
     <!--Vocal output related, offline-->
     <!--include file="$(find sound_play)/soundplay_node.launch"/>
@@ -158,7 +156,7 @@
 
     <!--Assistant related-->
     <param name="aiml_path" value="$(find pmc_assistant)/data" />
-    <node name="aiml_server" pkg="pmc_assistant" type="aiml_server.py" output="screen"/>
+    <node name="aiml_server" pkg="pmc_assistant" type="aiml_server.py"/>
 
     <!--navigation related-->
     <node name="tfServer" pkg="ira_factory_state_machine" type="tfServer.py"/>
