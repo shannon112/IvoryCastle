@@ -213,8 +213,8 @@ class SetDefault(smach.State):
             userdata.objectNum=0
             ps = [Pose(), Pose()]
             # grasp from amir
-            ps[0].position.x = 0.021; ps[0].position.y = -0.110; ps[0].position.z = 0.269
-            ps[0].orientation.x = 0.042; ps[0].orientation.y = -0.999; ps[0].orientation.z = -0.011; ps[0].orientation.w = 0.007
+            ps[1].position.x = 0.086; ps[1].position.y = -0.105; ps[1].position.z = 0.269
+            ps[1].orientation.x = -0.374; ps[1].orientation.y = -0.928; ps[1].orientation.z = -0.003; ps[1].orientation.w = 0.007
             userdata.pickPose = [ps[0]]
             # place on B station
             ps[1].position.x = -0.727; ps[1].position.y = 0.299; ps[1].position.z = 0.602
