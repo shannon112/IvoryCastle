@@ -144,7 +144,7 @@
     <rosparam command="load" file="$(find haf_grasping)/config/config.yaml" />
     <node name="calc_grasppoints_svm_action_server" pkg="haf_grasping" type="calc_grasppoints_action_server"/>
     <node name="attack_pose" pkg="arm_plan" type="attack_pose.py"/>
-    <node name="pick_place_ser" pkg="arm_plan" type="pick_place_ser.py"/>
+    <node name="pick_place_ser" pkg="arm_plan" type="pick_place_ser.py" output="screen"/>
     <node name="test_haf_client" pkg="haf_grasping" type="test_haf_client" output="screen"/>
 
     <!--Vocal output related, offline-->
