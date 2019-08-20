@@ -262,11 +262,11 @@ class Attacking(smach.State):
     def execute(self, userdata):
         rospy.loginfo('Executing state Attacking')
         req = PoseSrvRequest()
-        req.pose = userdata.initPose
-        req.str_box_ind = 'i'
-        result = self.AttackingSrv(req)
-        if not result.result:
-            return 'aborted'
+        #req.pose = userdata.initPose
+        #req.str_box_ind = 'i'
+        #result = self.AttackingSrv(req)
+        #if not result.result:
+        #    return 'aborted'
         req.pose = userdata.attackPose
         if userdata.mani_task == 'grasp':
             req.str_box_ind = 'a'
@@ -277,6 +277,7 @@ class Attacking(smach.State):
         else:
             return 'aborted'
         result = self.AttackingSrv(req)
+        rospy.sleep(5)
         if result.result:
             return 'success'
         return 'aborted'
@@ -291,7 +292,6 @@ class Detection(smach.State):
         self.DetectionSrv = rospy.ServiceProxy('/object_detection_willie', detection_PMC_half)
 
     def execute(self, userdata):
-        rospy.sleep(3)
         rospy.loginfo('Executing state objects Detection')
         result = self.DetectionSrv(detection_PMC_halfRequest())
         #rospy.loginfo(result.data)
@@ -346,12 +346,12 @@ class PicknPlace(smach.State):
 
     def execute(self, userdata):
         rospy.loginfo('Executing state pose PickPlace')
-        req = PoseSrvRequest()
-        req.pose = userdata.initPose
-        req.str_box_ind = 'i'
-        result = self.AttackingSrv(req)
-        if not result.result:
-            return 'aborted'
+        #req = PoseSrvRequest()
+        #req.pose = userdata.initPose
+        #req.str_box_ind = 'i'
+        #result = self.AttackingSrv(req)
+        #if not result.result:
+        #    return 'aborted'
         req = PickPlaceRequest()
         req.pick_pose = userdata.estPose
         req.place_pose = userdata.placePose[userdata.execNum]

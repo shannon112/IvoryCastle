@@ -62,7 +62,7 @@ def graspEst(req):
     req.bbox_corner2.x, req.bbox_corner2.y, req.bbox_corner2.z))
   rep = GraspPoseEst_directResponse()
   ps = Pose()
-  ps.position.x = 100.0; ps.position.y = 100.0; ps.position.z = 100.0
+  ps.position.x = 0.0; ps.position.y = 0.0; ps.position.z = 0.0
   rep.grasp_pose = ps
   rospy.sleep(1)
   print('[Grasping Pose Estimation] Return grasping pose:')
