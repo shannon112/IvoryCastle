@@ -217,8 +217,8 @@ class SetDefault(smach.State):
             ps[0].orientation.x = -0.374; ps[0].orientation.y = -0.928; ps[0].orientation.z = -0.003; ps[0].orientation.w = 0.007
             userdata.pickPose = [ps[0]]
             # place on B station
-            ps[1].position.x = -0.727; ps[1].position.y = 0.299; ps[1].position.z = 0.602
-            ps[1].orientation.x = -0.999; ps[1].orientation.y = -0.042; ps[1].orientation.z = 0.004; ps[1].orientation.w = 0.013
+            ps[1].position.x = -0.857; ps[1].position.y = 0.260; ps[1].position.z = 0.540
+            ps[1].orientation.x = -0.374; ps[1].orientation.y = -0.928; ps[1].orientation.z = -0.003; ps[1].orientation.w = 0.007
             userdata.placePose = [ps[1]]
             return 'pickplace'
 
@@ -243,8 +243,8 @@ class SetDefault(smach.State):
             ps[0].orientation.x =  -0.715; ps[0].orientation.y = 0.699; ps[0].orientation.z = -0.005; ps[0].orientation.w = 0.033
             userdata.attackPose = ps[0]
             # grasp from amir
-            ps[1].position.x = 0.090; ps[1].position.y = -0.112; ps[1].position.z = 0.319
-            ps[1].orientation.x = 0.075; ps[1].orientation.y = -0.996; ps[1].orientation.z = 0.051; ps[1].orientation.w = 0.017
+            ps[1].position.x = 0.090; ps[1].position.y = -0.112; ps[1].position.z = 0.235
+            ps[1].orientation.x = 0.042; ps[1].orientation.y = -0.999; ps[1].orientation.z = -0.011; ps[1].orientation.w = 0.007
             userdata.pickPose = [ps[1]]
             return 'attack'
         else:
