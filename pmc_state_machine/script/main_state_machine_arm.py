@@ -382,13 +382,15 @@ class PicknPlace(smach.State):
             req.str_box_ind = 'b'
             req.pick_pose = userdata.estPose
             req.place_pose = userdata.placePose[userdata.execNum]
+            req.pick_pose.orientation.x = -0.999; req.pick_pose.orientation.y = -0.042; req.pick_pose.orientation.z = 0.004; req.pick_pose.orientation.w = 0.013
         elif userdata.mani_task == 'stack':
             req.str_box_ind = 'c'
             req.pick_pose = userdata.pickPose[userdata.execNum]
             req.place_pose.position.x = userdata.estPose.position.x
             req.place_pose.position.y = userdata.estPose.position.y
-            req.place_pose.position.z = userdata.estPose.position.z + 0.05
+            req.place_pose.position.z = userdata.estPose.position.z + 0.07
             req.place_pose.orientation = userdata.estPose.orientation
+            req.place_pose.orientation.x =  -0.715; req.place_pose.orientation.y = 0.699; req.place_pose.orientation.z = -0.005; req.place_pose.orientation.w = 0.033
         else:
             return 'aborted'
         if self.pick:
