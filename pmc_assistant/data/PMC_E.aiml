@@ -82,6 +82,20 @@
 <template>There are two at the shipping area.</template>
 </category>
 
+
+<category><pattern>_ ARE YOU FROM</pattern>
+<template>I am from the Graduate institute of eletrical engineer,National Taiwan University  .</template>
+</category>
+
+
+
+<category><pattern>_ TIME IS IT</pattern>
+<template>now the time is Friday </template>
+</category>
+
+
+
+
 <category>
       <pattern>_ HAVE BEEN FINISHED</pattern>
       <template>

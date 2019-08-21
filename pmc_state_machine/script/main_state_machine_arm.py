@@ -308,6 +308,8 @@ class Estimation(smach.State):
                              output_keys=['PoseEst'])
         rospy.wait_for_service('/grasping_pose_estimation')
         self.DetectionSrv = rospy.ServiceProxy('/grasping_pose_estimation', GraspPoseEst_direct)
+        #rospy.wait_for_service('/PC_center')
+        #self.PCCenterSrv = rospy.ServiceProxy('/PC_center', BBoxCenter)
 
     def execute(self, userdata):
         rospy.loginfo('Executing state pose Estimation')
@@ -330,7 +332,20 @@ class Estimation(smach.State):
         if result.grasp_pose.position.x == 0.0 and  result.grasp_pose.position.y == 0.0 and result.grasp_pose.position.z == 0.0:
             return 'retry'
         userdata.PoseEst = result.grasp_pose
-
+        """
+        if userdata.mani_task == 'fetch' or userdata.mani_task == 'stack':
+            resultPS = Pose()
+            resultPS.orientation = result.grasp_pose.orientation
+            req = BBoxCenterRequest()
+            req.bboxx = (BBox[0]+BBox[2])/2
+            req.bboxy = (BBox[1]+BBox[3])/2
+            result = self.PCCenterSrv(req)
+            print (result)
+            resultPS.position.x = result.centerx
+            resultPS.position.y = result.centery
+            resultPS.position.z = result.centerz
+            userdata.PoseEst = resultPS
+        """
         return 'success'
 
 #define state PickPlace
@@ -343,8 +358,6 @@ class PicknPlace(smach.State):
         #self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
         rospy.wait_for_service('/pick_and_place')
         self.PickPlaceSrv = rospy.ServiceProxy('/pick_and_place', PickPlace)
-        rospy.wait_for_service('/PC_center')
-        self.PCCenterSrv = rospy.ServiceProxy('/PC_center', BBoxCenter)
         self.restart = 0
         self.pick = True
 
@@ -357,26 +370,21 @@ class PicknPlace(smach.State):
         #if not result.result:
         #    return 'aborted'
         req = PickPlaceRequest()
-        req.pick_pose = userdata.estPose
         if userdata.mani_task == 'grasp':
-            req.place_pose = userdata.placePose[userdata.execNum]
             req.str_box_ind = 'a'
+            req.pick_pose = userdata.estPose
+            req.place_pose = userdata.placePose[userdata.execNum]
         elif userdata.mani_task == 'place':
             req.str_box_ind = 'b'
             req.pick_pose = userdata.pickPose[userdata.execNum]
             req.place_pose = userdata.placePose[userdata.execNum]
         elif userdata.mani_task == 'fetch':
             req.str_box_ind = 'b'
+            req.pick_pose = userdata.estPose
             req.place_pose = userdata.placePose[userdata.execNum]
         elif userdata.mani_task == 'stack':
-            #reqCenter = BBoxCenterRequest()
-            #reqCenter.bboxx = (userdata.BBoxs[12] + userdata.BBoxs[14])/2
-            #reqCenter.bboxy = (userdata.BBoxs[13] + userdata.BBoxs[15])/2
-            #resCenter = self.PCCenterSrv(reqCenter)
             req.str_box_ind = 'c'
             req.pick_pose = userdata.pickPose[userdata.execNum]
-            #req.place_pose.position.x = resCenter.centerx
-            #req.place_pose.position.y = resCenter.centery
             req.place_pose.position.x = userdata.estPose.position.x
             req.place_pose.position.y = userdata.estPose.position.y
             req.place_pose.position.z = userdata.estPose.position.z + 0.05
