@@ -557,7 +557,7 @@ def main():
                                    remapping={'BBoxs':'sm_arm_bboxs'})
             smach.StateMachine.add('PoseEstimation', Estimation(),
                                    transitions={'success':'PickAndPlace',
-												'retry':'ObjectsDetection',
+												'retry':'PoseAttacking',
                                                 'aborted':'task_aborted'},
                                    remapping={'BBoxs':'sm_arm_bboxs',
                                               'execNum':'sm_arm_exec_count',
