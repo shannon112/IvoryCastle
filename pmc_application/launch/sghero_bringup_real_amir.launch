@@ -4,6 +4,7 @@
     <arg name="carto" default="true"/>
     <arg name="slam" default="false"/>
     <arg name="rviz" default="false"/>
+    <arg name="rqt" default="false"/>
 
     <!--Spawn Robot-->
     <param name="robot_description" command="rosrun xacro xacro.py '$(find scorpio_description)/robots/scorpio.urdf.xacro'" />
@@ -166,15 +167,17 @@
     <node name="humancaution" pkg="pmc_navigation" type="humancaution.py" args="$(arg ns)"/>
     <node name="humancaution_chatter" pkg="pmc_navigation" type="humancaution_chatter.py"/>
 
-    <!--Gui steering console (Optional)-->
-    <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
-      <param name="default_topic" value="/diff_drive_controller/cmd_vel"/>
-      <param name="default_vx_max" value="1.0"/>
-      <param name="default_vx_min" value="-1.0"/>
-    </node>
+    <group if="$(arg rqt)">
+      <!--Gui steering console (Optional)-->
+      <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+        <param name="default_topic" value="/diff_drive_controller/cmd_vel"/>
+        <param name="default_vx_max" value="1.0"/>
+        <param name="default_vx_min" value="-1.0"/>
+      </node>
 
-    <!-- Gui arm (Optional)-->
-    <node name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"/>
+      <!-- Gui arm (Optional)-->
+      <node name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"/>
+    </group>
 
     <group if="$(arg rviz)">
       <!-- Gui Rviz   -->
