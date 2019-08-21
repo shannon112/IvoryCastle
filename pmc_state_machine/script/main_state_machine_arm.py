@@ -273,6 +273,7 @@ class Attacking(smach.State):
         req.pose.position.x = userdata.attackPose.position.x
         req.pose.position.y = userdata.attackPose.position.y
         req.pose.position.z = userdata.attackPose.position.z
+        req.pose.orientation = userdata.attackPose.orientation
         if userdata.mani_task == 'grasp':
             req.str_box_ind = 'a'
         elif userdata.mani_task == 'fetch':
@@ -281,16 +282,14 @@ class Attacking(smach.State):
             req.str_box_ind = 'c'
         else:
             return 'aborted'
-        """
         if userdata.countIn % 10 == 2 or userdata.countIn % 10 == 3:
-            req.pose.position.x = req.pose.position.x + 0.03
+            req.pose.position.x = req.pose.position.x + 0.04
         elif userdata.countIn % 10 == 4 or userdata.countIn % 10 == 5:
-            req.pose.position.y = req.pose.position.y + 0.03
+            req.pose.position.y = req.pose.position.y + 0.04
         elif userdata.countIn % 10 == 6 or userdata.countIn % 10 == 7:
-            req.pose.position.x = req.pose.position.x - 0.03
+            req.pose.position.x = req.pose.position.x - 0.04
         elif userdata.countIn % 10 == 8 or userdata.countIn % 10 == 9:
-            req.pose.position.y = req.pose.position.y - 0.03
-        """
+            req.pose.position.y = req.pose.position.y - 0.04
         result = self.AttackingSrv(req)
         rospy.sleep(3)
         userdata.countOut = userdata.countIn + 1
@@ -403,7 +402,7 @@ class PicknPlace(smach.State):
             req.pick_pose = userdata.pickPose[userdata.execNum]
             req.place_pose.position.x = userdata.estPose.position.x
             req.place_pose.position.y = userdata.estPose.position.y
-            req.place_pose.position.z = userdata.estPose.position.z + 0.07
+            req.place_pose.position.z = userdata.estPose.position.z + 0.1
             req.place_pose.orientation = userdata.estPose.orientation
             req.place_pose.orientation.x =  -0.715; req.place_pose.orientation.y = 0.699; req.place_pose.orientation.z = -0.005; req.place_pose.orientation.w = 0.033
         else:
