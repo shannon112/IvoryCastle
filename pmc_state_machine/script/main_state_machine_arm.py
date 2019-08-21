@@ -278,7 +278,7 @@ class Attacking(smach.State):
         else:
             return 'aborted'
         result = self.AttackingSrv(req)
-        rospy.sleep(5)
+        rospy.sleep(3)
         if result.result:
             return 'success'
         return 'aborted'
@@ -358,23 +358,27 @@ class PicknPlace(smach.State):
         #    return 'aborted'
         req = PickPlaceRequest()
         req.pick_pose = userdata.estPose
-        req.place_pose = userdata.placePose[userdata.execNum]
         if userdata.mani_task == 'grasp':
+            req.place_pose = userdata.placePose[userdata.execNum]
             req.str_box_ind = 'a'
         elif userdata.mani_task == 'place':
             req.str_box_ind = 'b'
             req.pick_pose = userdata.pickPose[userdata.execNum]
+            req.place_pose = userdata.placePose[userdata.execNum]
         elif userdata.mani_task == 'fetch':
             req.str_box_ind = 'b'
+            req.place_pose = userdata.placePose[userdata.execNum]
         elif userdata.mani_task == 'stack':
-            reqCenter = BBoxCenterRequest()
-            req.bboxx = (BBox[0] + BBox[2])/2
-            req.bboxy = (BBox[1] + BBox[3])/2
-            resCenter = self.PCCenterSrv(req)
+            #reqCenter = BBoxCenterRequest()
+            #reqCenter.bboxx = (userdata.BBoxs[12] + userdata.BBoxs[14])/2
+            #reqCenter.bboxy = (userdata.BBoxs[13] + userdata.BBoxs[15])/2
+            #resCenter = self.PCCenterSrv(reqCenter)
             req.str_box_ind = 'c'
             req.pick_pose = userdata.pickPose[userdata.execNum]
-            req.place_pose.position.x = resCenter.centerx
-            req.place_pose.position.y = resCenter.centery
+            #req.place_pose.position.x = resCenter.centerx
+            #req.place_pose.position.y = resCenter.centery
+            req.place_pose.position.x = userdata.estPose.position.x
+            req.place_pose.position.y = userdata.estPose.position.y
             req.place_pose.position.z = userdata.estPose.position.z + 0.05
             req.place_pose.orientation = userdata.estPose.orientation
         else:

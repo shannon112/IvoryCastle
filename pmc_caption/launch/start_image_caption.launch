@@ -1,8 +1,8 @@
 <launch>
   <arg name="ns" default="scorpio/mmp0"/>
 
-  <param name="caption_model_path" value="$(find caption_pkg)/src/log_st_v5/model-best.pth" />
-  <param name="infos_path" value="$(find caption_pkg)/src/log_st_v5/infos_st-best.pkl" />
+  <param name="caption_model_path" value="$(find caption_pkg)/src/log_st_v2/model-best.pth" />
+  <param name="infos_path" value="$(find caption_pkg)/src/log_st_v2/infos_st-best.pkl" />
   <param name="imagenet_weights_path" value="$(find caption_pkg)/src/data/imagenet_weights/resnet101.pth"/>
   <param name="image_caption_image_topic" value="/camera/color/image_raw"/>
 
