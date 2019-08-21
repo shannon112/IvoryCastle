@@ -256,9 +256,11 @@ class Attacking(smach.State):
     def __init__(self):
         smach.State.__init__(self,
                              outcomes=['success','aborted'],
-                             input_keys=['mani_task','initPose','attackPose'])
+                             input_keys=['mani_task','initPose','attackPose','countIn'],
+                             output_keys=['countOut'])
         rospy.wait_for_service('/attacking_pose')
         self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
+        self.count = 0
 
     def execute(self, userdata):
         rospy.loginfo('Executing state Attacking')
@@ -277,8 +279,17 @@ class Attacking(smach.State):
             req.str_box_ind = 'c'
         else:
             return 'aborted'
+        if userdata.countIn % 5 == 1:
+            req.pose.x = req.pose.x + 0.03
+        elif userdata.countIn % 5 == 2:
+            req.pose.x = req.pose.y + 0.03
+        elif userdata.countIn % 5 == 3:
+            req.pose.x = req.pose.x - 0.03
+        elif userdata.countIn % 5 == 4:
+            req.pose.x = req.pose.y - 0.03
         result = self.AttackingSrv(req)
         rospy.sleep(3)
+        userdata.countOut = userdata.countIn + 1
         if result.result:
             return 'success'
         return 'aborted'
@@ -419,13 +430,14 @@ class TaskEnd(smach.State):
         smach.State.__init__(self,
                              outcomes=['graspdone','placedone','fetchdone','stackdone','continue','aborted'],
                              input_keys=['initPose','mani_task','objectNum','execNumIn'],
-                             output_keys=['execNumOut'])
+                             output_keys=['execNumOut','countOut'])
         rospy.wait_for_service('/attacking_pose')
         self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
 
     def execute(self, userdata):
         rospy.loginfo('Executing state TaskEnd')
         #self.InitPub.publish(String("trig"))
+        userdata.countOut = 0
         req = PoseSrvRequest()
         req.pose = userdata.initPose
         req.str_box_ind = 'i'
@@ -530,6 +542,7 @@ def main():
         # ************************************************
         sm_arm.userdata.sm_arm_ini_pose = Pose()
         sm_arm.userdata.sm_arm_atk_pose = Pose()
+        sm_arm.userdata.sm_atk_count = 0
         sm_arm.userdata.sm_arm_pck_pose = []
         sm_arm.userdata.sm_arm_plc_pose = []
         sm_arm.userdata.sm_arm_est_pose = Pose()
@@ -551,7 +564,9 @@ def main():
                                    transitions={'success':'ObjectsDetection',
                                                 'aborted':'PoseAttacking'},
                                    remapping={'initPose':'sm_arm_ini_pose',
-											  'attackPose':'sm_arm_atk_pose'})
+											  'attackPose':'sm_arm_atk_pose',
+                                              'countIn':'sm_atk_count',
+                                              'countOut':'sm_atk_count'})
             smach.StateMachine.add('ObjectsDetection', Detection(),
                                    transitions={'success':'PoseEstimation'},
                                    remapping={'BBoxs':'sm_arm_bboxs'})
@@ -571,7 +586,7 @@ def main():
                                               'placePose':'sm_arm_plc_pose',
                                               'estPose':'sm_arm_est_pose',
                                               'execNum':'sm_arm_exec_count',
-                                              'BBoxs':'sm_arm_bboxs'})
+                                              'BBoxs':'sm_arm_bboxs',})
             smach.StateMachine.add('TaskEnd', TaskEnd(),
                                    transitions={'graspdone':'grasping_done',
                                                 'placedone':'placing_done',
@@ -582,7 +597,8 @@ def main():
                                    remapping={'initPose':'sm_arm_ini_pose',
 											  'objectNum':'sm_arm_object_count',
                                               'execNumIn':'sm_arm_exec_count',
-                                              'execNumOut':'sm_arm_exec_count'})
+                                              'execNumOut':'sm_arm_exec_count',
+                                              'countOut':'sm_atk_count'})
 
         smach.StateMachine.add('MANIPULATION', sm_arm,
                                transitions={'grasping_done':'COLLECTING',
