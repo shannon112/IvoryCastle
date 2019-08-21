@@ -131,65 +131,67 @@ Visualization Manager:
           Value: true
         left_wheel:
           Value: true
+        map:
+          Value: true
+        odom:
+          Value: true
         right_wheel:
           Value: true
-        tf_help:
-          Value: false
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: false
       Tree:
-        base_footprint:
-          base_link:
-            arm_base_link:
-              axis1_link:
-                axis2_link:
-                  axis3_link:
-                    axis4_link:
-                      axis5_link:
-                        axis6_link:
-                          base_camera_link:
-                            base_camera_aligned_depth_to_color_frame:
-                              base_camera_color_optical_frame:
+        map:
+          odom:
+            base_footprint:
+              base_link:
+                arm_base_link:
+                  axis1_link:
+                    axis2_link:
+                      axis3_link:
+                        axis4_link:
+                          axis5_link:
+                            axis6_link:
+                              base_camera_link:
+                                base_camera_aligned_depth_to_color_frame:
+                                  base_camera_color_optical_frame:
+                                    {}
+                                base_camera_aligned_depth_to_infra1_frame:
+                                  base_camera_infra1_optical_frame:
+                                    {}
+                                base_camera_color_frame:
+                                  {}
+                                base_camera_depth_frame:
+                                  base_camera_depth_optical_frame:
+                                    {}
+                                base_camera_infra1_frame:
+                                  {}
+                                base_camera_infra2_frame:
+                                  base_camera_infra2_optical_frame:
+                                    {}
+                                base_camera_rgb_frame:
+                                  base_camera_rgb_optical_frame:
+                                    {}
+                              eef_link:
                                 {}
-                            base_camera_aligned_depth_to_infra1_frame:
-                              base_camera_infra1_optical_frame:
-                                {}
-                            base_camera_color_frame:
-                              {}
-                            base_camera_depth_frame:
-                              base_camera_depth_optical_frame:
-                                {}
-                            base_camera_infra1_frame:
-                              {}
-                            base_camera_infra2_frame:
-                              base_camera_infra2_optical_frame:
-                                {}
-                            base_camera_rgb_frame:
-                              base_camera_rgb_optical_frame:
-                                {}
-                            tf_help:
-                              {}
-                          eef_link:
-                            {}
-            back_hokuyo_link:
-              {}
-            back_left_wheel:
-              {}
-            back_right_wheel:
-              {}
-            front_hokuyo_link:
-              {}
-            front_left_wheel:
-              {}
-            front_right_wheel:
-              {}
-            left_wheel:
-              {}
-            right_wheel:
-              {}
+                back_hokuyo_link:
+                  {}
+                back_left_wheel:
+                  {}
+                back_right_wheel:
+                  {}
+                front_hokuyo_link:
+                  {}
+                front_left_wheel:
+                  {}
+                front_right_wheel:
+                  {}
+                left_wheel:
+                  {}
+                right_wheel:
+                  {}
       Update Interval: 0
       Value: true
     - Alpha: 0.699999988
@@ -279,11 +281,7 @@ Visualization Manager:
       Marker Topic: /visualization_marker
       Name: Marker
       Namespaces:
-        corner1: true
-        corner2: true
-        my_namespace: true
-        origin: true
-        trans: true
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/Marker
@@ -328,7 +326,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: base_link
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
@@ -349,16 +347,16 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 2.34460425
+      Distance: 7.28198433
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.612307668
-        Y: 1.10122573
-        Z: -1.66893005e-06
+        X: 1.14384449
+        Y: -0.509150624
+        Z: -2.38418579e-06
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false

@@ -2,6 +2,7 @@
 <launch>
   <arg name="ns" default="scorpio/mmp0"/>
   <arg name="rviz" default="true"/>
+  <arg name="rqt" default="true"/>
 
   <!--vocal input related, need isolately run-->
   <node name="aiml_stt_google" pkg="pmc_assistant" type="aiml_stt_google.py" output="screen"/>
@@ -20,6 +21,17 @@
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find pmc_application)/rviz/sghero_pmc_demo.rviz"/>
     <!-- Gui Moveit-->
     <include file="$(find pmc_application)/launch/moveit_rviz.launch"/>
+  </group>
+
+  <group if="$(arg rqt)">
+    <!--Gui steering console (Optional)-->
+    <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+      <param name="default_topic" value="/diff_drive_controller/cmd_vel"/>
+      <param name="default_vx_max" value="1.0"/>
+      <param name="default_vx_min" value="-1.0"/>
+    </node>
+    <!-- Gui arm (Optional)-->
+    <node name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" type="rqt_joint_trajectory_controller"/>
   </group>
 
 </launch>

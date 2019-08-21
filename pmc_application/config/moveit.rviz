@@ -6,7 +6,7 @@ Panels:
       Expanded:
         - /MotionPlanning1
       Splitter Ratio: 0.742560029
-    Tree Height: 405
+    Tree Height: 353
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
