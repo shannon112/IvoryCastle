@@ -17,7 +17,7 @@
 
 
 
-
+   
    <category>
       <pattern>_ ASSEMBLE * CAMERA *</pattern>
       <template>
@@ -25,14 +25,14 @@
          <think><set name = "item">camera</set></think>
          <think><set name = "state">IntentFind</set></think>
       <condition name = "state" value = "IntentFind">
-
+            
             <random>
             <li> Ok, I will collect all the parts for you,and the current state is IntentFind </li>
             <li> Sure, let's do this,and the current state is IntentFind </li>
             <li> No preblem, I am going to do it,and the current state is IntentFind </li>
             </random>
       </condition>
-
+         
       </template>
    </category>
 
@@ -43,17 +43,17 @@
          <think><set name = "item">camera</set></think>
          <think><set name = "state">IntentFind</set></think>
       <condition name = "state" value = "IntentFind">
-
+            
             <random>
             <li> Ok, I will collect all the parts for you,and the current state is IntentFind </li>
             <li> Sure, let's do this,and the current state is IntentFind </li>
             <li> No preblem, I am going to do it,and the current state is IntentFind </li>
             </random>
       </condition>
-
+         
       </template>
    </category>
-
+   
    <category>
       <pattern>_ CAMERA PACK</pattern>
       <template>
@@ -61,17 +61,17 @@
          <think><set name = "item">camera</set></think>
          <think><set name = "state">IntentFind</set></think>
       <condition name = "state" value = "IntentFind">
-
+            
             <random>
             <li> Ok, I will collect all the parts for you,and the current state is IntentFind </li>
             <li> Sure, let's do this,and the current state is IntentFind </li>
             <li> No preblem, I am going to do it,and the current state is IntentFind </li>
             </random>
       </condition>
-
+         
       </template>
    </category>
-
+   
 
 
 <category><pattern>_ TASK ARE YOU *</pattern>
@@ -84,7 +84,11 @@
 
 
 <category><pattern>_ ARE YOU FROM</pattern>
-<template>I am from the Graduate institute of eletrical engineer,National Taiwan University  .</template>
+<template>I am from the Graduate institute of eletrical engineer,National Taiwan University,N.T.U.E.E,team six cellabo  .</template>
+</category>
+
+<category><pattern>_ END</pattern>
+<template>Thank you for your attentation,I am team six cellabo  .</template>
 </category>
 
 
@@ -122,29 +126,29 @@
 
 
       </template>
-   </category>
-
+   </category>  
+   
    <category>
       <pattern>_ ITEM</pattern>
       <template>
          <srai>ITEM</srai>
       </template>
    </category>
-
+   
    <category>
       <pattern>_ ITEM</pattern>
       <template>
          <srai>ITEM</srai>
       </template>
    </category>
-
+   
    <category>
       <pattern>ITEM *</pattern>
       <template>
          <srai>ITEM</srai>
       </template>
    </category>
-
+   
    <category>
       <pattern>_ ITEM *</pattern>
       <template>
@@ -180,33 +184,33 @@
             <li> No preblem, I am going to deliver them,and the current state is IntentDelivery </li>
          </random>
       </condition>
-
+        
 
 
       </template>
-   </category>
-
+   </category>  
+   
    <category>
       <pattern>_ DELIVER</pattern>
       <template>
          <srai>DELIVER</srai>
       </template>
    </category>
-
+   
    <category>
       <pattern>_ DELIVER</pattern>
       <template>
          <srai>DELIVER</srai>
       </template>
    </category>
-
+   
    <category>
       <pattern>DELIVER *</pattern>
       <template>
          <srai>DELIVER</srai>
       </template>
    </category>
-
+   
    <category>
       <pattern>_ DELIVER *</pattern>
       <template>
@@ -214,7 +218,7 @@
       </template>
    </category>
 
-
+   
 
 <category>
       <pattern>RESET CURRENT STATE TO BLANK</pattern>
@@ -227,10 +231,10 @@
 <category>
       <pattern>_ ARE YOU DOING</pattern>
       <template>
-
+      
 
       <condition name = "state" value = "">
-         I am waiting for your command
+         I am waiting for your command 
       </condition>
 
       <condition name = "state" value = "IntentDelivery">
@@ -247,9 +251,9 @@
          </random>
       </condition>
       <condition name = "state" value = "Waiting">
-         I am waiting for your command
+         I am waiting for your command 
       </condition>
-
+      
 
 
       </template>
@@ -267,5 +271,13 @@
 </template>
 </category>
 
-
+   
 </aiml>
+
+
+
+
+
+
+
+

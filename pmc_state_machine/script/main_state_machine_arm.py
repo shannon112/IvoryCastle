@@ -270,7 +270,9 @@ class Attacking(smach.State):
         #result = self.AttackingSrv(req)
         #if not result.result:
         #    return 'aborted'
-        req.pose = userdata.attackPose
+        req.pose.position.x = userdata.attackPose.position.x
+        req.pose.position.y = userdata.attackPose.position.y
+        req.pose.position.z = userdata.attackPose.position.z
         if userdata.mani_task == 'grasp':
             req.str_box_ind = 'a'
         elif userdata.mani_task == 'fetch':
@@ -279,14 +281,16 @@ class Attacking(smach.State):
             req.str_box_ind = 'c'
         else:
             return 'aborted'
-        if userdata.countIn % 5 == 1:
-            req.pose.x = req.pose.x + 0.03
-        elif userdata.countIn % 5 == 2:
-            req.pose.x = req.pose.y + 0.03
-        elif userdata.countIn % 5 == 3:
-            req.pose.x = req.pose.x - 0.03
-        elif userdata.countIn % 5 == 4:
-            req.pose.x = req.pose.y - 0.03
+        """
+        if userdata.countIn % 10 == 2 or userdata.countIn % 10 == 3:
+            req.pose.position.x = req.pose.position.x + 0.03
+        elif userdata.countIn % 10 == 4 or userdata.countIn % 10 == 5:
+            req.pose.position.y = req.pose.position.y + 0.03
+        elif userdata.countIn % 10 == 6 or userdata.countIn % 10 == 7:
+            req.pose.position.x = req.pose.position.x - 0.03
+        elif userdata.countIn % 10 == 8 or userdata.countIn % 10 == 9:
+            req.pose.position.y = req.pose.position.y - 0.03
+        """
         result = self.AttackingSrv(req)
         rospy.sleep(3)
         userdata.countOut = userdata.countIn + 1
