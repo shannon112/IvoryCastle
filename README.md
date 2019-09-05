@@ -35,10 +35,9 @@ neronbot: https://github.com/willie5588912/neuronbot  -b  multi-bots
 ira_factory: https://github.com/willie5588912/ira_factory  -b  multibots  
 ros_aiml: https://github.com/jkllbn2563/ros_aiml master
 
-scorpio:  
+scorpio: (using the newest code before 2019.08.23)  
 IvoryCastle: https://github.com/shannon112/IvoryCastle -b pmccontest_default  
 scorpio: https://github.com/willie5588912/scorpio -b pmc_sghero_merge (simulation with scorpio_ethercat removed)  
-neronbot: https://github.com/willie5588912/neuronbot  -b  pmc_sghero (multi-bots with move_back removed)  
 ira_factory: https://github.com/willie5588912/ira_factory  -b  pmc_sghero (scorpio)  
 image_caption_PMC: https://github.com/jkllbn2563/image_caption_PMC -b pmc_sghero  
 robot_arm_PMC: https://github.com/jkllbn2563/robot_arm_PMC -b pmc_sghero  
