@@ -14,7 +14,7 @@
     <rosparam command="load" file="$(find ira_factory_robot_controller)/config/scorpio/ros_control/real/controllers.yaml"/>
     <node name="scorpio_controller_spawner" pkg="controller_manager" type="spawner"
       args="joint_state_controller
-            arm_controller"/>
+            diff_drive_controller"/>
 
     <!--Main control node 8 axis-->
     <node name="scorpio_base_ros_control" pkg="scorpio_base_ros_control" type="scorpio_base_ros_control"
