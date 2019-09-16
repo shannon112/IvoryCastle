@@ -34,7 +34,7 @@ Visualization Manager:
   Class: ""
   Displays:
     - Alpha: 0.5
-      Cell Size: 0.100000001
+      Cell Size: 1
       Class: rviz/Grid
       Color: 160; 160; 164
       Enabled: true
@@ -128,6 +128,8 @@ Visualization Manager:
           Value: true
         left_wheel:
           Value: true
+        odom:
+          Value: true
         right_inner_finger:
           Value: true
         right_inner_finger_pad:
@@ -173,6 +175,8 @@ Visualization Manager:
             surface_link:
               arm_base_link:
                 {}
+        odom:
+          {}
       Update Interval: 0
       Value: true
     - Alpha: 1

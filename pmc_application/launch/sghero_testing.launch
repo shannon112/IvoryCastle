@@ -22,7 +22,18 @@
 		<param name="scan_destination_topic" value="/scan_multi"/>
     <param name="laserscan_topics" value ="/back_scan /front_scan" /> <!-- LIST OF THE LASER SCAN TOPICS TO SUBSCRIBE -->
 	</node>
-  
+
+  <param name="diff_drive_controller/base_frame_id" value="base_footprint"/>
+  <!--Correcting the odom -->
+  <node name="robot_pose_ekf" pkg="robot_pose_ekf" type="robot_pose_ekf">
+    <param name="output_frame" value="odom" />
+    <param name="base_footprint_frame" value="base_footprint" />
+    <param name="odom_used" value="true" />
+    <param name="imu_used" value="false" />
+    <param name="vo_used" value="false" />
+    <remap from="odom"     to="diff_drive_controller/odom"/>
+  </node>
+
   <!--Gui steering console (Optional)-->
   <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
     <param name="default_topic" value="/diff_drive_controller/cmd_vel"/>
