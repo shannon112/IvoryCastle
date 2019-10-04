@@ -195,7 +195,7 @@ class SetDefault(smach.State):
         psInit.orientation.x = -0.891; psInit.orientation.y = -0.030; psInit.orientation.z = 0.453; psInit.orientation.w = 0.023
         userdata.initPose = psInit
         if userdata.mani_task == 'grasp':
-            userdata.objectNum=1
+            userdata.objectNum=3
             ps = [Pose(), Pose(), Pose(), Pose()]
             # take picture at A station
             #ps[0].position.x = -0.381; ps[0].position.y = 0.680; ps[0].position.z = 0.847
@@ -335,7 +335,10 @@ class Estimation(smach.State):
         rospy.loginfo('Executing state pose Estimation')
         BBox = []
         if userdata.mani_task == 'grasp':
-            BBox = userdata.BBoxs[userdata.execNum*4:userdata.execNum*4+4]
+            for i in range(3):
+                BBox = userdata.BBoxs[i*4:(i+1)*4]
+                if BBox != (0., 0., 0., 0.):
+                    break
         elif userdata.mani_task == 'fetch' or userdata.mani_task == 'stack':
             BBox = userdata.BBoxs[12:16]
         else:

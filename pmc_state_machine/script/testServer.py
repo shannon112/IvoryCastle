@@ -9,6 +9,7 @@ from pmc_msgs.srv import PoseSrv, PoseSrvResponse
 
 from sensor_msgs.msg import PointCloud2
 from geometry_msgs.msg import Point, Pose
+count = 0
 
 def trigger(req):
   rospy.sleep(2)
@@ -21,10 +22,19 @@ def alignment(req):
   return AlignmentResponse(True)
 
 def objDetectionPMC(req):
+  global count
   print('[Object Detection]')
   rep = detection_PMC_halfResponse()
-  rep.data = [1., 1., 1., 1., 2., 2., 2., 2., 3., 3., 3., 3., 4., 4., 4., 4.]
-
+  if count == 0:
+    count = 1
+    rep.data = [1., 1., 1., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.]
+  elif count == 1:
+    count = 2
+    rep.data = [0., 0., 0., 0., 2., 2., 2., 2., 3., 0., 0., 0., 0., 0., 0., 0.]
+  else:
+    count = 0
+    rep.data = [0., 0., 0., 0., 0., 0., 0., 0., 3., 3., 3., 3., 0., 0., 0., 0.]
+    
   return rep
 
 def objDetection(req):
@@ -62,7 +72,7 @@ def graspEst(req):
     req.bbox_corner2.x, req.bbox_corner2.y, req.bbox_corner2.z))
   rep = GraspPoseEst_directResponse()
   ps = Pose()
-  ps.position.x = 0.0; ps.position.y = 0.0; ps.position.z = 0.0
+  ps.position.x = 88.0; ps.position.y = 88.0; ps.position.z = 88.0
   rep.grasp_pose = ps
   rospy.sleep(1)
   print('[Grasping Pose Estimation] Return grasping pose:')
@@ -122,8 +132,8 @@ if __name__ == '__main__':
   #trigger2_srv = rospy.Service('triggerFetching', Trigger, trigger)
   #trigger3_srv = rospy.Service('triggerGrasping', Trigger, trigger)
   #trigger4_srv = rospy.Service('triggerStacking', Trigger, trigger)
-  #attack_srv = rospy.Service('/attacking_pose', PoseSrv, attack)
-  #obj_srv = rospy.Service('object_detection_willie', detection_PMC_half, objDetectionPMC)
-  #grasp_est_srv = rospy.Service('grasping_pose_estimation', GraspPoseEst_direct, graspEst)
-  #pick_place_srv = rospy.Service('pick_and_place', PickPlace, pickPlace)
+  attack_srv = rospy.Service('/attacking_pose', PoseSrv, attack)
+  obj_srv = rospy.Service('object_detection_willie', detection_PMC_half, objDetectionPMC)
+  grasp_est_srv = rospy.Service('grasping_pose_estimation', GraspPoseEst_direct, graspEst)
+  pick_place_srv = rospy.Service('pick_and_place', PickPlace, pickPlace)
   rospy.spin()
