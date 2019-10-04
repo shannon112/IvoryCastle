@@ -85,7 +85,7 @@ class PlacingBasket(smach.State):
 
     def execute(self, userdata):
         rospy.loginfo('Executing state PlacingBasket')
-        userdata.task = 'place'
+        userdata.task = 'skip'
         return 'placing_start'
 
 
@@ -99,7 +99,7 @@ class FetchingBox(smach.State):
 
     def execute(self, userdata):
         rospy.loginfo('Executing state FetchingBox')
-        userdata.task = 'fetch'
+        userdata.task = 'place'
         return 'fetching_start'
 
 
@@ -113,20 +113,20 @@ class StackingBox(smach.State):
 
     def execute(self, userdata):
         rospy.loginfo('Executing state StackingBox')
-        userdata.task = 'stack'
+        userdata.task = 'skip'
         return 'stacking_start'
 
 
 # define state NavigationC
 class NavigationC(smach.State):
     def __init__(self):
-        smach.State.__init__(self,outcomes=['prepare_to_go','reach_goal','back_to_home','done'])
+        smach.State.__init__(self,outcomes=['prepare_to_go','reach_goal','done'])
         rospy.wait_for_service('/triggerNavigating')
         self.triggerNavigating_service = rospy.ServiceProxy('/triggerNavigating', navigoal)
         self.state = 0
 
     def execute(self, userdata):
-        rospy.loginfo('Executing state NavigationC')
+        rospy.loginfo('Executing state NavigationC %d', self.state)
         if self.state == 0:
             self.state += 1
             return 'prepare_to_go'
@@ -137,13 +137,6 @@ class NavigationC(smach.State):
                 self.state += 1
                 return 'reach_goal'
         elif self.state == 2:
-            return 'done'
-            result = self.triggerNavigating_service(2)
-            rospy.loginfo(result.message)
-            if result.success:
-                self.state += 1
-                return 'back_to_home'
-        elif self.state == 3:
             self.state = 0
             return 'done'
 
@@ -151,13 +144,13 @@ class NavigationC(smach.State):
 # define state NavigationD
 class NavigationD(smach.State):
     def __init__(self):
-        smach.State.__init__(self,outcomes=['prepare_to_go','reach_goal','back_to_home','done'])
+        smach.State.__init__(self,outcomes=['prepare_to_go','reach_goal','done'])
         rospy.wait_for_service('/triggerNavigating')
         self.triggerNavigating_service = rospy.ServiceProxy('/triggerNavigating', navigoal)
         self.state = 0
 
     def execute(self, userdata):
-        rospy.loginfo('Executing state NavigationD')
+        rospy.loginfo('Executing state NavigationD %d', self.state)
         if self.state == 0:
             self.state += 1
             return 'prepare_to_go'
@@ -168,12 +161,6 @@ class NavigationD(smach.State):
                 self.state += 1
                 return 'reach_goal'
         elif self.state == 2:
-            result = self.triggerNavigating_service(4)
-            rospy.loginfo(result.message)
-            if result.success:
-                self.state += 1
-                return 'back_to_home'
-        elif self.state == 3:
             self.state = 0
             return 'done'
 
@@ -229,31 +216,6 @@ class SetDefault(smach.State):
             userdata.placePose = [ps[1]]
             return 'pickplace'
 
-        elif userdata.mani_task == 'fetch':
-            userdata.objectNum=1
-            ps = [Pose(), Pose()]
-            # take picture at B station
-            ps[0].position.x = -0.707; ps[0].position.y = 0.299; ps[0].position.z = 0.650
-            ps[0].orientation.x = -0.999; ps[0].orientation.y = -0.042; ps[0].orientation.z = 0.004; ps[0].orientation.w = 0.013
-            userdata.attackPose = ps[0]
-            # place on amir
-            ps[1].position.x = 0.090; ps[1].position.y = -0.112; ps[1].position.z = 0.235
-            ps[1].orientation.x = 0.042; ps[1].orientation.y = -0.999; ps[1].orientation.z = -0.011; ps[1].orientation.w = 0.007
-            userdata.placePose = [ps[1]]
-            return 'attack'
-
-        elif userdata.mani_task == 'stack':
-            userdata.objectNum=1
-            ps = [Pose(), Pose()]
-            # take picture at C station
-            ps[0].position.x = -0.181; ps[0].position.y = 0.680; ps[0].position.z = 0.847
-            ps[0].orientation.x =  -0.715; ps[0].orientation.y = 0.699; ps[0].orientation.z = -0.005; ps[0].orientation.w = 0.033
-            userdata.attackPose = ps[0]
-            # grasp from amir
-            ps[1].position.x = 0.090; ps[1].position.y = -0.112; ps[1].position.z = 0.235
-            ps[1].orientation.x = 0.042; ps[1].orientation.y = -0.999; ps[1].orientation.z = -0.011; ps[1].orientation.w = 0.007
-            userdata.pickPose = [ps[1]]
-            return 'attack'
         else:
             return 'aborted'
 
@@ -282,10 +244,8 @@ class Attacking(smach.State):
         req.pose.orientation = userdata.attackPose.orientation
         if userdata.mani_task == 'grasp':
             req.str_box_ind = 'a'
-        elif userdata.mani_task == 'fetch':
+        elif userdata.mani_task == 'place':
             req.str_box_ind = 'b'
-        elif userdata.mani_task == 'stack':
-            req.str_box_ind = 'c'
         else:
             return 'aborted'
         if userdata.countIn % 10 == 2 or userdata.countIn % 10 == 3:
@@ -339,8 +299,6 @@ class Estimation(smach.State):
                 BBox = userdata.BBoxs[i*4:(i+1)*4]
                 if BBox != (0., 0., 0., 0.):
                     break
-        elif userdata.mani_task == 'fetch' or userdata.mani_task == 'stack':
-            BBox = userdata.BBoxs[12:16]
         else:
             return 'aborted'
         rospy.loginfo(BBox)
@@ -406,19 +364,6 @@ class PicknPlace(smach.State):
             req.str_box_ind = 'b'
             req.pick_pose = userdata.pickPose[userdata.execNum]
             req.place_pose = userdata.placePose[userdata.execNum]
-        elif userdata.mani_task == 'fetch':
-            req.str_box_ind = 'b'
-            req.pick_pose = userdata.estPose
-            req.place_pose = userdata.placePose[userdata.execNum]
-            req.pick_pose.orientation.x = -0.999; req.pick_pose.orientation.y = -0.042; req.pick_pose.orientation.z = 0.004; req.pick_pose.orientation.w = 0.013
-        elif userdata.mani_task == 'stack':
-            req.str_box_ind = 'c'
-            req.pick_pose = userdata.pickPose[userdata.execNum]
-            req.place_pose.position.x = userdata.estPose.position.x
-            req.place_pose.position.y = userdata.estPose.position.y
-            req.place_pose.position.z = userdata.estPose.position.z + 0.1
-            req.place_pose.orientation = userdata.estPose.orientation
-            req.place_pose.orientation.x =  -0.715; req.place_pose.orientation.y = 0.699; req.place_pose.orientation.z = -0.005; req.place_pose.orientation.w = 0.033
         else:
             return 'aborted'
         if self.pick:
@@ -445,7 +390,7 @@ class PicknPlace(smach.State):
 class TaskEnd(smach.State):
     def __init__(self):
         smach.State.__init__(self,
-                             outcomes=['graspdone','placedone','fetchdone','stackdone','continue','aborted'],
+                             outcomes=['graspdone','placedone','continue','aborted'],
                              input_keys=['initPose','mani_task','objectNum','execNumIn'],
                              output_keys=['execNumOut','countOut'])
         rospy.wait_for_service('/attacking_pose')
@@ -468,10 +413,6 @@ class TaskEnd(smach.State):
                 status = 'graspdone'
             elif userdata.mani_task == 'place':
                 status = 'placedone'
-            elif userdata.mani_task == 'fetch':
-                status = 'fetchdone'
-            elif userdata.mani_task == 'stack':
-                status = 'stackdone'
             else:
                 return 'aborted'
             result = self.AttackingSrv(req)
@@ -494,7 +435,7 @@ def main():
     sm_naviF = smach.StateMachine(outcomes=['collecting_done', 'manipulating'],
                                   output_keys=['mani_task'])
     sis_naviF = smach_ros.IntrospectionServer('server_pmc', sm_naviF, '/SM_ROOT/COLLECTING')
-    sm_arm = smach.StateMachine(outcomes=['grasping_done', 'placing_done', 'fetching_done', 'stacking_done', 'task_aborted'],
+    sm_arm = smach.StateMachine(outcomes=['grasping_done', 'placing_done', 'task_aborted'],
                                 input_keys=['mani_task'])
     sis_arm = smach_ros.IntrospectionServer('server_pmc', sm_arm, '/SM_ROOT/MANIPULATION')
 
@@ -520,14 +461,13 @@ def main():
             smach.StateMachine.add('NavigationC', NavigationC(),
                                    transitions={'prepare_to_go':'NavigationC',
                                                 'reach_goal':'GraspingObject',
-                                                'back_to_home':'PlacingBasket',
                                                 'done':'collecting_done'})
             smach.StateMachine.add('GraspingObject', GraspingObject(),
                                    transitions={'grasping_start':'manipulating'},
                                    remapping={'task':'mani_task'})
-            smach.StateMachine.add('PlacingBasket', PlacingBasket(),
-                                   transitions={'placing_start':'manipulating'},
-                                   remapping={'task':'mani_task'})
+            #smach.StateMachine.add('PlacingBasket', PlacingBasket(),
+            #                       transitions={'placing_start':'manipulating'},
+            #                       remapping={'task':'mani_task'})
         smach.StateMachine.add('COLLECTING', sm_naviF,
                                transitions={'collecting_done':'VoiceCommand',
                                             'manipulating':'MANIPULATION'})
@@ -538,17 +478,16 @@ def main():
         # ************************************************
         with sm_naviD:
             smach.StateMachine.add('NavigationD', NavigationD(),
-                                   transitions={'prepare_to_go':'FetchingBox',
-                                                'reach_goal':'StackingBox',
-                                                'back_to_home':'NavigationD',
+                                   transitions={'prepare_to_go':'NavigationD',
+                                                'reach_goal':'PlacingBasket',
                                                 'done':'delivering_done'
                                                })
-            smach.StateMachine.add('FetchingBox', FetchingBox(),
+            smach.StateMachine.add('PlacingBasket', FetchingBox(),
                                    transitions={'fetching_start':'manipulating'},
                                    remapping={'task':'mani_task'})
-            smach.StateMachine.add('StackingBox', StackingBox(),
-                                   transitions={'stacking_start':'manipulating'},
-                                   remapping={'task':'mani_task'})
+            #smach.StateMachine.add('StackingBox', StackingBox(),
+            #                       transitions={'stacking_start':'manipulating'},
+            #                       remapping={'task':'mani_task'})
         smach.StateMachine.add('DELIVERING', sm_naviD,
                                transitions={'delivering_done':'VoiceCommand',
                                             'manipulating':'MANIPULATION'})
@@ -607,8 +546,6 @@ def main():
             smach.StateMachine.add('TaskEnd', TaskEnd(),
                                    transitions={'graspdone':'grasping_done',
                                                 'placedone':'placing_done',
-                                                'fetchdone':'fetching_done',
-                                                'stackdone':'stacking_done',
                                                 'continue':'SetDefaultParams',
                                                 'aborted':'TaskEnd'},
                                    remapping={'initPose':'sm_arm_ini_pose',
@@ -619,9 +556,7 @@ def main():
 
         smach.StateMachine.add('MANIPULATION', sm_arm,
                                transitions={'grasping_done':'COLLECTING',
-                                            'placing_done':'COLLECTING',
-                                            'fetching_done':'DELIVERING',
-                                            'stacking_done':'DELIVERING',
+                                            'placing_done':'DELIVERING',
                                             'task_aborted':'VoiceCommand'})
 
     # Execute SMACH plan
