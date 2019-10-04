@@ -137,6 +137,7 @@ class NavigationC(smach.State):
                 self.state += 1
                 return 'reach_goal'
         elif self.state == 2:
+            return 'done'
             result = self.triggerNavigating_service(2)
             rospy.loginfo(result.message)
             if result.success:
@@ -197,12 +198,17 @@ class SetDefault(smach.State):
             userdata.objectNum=1
             ps = [Pose(), Pose(), Pose(), Pose()]
             # take picture at A station
-            ps[0].position.x = -0.381; ps[0].position.y = 0.680; ps[0].position.z = 0.847
-            ps[0].orientation.x =  -0.715; ps[0].orientation.y = 0.699; ps[0].orientation.z = -0.005; ps[0].orientation.w = 0.033
+            #ps[0].position.x = -0.381; ps[0].position.y = 0.680; ps[0].position.z = 0.847
+            #ps[0].orientation.x =  -0.715; ps[0].orientation.y = 0.699; ps[0].orientation.z = -0.005; ps[0].orientation.w = 0.033
+            ps[0].position.x = -0.000; ps[0].position.y = 0.424; ps[0].position.z = 1.088
+            ps[0].orientation.x = -0.707; ps[0].orientation.y = 0.706; ps[0].orientation.z = 0.024; ps[0].orientation.w = 0.023
             userdata.attackPose = ps[0]
+
             # place on amir
-            ps[1].position.x = 0.016; ps[1].position.y = -0.175; ps[1].position.z = 0.295
-            ps[1].orientation.x = -0.374; ps[1].orientation.y = -0.928; ps[1].orientation.z = -0.003; ps[1].orientation.w = 0.007
+            #ps[1].position.x = 0.016; ps[1].position.y = -0.175; ps[1].position.z = 0.295
+            #ps[1].orientation.x = -0.374; ps[1].orientation.y = -0.928; ps[1].orientation.z = -0.003; ps[1].orientation.w = 0.007
+            ps[1].position.x = -0.000; ps[1].position.y = 0.424; ps[1].position.z = 1.088
+            ps[1].orientation.x = -0.707; ps[1].orientation.y = 0.706; ps[1].orientation.z = 0.024; ps[1].orientation.w = 0.023
             ps[2].position.x = 0.016; ps[2].position.y = -0.175; ps[2].position.z = 0.295
             ps[2].orientation.x = -0.374; ps[2].orientation.y = -0.928; ps[2].orientation.z = -0.003; ps[2].orientation.w = 0.007
             ps[3].position.x = 0.016; ps[3].position.y = -0.175; ps[3].position.z = 0.295
@@ -345,7 +351,12 @@ class Estimation(smach.State):
         result = self.DetectionSrv(req)
         if result.grasp_pose.position.x == 0.0 and  result.grasp_pose.position.y == 0.0 and result.grasp_pose.position.z == 0.0:
             return 'retry'
-        userdata.PoseEst = result.grasp_pose
+        OffsetPose = Pose()
+        OffsetPose.position.x = result.grasp_pose.position.x
+        OffsetPose.position.y = result.grasp_pose.position.y
+        OffsetPose.position.z = result.grasp_pose.position.z - 0.02
+        OffsetPose.orientation = result.grasp_pose.orientation
+        userdata.PoseEst = OffsetPose
         """
         if userdata.mani_task == 'fetch' or userdata.mani_task == 'stack':
             resultPS = Pose()

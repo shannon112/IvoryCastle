@@ -111,7 +111,7 @@ def pickPlace(req):
   print('[Pick & Place] Pick and place completed.')
   print('============ Above Scenario Completed ==========\n')
   res = PickPlaceResponse()
-  res.result = False
+  res.result = True
   res.state = 'place'
   return res
 
