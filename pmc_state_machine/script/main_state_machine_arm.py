@@ -187,19 +187,19 @@ class SetDefault(smach.State):
             # take picture at A station
             #ps[0].position.x = -0.381; ps[0].position.y = 0.680; ps[0].position.z = 0.847
             #ps[0].orientation.x =  -0.715; ps[0].orientation.y = 0.699; ps[0].orientation.z = -0.005; ps[0].orientation.w = 0.033
-            ps[0].position.x = -0.000; ps[0].position.y = 0.424; ps[0].position.z = 1.088
+            ps[0].position.x = 0.080; ps[0].position.y = 0.424; ps[0].position.z = 1.108
             ps[0].orientation.x = -0.707; ps[0].orientation.y = 0.706; ps[0].orientation.z = 0.024; ps[0].orientation.w = 0.023
             userdata.attackPose = ps[0]
 
             # place on amir
             #ps[1].position.x = 0.016; ps[1].position.y = -0.175; ps[1].position.z = 0.295
             #ps[1].orientation.x = -0.374; ps[1].orientation.y = -0.928; ps[1].orientation.z = -0.003; ps[1].orientation.w = 0.007
-            ps[1].position.x = -0.000; ps[1].position.y = 0.424; ps[1].position.z = 1.088
-            ps[1].orientation.x = -0.707; ps[1].orientation.y = 0.706; ps[1].orientation.z = 0.024; ps[1].orientation.w = 0.023
-            ps[2].position.x = 0.016; ps[2].position.y = -0.175; ps[2].position.z = 0.295
-            ps[2].orientation.x = -0.374; ps[2].orientation.y = -0.928; ps[2].orientation.z = -0.003; ps[2].orientation.w = 0.007
-            ps[3].position.x = 0.016; ps[3].position.y = -0.175; ps[3].position.z = 0.295
-            ps[3].orientation.x = -0.374; ps[3].orientation.y = -0.928; ps[3].orientation.z = -0.003; ps[3].orientation.w = 0.007
+            ps[1].position.x = 0.544; ps[1].position.y = -0.298; ps[1].position.z = 0.663
+            ps[1].orientation.x = -0.372; ps[1].orientation.y = -0.928; ps[1].orientation.z = -0.006; ps[1].orientation.w = 0.009
+            ps[2].position.x = 0.544; ps[2].position.y = -0.298; ps[2].position.z = 0.663
+            ps[2].orientation.x = -0.372; ps[2].orientation.y = -0.928; ps[2].orientation.z = -0.006; ps[2].orientation.w = 0.009
+            ps[3].position.x = 0.544; ps[3].position.y = -0.298; ps[3].position.z = 0.663
+            ps[3].orientation.x = -0.372; ps[3].orientation.y = -0.928; ps[3].orientation.z = -0.006; ps[3].orientation.w = 0.009
             userdata.placePose = ps[1:]
             return 'attack'
 
@@ -267,7 +267,7 @@ class Attacking(smach.State):
 class Detection(smach.State):
     def __init__(self):
         smach.State.__init__(self,
-                             outcomes=['success'],
+                             outcomes=['success', 'retry'],
                              output_keys=['BBoxs'])
         rospy.wait_for_service('/object_detection_willie')
         self.DetectionSrv = rospy.ServiceProxy('/object_detection_willie', detection_PMC_half)
@@ -275,7 +275,8 @@ class Detection(smach.State):
     def execute(self, userdata):
         rospy.loginfo('Executing state objects Detection')
         result = self.DetectionSrv(detection_PMC_halfRequest())
-        #rospy.loginfo(result.data)
+        if sum(result.data) == 0:
+            return 'retry'
         userdata.BBoxs = result.data
         return 'success'
 
@@ -295,15 +296,13 @@ class Estimation(smach.State):
         rospy.loginfo('Executing state pose Estimation')
         BBox = []
         if userdata.mani_task == 'grasp':
-            for i in range(3):
+            for i in range(4):
                 BBox = userdata.BBoxs[i*4:(i+1)*4]
                 if BBox != (0., 0., 0., 0.):
                     break
         else:
             return 'aborted'
         rospy.loginfo(BBox)
-        if BBox == (0., 0., 0., 0.):
-            return 'retry'
         req = GraspPoseEst_directRequest()
         req.bbox_corner1.x = BBox[0]
         req.bbox_corner1.y = BBox[1]
@@ -524,7 +523,8 @@ def main():
                                               'countIn':'sm_atk_count',
                                               'countOut':'sm_atk_count'})
             smach.StateMachine.add('ObjectsDetection', Detection(),
-                                   transitions={'success':'PoseEstimation'},
+                                   transitions={'success':'PoseEstimation',
+                                                'retry':'ObjectsDetection'},
                                    remapping={'BBoxs':'sm_arm_bboxs'})
             smach.StateMachine.add('PoseEstimation', Estimation(),
                                    transitions={'success':'PickAndPlace',
