@@ -183,7 +183,7 @@ class SetDefault(smach.State):
         userdata.initPose = psInit
         if userdata.mani_task == 'grasp':
             userdata.objectNum=3
-            ps = [Pose(), Pose(), Pose(), Pose()]
+            ps = [Pose(), Pose(), Pose(), Pose(), Pose()]
             # take picture at A station
             #ps[0].position.x = -0.381; ps[0].position.y = 0.680; ps[0].position.z = 0.847
             #ps[0].orientation.x =  -0.715; ps[0].orientation.y = 0.699; ps[0].orientation.z = -0.005; ps[0].orientation.w = 0.033
@@ -191,22 +191,25 @@ class SetDefault(smach.State):
             ps[0].orientation.x = -0.707; ps[0].orientation.y = 0.706; ps[0].orientation.z = 0.024; ps[0].orientation.w = 0.023
             userdata.attackPose = ps[0]
 
-            # place on amir
-            #ps[1].position.x = 0.016; ps[1].position.y = -0.175; ps[1].position.z = 0.295
-            #ps[1].orientation.x = -0.374; ps[1].orientation.y = -0.928; ps[1].orientation.z = -0.003; ps[1].orientation.w = 0.007
-            ps[1].position.x = 0.544; ps[1].position.y = -0.298; ps[1].position.z = 0.663
+            # place on amir (x)
+            ps[1].position.x = 1.0; ps[1].position.y = -0.298; ps[1].position.z = 0.663
             ps[1].orientation.x = -0.372; ps[1].orientation.y = -0.928; ps[1].orientation.z = -0.006; ps[1].orientation.w = 0.009
-            ps[2].position.x = 0.544; ps[2].position.y = -0.298; ps[2].position.z = 0.663
+            # place on amir (y)
+            ps[2].position.x = 2.0; ps[2].position.y = -0.298; ps[2].position.z = 0.663
             ps[2].orientation.x = -0.372; ps[2].orientation.y = -0.928; ps[2].orientation.z = -0.006; ps[2].orientation.w = 0.009
-            ps[3].position.x = 0.544; ps[3].position.y = -0.298; ps[3].position.z = 0.663
+            # place on amir (z)
+            ps[3].position.x = 3.0; ps[3].position.y = -0.298; ps[3].position.z = 0.663
             ps[3].orientation.x = -0.372; ps[3].orientation.y = -0.928; ps[3].orientation.z = -0.006; ps[3].orientation.w = 0.009
+            # place on amir (box)
+            ps[4].position.x = 4.0; ps[4].position.y = -0.298; ps[4].position.z = 0.663
+            ps[4].orientation.x = -0.372; ps[4].orientation.y = -0.928; ps[4].orientation.z = -0.006; ps[4].orientation.w = 0.009
             userdata.placePose = ps[1:]
             return 'attack'
 
         elif userdata.mani_task == 'place':
             userdata.objectNum=0
             ps = [Pose(), Pose()]
-            # grasp from amir
+            # grasp from amir (box)
             ps[0].position.x = 0.086; ps[0].position.y = -0.105; ps[0].position.z = 0.269
             ps[0].orientation.x = -0.374; ps[0].orientation.y = -0.928; ps[0].orientation.z = -0.003; ps[0].orientation.w = 0.007
             userdata.pickPose = [ps[0]]
@@ -286,7 +289,7 @@ class Estimation(smach.State):
         smach.State.__init__(self,
                              outcomes=['success','retry','aborted'],
                              input_keys=['mani_task','BBoxs','execNum'],
-                             output_keys=['PoseEst'])
+                             output_keys=['PoseEst','ObjectID'])
         rospy.wait_for_service('/grasping_pose_estimation')
         self.DetectionSrv = rospy.ServiceProxy('/grasping_pose_estimation', GraspPoseEst_direct)
         #rospy.wait_for_service('/PC_center')
@@ -295,10 +298,12 @@ class Estimation(smach.State):
     def execute(self, userdata):
         rospy.loginfo('Executing state pose Estimation')
         BBox = []
+        userdata.ObjectID = 0
         if userdata.mani_task == 'grasp':
             for i in range(4):
                 BBox = userdata.BBoxs[i*4:(i+1)*4]
                 if BBox != (0., 0., 0., 0.):
+                    userdata.ObjectID = i
                     break
         else:
             return 'aborted'
@@ -338,7 +343,7 @@ class PicknPlace(smach.State):
     def __init__(self):
         smach.State.__init__(self,
                              outcomes=['success','restart','aborted'],
-                             input_keys=['mani_task','initPose','pickPose','placePose','estPose','execNum','BBoxs'])
+                             input_keys=['mani_task','initPose','pickPose','placePose','estPose','execNum','ObjectID','BBoxs'])
         #rospy.wait_for_service('/attacking_pose')
         #self.AttackingSrv = rospy.ServiceProxy('/attacking_pose', PoseSrv)
         rospy.wait_for_service('/pick_and_place')
@@ -355,10 +360,12 @@ class PicknPlace(smach.State):
         #if not result.result:
         #    return 'aborted'
         req = PickPlaceRequest()
+        rospy.loginfo(userdata.ObjectID)
+        #rospy.loginfo(userdata.placePose)
         if userdata.mani_task == 'grasp':
             req.str_box_ind = 'a'
             req.pick_pose = userdata.estPose
-            req.place_pose = userdata.placePose[userdata.execNum]
+            req.place_pose = userdata.placePose[userdata.ObjectID]
         elif userdata.mani_task == 'place':
             req.str_box_ind = 'b'
             req.pick_pose = userdata.pickPose[userdata.execNum]
@@ -502,6 +509,7 @@ def main():
         sm_arm.userdata.sm_arm_plc_pose = []
         sm_arm.userdata.sm_arm_est_pose = Pose()
         sm_arm.userdata.sm_arm_object_count = 0
+        sm_arm.userdata.sm_arm_object_id = 0
         sm_arm.userdata.sm_arm_exec_count = 0
         sm_arm.userdata.sm_arm_bboxs = []
 
@@ -532,7 +540,8 @@ def main():
                                                 'aborted':'task_aborted'},
                                    remapping={'BBoxs':'sm_arm_bboxs',
                                               'execNum':'sm_arm_exec_count',
-                                              'PoseEst':'sm_arm_est_pose'})
+                                              'PoseEst':'sm_arm_est_pose',
+                                              'ObjectID':'sm_arm_object_id'})
             smach.StateMachine.add('PickAndPlace', PicknPlace(),
                                    transitions={'success':'TaskEnd',
                                                 'restart':'ObjectsDetection',
@@ -542,6 +551,7 @@ def main():
                                               'placePose':'sm_arm_plc_pose',
                                               'estPose':'sm_arm_est_pose',
                                               'execNum':'sm_arm_exec_count',
+                                              'ObjectID':'sm_arm_object_id',
                                               'BBoxs':'sm_arm_bboxs',})
             smach.StateMachine.add('TaskEnd', TaskEnd(),
                                    transitions={'graspdone':'grasping_done',
