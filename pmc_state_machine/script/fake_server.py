@@ -83,7 +83,7 @@ def main():
     #s4 = rospy.Service('triggerFetching', Trigger, executeFetching)
     #s5 = rospy.Service('triggerStacking', Trigger, executeStacking)
     #s6 = rospy.Service('triggerLookforward', Trigger, executeLookforward)
-    s6 = rospy.Service('triggerNavigating', navigoal, executeNavigating)
+    #s6 = rospy.Service('triggerNavigating', navigoal, executeNavigating)
     rospy.spin()
 
 if __name__ == "__main__":

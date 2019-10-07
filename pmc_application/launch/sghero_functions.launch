@@ -8,10 +8,10 @@
   <node name="aiml_stt_google" pkg="pmc_assistant" type="aiml_stt_google.py" output="screen"/>
 
   <!--image caption related-->
-  <include file="$(find pmc_recognition)/launch/start_object_recognition.launch"/>
+  <include file="$(find pmc_caption)/launch/start_image_caption.launch"/>
 
   <!--object recognition related-->
-  <include file="$(find pmc_caption)/launch/start_image_caption.launch"/>
+  <include file="$(find pmc_recognition)/launch/start_object_recognition.launch"/>
 
   <!--state machine-->
   <include file="$(find pmc_state_machine)/launch/pmc_state_machine_test_arm.launch"/>
