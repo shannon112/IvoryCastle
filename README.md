@@ -1,5 +1,15 @@
 # IvoryCastle
-<img src="https://static.newmobilelife.com/wp-content/uploads/2017/12/pokemon-go-hoenn-slaking_00.jpg" width="400"/>  <img src="http://res.pokemon.name/common/pokemon/pgl/288.00.png" width="200"/><img src="https://tw.portal-pokemon.com/play/resources/pokedex/img/pm/25ecd635b6ac9803e574229c886ede9a2f1fbd38.png" width="200"/>
+Authors: 
+
+| Shannon Lee | Column 2 | Column 3 |
+| ----------- | -------- | -------- |
+| 李尚倫       | Text     | Text     |
+
+Advisor: Professor Ren C. Luo  
+
+<img src="https://raw.githubusercontent.com/shannon112/IvoryCastle/pmccontest_default/pmc_result/IMG_5895.JPG" width="280"/> <img src="https://raw.githubusercontent.com/shannon112/IvoryCastle/pmccontest_default/pmc_result/Screen%20Shot%202019-09-22%20at%2010.48.18%20PM.png" width="280"/>  <img src="https://raw.githubusercontent.com/shannon112/IvoryCastle/pmccontest_default/pmc_result/Screen%20Shot%202019-09-22%20at%2010.48.35%20PM.png" width="280"/>  
+
+# Getting Started 
 
 ```sh
 # Main control loop
@@ -25,7 +35,8 @@ roslaunch pmc_application sghero_bringup_real_amir.launch
 (roslaunch pmc_application sghero_init_pose.launch)
 roslaunch pmc_application sghero_functions.launch 
 ```
-<img src=https://pre00.deviantart.net/3d42/th/pre/i/2019/041/b/4/one_punch_man_class_s_by_vegito5001-dczfcdn.png width="840"/>
+
+<img src="https://static.newmobilelife.com/wp-content/uploads/2017/12/pokemon-go-hoenn-slaking_00.jpg" width="400"/>  <img src="http://res.pokemon.name/common/pokemon/pgl/288.00.png" width="200"/><img src="https://tw.portal-pokemon.com/play/resources/pokedex/img/pm/25ecd635b6ac9803e574229c886ede9a2f1fbd38.png" width="200"/>
 
 ## Dependences
 
@@ -42,6 +53,8 @@ ira_factory: https://github.com/willie5588912/ira_factory  -b  pmc_sghero (scorp
 image_caption_PMC: https://github.com/jkllbn2563/image_caption_PMC -b pmc_sghero  
 robot_arm_PMC: https://github.com/jkllbn2563/robot_arm_PMC -b pmc_sghero  
 leg_detector: https://github.com/Herobrixx/people -b ros1  
+
+<img src=https://pre00.deviantart.net/3d42/th/pre/i/2019/041/b/4/one_punch_man_class_s_by_vegito5001-dczfcdn.png width="840"/>
 
 ## icps demo world
 ```
