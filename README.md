@@ -1,13 +1,14 @@
 # IvoryCastle
 Authors: 
 
-| Shannon Lee | Column 2 | Column 3 |
-| ----------- | -------- | -------- |
-| 李尚倫       | Text     | Text     |
+| Shannon Lee | Wen, Yu-Cheng | Hsu, Lung-Chuan | Hsu, Chin-Hao | Yeh, Huan-Chun | Perng, Yi-Wen  |
+| ----------- | -------- | -------- | ----- | ----- | ----- |
+| 李尚倫       | 温郁承    | 許隆銓    | 許晉豪 | 葉煥駿 | 彭鐿文 |
 
 Advisor: Professor Ren C. Luo  
 
-<img src="https://raw.githubusercontent.com/shannon112/IvoryCastle/pmccontest_default/pmc_result/IMG_5895.JPG" width="280"/> <img src="https://raw.githubusercontent.com/shannon112/IvoryCastle/pmccontest_default/pmc_result/Screen%20Shot%202019-09-22%20at%2010.48.18%20PM.png" width="280"/>  <img src="https://raw.githubusercontent.com/shannon112/IvoryCastle/pmccontest_default/pmc_result/Screen%20Shot%202019-09-22%20at%2010.48.35%20PM.png" width="280"/>  
+Hornor: 2019 Robot Competition 1st Award  
+<img src="https://raw.githubusercontent.com/shannon112/IvoryCastle/pmccontest_default/pmc_result/IMG_5895.JPG" height="200"/> <img src="https://raw.githubusercontent.com/shannon112/IvoryCastle/pmccontest_default/pmc_result/Screen%20Shot%202019-09-22%20at%2010.48.18%20PM.png" height="200"/>  <img src="https://raw.githubusercontent.com/shannon112/IvoryCastle/pmccontest_default/pmc_result/Screen%20Shot%202019-09-22%20at%2010.48.35%20PM.png" height="200"/>  
 
 # Getting Started 
 
