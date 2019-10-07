@@ -1,9 +1,13 @@
 # IvoryCastle
+AI Enhanced Human Machine Interactive Autonomous Mobile Industrial Robot (AMIR) for Factory of the Future  
+人工智慧增益之人機互動 自主移動工業機器人 於未來工廠之應用  
+
 Authors: 
 
 | Shannon Lee | Wen, Yu-Cheng | Hsu, Lung-Chuan | Hsu, Chin-Hao | Yeh, Huan-Chun | Perng, Yi-Wen  |
 | ----------- | -------- | -------- | ----- | ----- | ----- |
 | 李尚倫       | 温郁承    | 許隆銓    | 許晉豪 | 葉煥駿 | 彭鐿文 |
+| @shannon112 | @warmtub | @EvanChuan | @Herobrixx | @jkllbn2563 ||
 
 Advisor: Professor Ren C. Luo  
 
