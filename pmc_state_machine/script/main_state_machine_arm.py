@@ -185,24 +185,22 @@ class SetDefault(smach.State):
             userdata.objectNum=3
             ps = [Pose(), Pose(), Pose(), Pose(), Pose()]
             # take picture at A station
-            #ps[0].position.x = -0.381; ps[0].position.y = 0.680; ps[0].position.z = 0.847
-            #ps[0].orientation.x =  -0.715; ps[0].orientation.y = 0.699; ps[0].orientation.z = -0.005; ps[0].orientation.w = 0.033
-            ps[0].position.x = 0.080; ps[0].position.y = 0.424; ps[0].position.z = 1.108
-            ps[0].orientation.x = -0.707; ps[0].orientation.y = 0.706; ps[0].orientation.z = 0.024; ps[0].orientation.w = 0.023
+            ps[0].position.x = 0.095; ps[0].position.y = -0.656; ps[0].position.z = 1.103
+            ps[0].orientation.x = 0.707; ps[0].orientation.y = 0.707; ps[0].orientation.z = -0.027; ps[0].orientation.w = 0.027
             userdata.attackPose = ps[0]
 
-            # place on amir (x)
-            ps[1].position.x = 1.0; ps[1].position.y = -0.298; ps[1].position.z = 0.663
-            ps[1].orientation.x = -0.372; ps[1].orientation.y = -0.928; ps[1].orientation.z = -0.006; ps[1].orientation.w = 0.009
-            # place on amir (y)
-            ps[2].position.x = 2.0; ps[2].position.y = -0.298; ps[2].position.z = 0.663
-            ps[2].orientation.x = -0.372; ps[2].orientation.y = -0.928; ps[2].orientation.z = -0.006; ps[2].orientation.w = 0.009
-            # place on amir (z)
-            ps[3].position.x = 3.0; ps[3].position.y = -0.298; ps[3].position.z = 0.663
-            ps[3].orientation.x = -0.372; ps[3].orientation.y = -0.928; ps[3].orientation.z = -0.006; ps[3].orientation.w = 0.009
+            # place on amir (camera)
+            ps[1].position.x = -0.252; ps[1].position.y = 0.053; ps[1].position.z = 0.530
+            ps[1].orientation.x = 0.905; ps[1].orientation.y = -0.425; ps[1].orientation.z = -0.035; ps[1].orientation.w = 0.003
+            # place on amir (tripod)
+            ps[2].position.x = -0.252; ps[2].position.y = 0.053; ps[2].position.z = 0.530
+            ps[2].orientation.x = 0.905; ps[2].orientation.y = -0.425; ps[2].orientation.z = -0.035; ps[2].orientation.w = 0.003
+            # place on amir (USB)
+            ps[3].position.x = -0.252; ps[3].position.y = 0.053; ps[3].position.z = 0.530
+            ps[3].orientation.x = 0.905; ps[3].orientation.y = -0.425; ps[3].orientation.z = -0.035; ps[3].orientation.w = 0.003
             # place on amir (box)
-            ps[4].position.x = 4.0; ps[4].position.y = -0.298; ps[4].position.z = 0.663
-            ps[4].orientation.x = -0.372; ps[4].orientation.y = -0.928; ps[4].orientation.z = -0.006; ps[4].orientation.w = 0.009
+            ps[4].position.x = -0.288; ps[4].position.y = -0.189; ps[4].position.z = 0.475
+            ps[4].orientation.x = 1.000; ps[4].orientation.y = 0.002; ps[4].orientation.z = -0.015; ps[4].orientation.w = 0.004
             userdata.placePose = ps[1:]
             return 'attack'
 
@@ -210,12 +208,12 @@ class SetDefault(smach.State):
             userdata.objectNum=0
             ps = [Pose(), Pose()]
             # grasp from amir (box)
-            ps[0].position.x = 0.086; ps[0].position.y = -0.105; ps[0].position.z = 0.269
-            ps[0].orientation.x = -0.374; ps[0].orientation.y = -0.928; ps[0].orientation.z = -0.003; ps[0].orientation.w = 0.007
+            ps[0].position.x = -0.288; ps[0].position.y = -0.189; ps[0].position.z = 0.475
+            ps[0].orientation.x = 1.000; ps[0].orientation.y = 0.002; ps[0].orientation.z = -0.015; ps[0].orientation.w = 0.004
             userdata.pickPose = [ps[0]]
             # place on B station
-            ps[1].position.x = -0.857; ps[1].position.y = 0.260; ps[1].position.z = 0.540
-            ps[1].orientation.x = -0.374; ps[1].orientation.y = -0.928; ps[1].orientation.z = -0.003; ps[1].orientation.w = 0.007
+            ps[1].position.x = 0.245; ps[1].position.y = -0.706; ps[1].position.z = 0.753
+            ps[1].orientation.x = 0.707; ps[1].orientation.y = 0.707; ps[1].orientation.z = -0.027; ps[1].orientation.w = 0.027
             userdata.placePose = [ps[1]]
             return 'pickplace'
 
@@ -298,15 +296,16 @@ class Estimation(smach.State):
     def execute(self, userdata):
         rospy.loginfo('Executing state pose Estimation')
         BBox = []
-        userdata.ObjectID = 0
+        id = 0
         if userdata.mani_task == 'grasp':
             for i in range(4):
                 BBox = userdata.BBoxs[i*4:(i+1)*4]
                 if BBox != (0., 0., 0., 0.):
-                    userdata.ObjectID = i
+                    id = i
                     break
         else:
             return 'aborted'
+        userdata.ObjectID = id
         rospy.loginfo(BBox)
         req = GraspPoseEst_directRequest()
         req.bbox_corner1.x = BBox[0]
@@ -319,7 +318,9 @@ class Estimation(smach.State):
         OffsetPose = Pose()
         OffsetPose.position.x = result.grasp_pose.position.x
         OffsetPose.position.y = result.grasp_pose.position.y
-        OffsetPose.position.z = result.grasp_pose.position.z - 0.02
+        OffsetPose.position.z = result.grasp_pose.position.z - 0.04
+        if id == 3:
+            OffsetPose.position.z = result.grasp_pose.position.z - 0.07
         OffsetPose.orientation = result.grasp_pose.orientation
         userdata.PoseEst = OffsetPose
         """
@@ -364,7 +365,12 @@ class PicknPlace(smach.State):
         #rospy.loginfo(userdata.placePose)
         if userdata.mani_task == 'grasp':
             req.str_box_ind = 'a'
-            req.pick_pose = userdata.estPose
+            #req.pick_pose = userdata.estPose
+            req.pick_pose.position = userdata.estPose.position
+            if userdata.ObjectID == 3:
+                req.pick_pose.orientation.x = 0.055; req.pick_pose.orientation.y = 0.998; req.pick_pose.orientation.z = -0.031; req.pick_pose.orientation.w = 0.006
+            else:
+                req.pick_pose.orientation = userdata.estPose.orientation
             req.place_pose = userdata.placePose[userdata.ObjectID]
         elif userdata.mani_task == 'place':
             req.str_box_ind = 'b'
