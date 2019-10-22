@@ -2,7 +2,7 @@
   <!--object recognition related-->
   <param name="recognition_model_path" value="$(find robot_arm_PMC)/src/ssd_mobilenet_v1_coco_2017_11_17/output_inference_graph_v15.pb/frozen_inference_graph.pb" />
   <param name="label_path" value="$(find robot_arm_PMC)/src/data/label_map.pbtxt" />
-  <node name="recognition_server" pkg="robot_arm_PMC" type="server_launch.py"/>
-  <node name="recognition_client" pkg="robot_arm_PMC" type="client.py"/>
+  <node name="recognition_server" pkg="robot_arm_PMC" type="server_launch.py" />
+  <node name="recognition_client" pkg="robot_arm_PMC" type="client.py" output="screen"/>
 
 </launch>

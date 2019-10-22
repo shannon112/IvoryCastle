@@ -131,11 +131,13 @@ class NavigationC(smach.State):
             self.state += 1
             return 'prepare_to_go'
         if self.state == 1:
-            result = self.triggerNavigating_service(1)
-            rospy.loginfo(result.message)
-            if result.success:
-                self.state += 1
-                return 'reach_goal'
+            #result = self.triggerNavigating_service(1)
+            #rospy.loginfo(result.message)
+            #if result.success:
+            #    self.state += 1
+            #    return 'reach_goal'
+            self.state += 1
+            return 'reach_goal'
         elif self.state == 2:
             self.state = 0
             return 'done'
@@ -550,7 +552,7 @@ def main():
                                               'ObjectID':'sm_arm_object_id'})
             smach.StateMachine.add('PickAndPlace', PicknPlace(),
                                    transitions={'success':'TaskEnd',
-                                                'restart':'ObjectsDetection',
+                                                'restart':'PoseAttacking',
                                                 'aborted':'PickAndPlace'},
                                    remapping={'initPose':'sm_arm_ini_pose',
 											  'pickPose':'sm_arm_pck_pose',
