@@ -201,7 +201,7 @@ class SetDefault(smach.State):
             ps[3].position.x = -0.252; ps[3].position.y = 0.053; ps[3].position.z = 0.530
             ps[3].orientation.x = 0.905; ps[3].orientation.y = -0.425; ps[3].orientation.z = -0.035; ps[3].orientation.w = 0.003
             # place on amir (box)
-            ps[4].position.x = -0.288; ps[4].position.y = -0.189; ps[4].position.z = 0.475
+            ps[4].position.x = -0.288; ps[4].position.y = -0.189; ps[4].position.z = 0.505
             ps[4].orientation.x = 1.000; ps[4].orientation.y = 0.002; ps[4].orientation.z = -0.015; ps[4].orientation.w = 0.004
             userdata.placePose = ps[1:]
             return 'attack'
@@ -214,7 +214,7 @@ class SetDefault(smach.State):
             ps[0].orientation.x = 1.000; ps[0].orientation.y = 0.002; ps[0].orientation.z = -0.015; ps[0].orientation.w = 0.004
             userdata.pickPose = [ps[0]]
             # place on B station
-            ps[1].position.x = 0.245; ps[1].position.y = -0.706; ps[1].position.z = 0.753
+            ps[1].position.x = 0.245; ps[1].position.y = -0.706; ps[1].position.z = 0.853
             ps[1].orientation.x = 0.707; ps[1].orientation.y = 0.707; ps[1].orientation.z = -0.027; ps[1].orientation.w = 0.027
             userdata.placePose = [ps[1]]
             return 'pickplace'
@@ -393,7 +393,7 @@ class PicknPlace(smach.State):
             return 'success'
         else:
             self.restart += 1
-            if self.restart > 2:
+            if self.restart > 2 and req.str_box_ind == 'a':
                 self.restart = 0
                 return 'restart'
             self.pick = True
