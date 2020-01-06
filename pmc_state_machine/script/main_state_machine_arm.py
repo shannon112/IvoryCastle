@@ -393,7 +393,7 @@ class PicknPlace(smach.State):
             return 'success'
         else:
             self.restart += 1
-            if self.restart > 2 and req.str_box_ind == 'a':
+            if self.restart > 2 and req.str_box_ind == 'a' and userdata.mani_task == 'grasp':
                 self.restart = 0
                 return 'restart'
             self.pick = True
