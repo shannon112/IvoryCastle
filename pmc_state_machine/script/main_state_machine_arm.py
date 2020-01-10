@@ -184,11 +184,11 @@ class SetDefault(smach.State):
         psInit.orientation.x = -0.891; psInit.orientation.y = -0.030; psInit.orientation.z = 0.453; psInit.orientation.w = 0.023
         userdata.initPose = psInit
         if userdata.mani_task == 'grasp':
-            userdata.objectNum=3
+            userdata.objectNum=2
             ps = [Pose(), Pose(), Pose(), Pose(), Pose()]
             # take picture at A station
-            ps[0].position.x = 0.095; ps[0].position.y = -0.656; ps[0].position.z = 1.103
-            ps[0].orientation.x = 0.707; ps[0].orientation.y = 0.707; ps[0].orientation.z = -0.027; ps[0].orientation.w = 0.027
+            ps[0].position.x = 0.116; ps[0].position.y = -0.530; ps[0].position.z = 1.196
+            ps[0].orientation.x = 0.705; ps[0].orientation.y = 0.709; ps[0].orientation.z = -0.004; ps[0].orientation.w = 0.012
             userdata.attackPose = ps[0]
 
             # place on amir (camera)
@@ -196,12 +196,12 @@ class SetDefault(smach.State):
             ps[1].orientation.x = 0.905; ps[1].orientation.y = -0.425; ps[1].orientation.z = -0.035; ps[1].orientation.w = 0.003
             # place on amir (tripod)
             ps[2].position.x = -0.252; ps[2].position.y = 0.053; ps[2].position.z = 0.530
-            ps[2].orientation.x = 0.905; ps[2].orientation.y = -0.425; ps[2].orientation.z = -0.035; ps[2].orientation.w = 0.003
+            ps[1].orientation.x = 0.905; ps[1].orientation.y = -0.425; ps[1].orientation.z = -0.035; ps[1].orientation.w = 0.003
             # place on amir (USB)
             ps[3].position.x = -0.252; ps[3].position.y = 0.053; ps[3].position.z = 0.530
-            ps[3].orientation.x = 0.905; ps[3].orientation.y = -0.425; ps[3].orientation.z = -0.035; ps[3].orientation.w = 0.003
-            # place on amir (box)
-            ps[4].position.x = -0.288; ps[4].position.y = -0.189; ps[4].position.z = 0.505
+            ps[1].orientation.x = 0.905; ps[1].orientation.y = -0.425; ps[1].orientation.z = -0.035; ps[1].orientation.w = 0.003
+            # place on amir (box) z=0.505
+            ps[4].position.x = -0.288; ps[4].position.y = -0.189; ps[4].position.z = 0.485
             ps[4].orientation.x = 1.000; ps[4].orientation.y = 0.002; ps[4].orientation.z = -0.015; ps[4].orientation.w = 0.004
             userdata.placePose = ps[1:]
             return 'attack'
@@ -260,7 +260,7 @@ class Attacking(smach.State):
         elif userdata.countIn % 10 == 8 or userdata.countIn % 10 == 9:
             req.pose.position.y = req.pose.position.y - 0.04
         result = self.AttackingSrv(req)
-        rospy.sleep(3)
+        #rospy.sleep(3)
         userdata.countOut = userdata.countIn + 1
         if result.result:
             return 'success'
@@ -320,9 +320,9 @@ class Estimation(smach.State):
         OffsetPose = Pose()
         OffsetPose.position.x = result.grasp_pose.position.x
         OffsetPose.position.y = result.grasp_pose.position.y
-        OffsetPose.position.z = result.grasp_pose.position.z - 0.04
+        OffsetPose.position.z = result.grasp_pose.position.z - 0.055
         if id == 3:
-            OffsetPose.position.z = result.grasp_pose.position.z - 0.07
+            OffsetPose.position.z = result.grasp_pose.position.z - 0.07 
         OffsetPose.orientation = result.grasp_pose.orientation
         userdata.PoseEst = OffsetPose
         """
@@ -369,10 +369,13 @@ class PicknPlace(smach.State):
             req.str_box_ind = 'a'
             #req.pick_pose = userdata.estPose
             req.pick_pose.position = userdata.estPose.position
+            #req.pick_pose.orientation.x = 0.936; req.pick_pose.orientation.y = 0.352; req.pick_pose.orientation.z = 0.002; req.pick_pose.orientation.w = 0.007
             if userdata.ObjectID == 3:
                 req.pick_pose.orientation.x = 0.055; req.pick_pose.orientation.y = 0.998; req.pick_pose.orientation.z = -0.031; req.pick_pose.orientation.w = 0.006
             else:
-                req.pick_pose.orientation = userdata.estPose.orientation
+                #req.pick_pose.orientation.x = 0.936; req.pick_pose.orientation.y = 0.352; req.pick_pose.orientation.z = 0.002; req.pick_pose.orientation.w = 0.007
+            	req.pick_pose.orientation.x = 0.905; req.pick_pose.orientation.y = -0.425; req.pick_pose.orientation.z = -0.035; req.pick_pose.orientation.w = 0.003
+            	#req.pick_pose.orientation = userdata.estPose.orientation
             req.place_pose = userdata.placePose[userdata.ObjectID]
         elif userdata.mani_task == 'place':
             req.str_box_ind = 'b'
