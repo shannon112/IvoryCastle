@@ -13,6 +13,8 @@ Advisor: Professor Ren C. Luo
 
 Hornor: 2019 Robot Competition 1st Award  
 <img src="https://raw.githubusercontent.com/shannon112/IvoryCastle/pmccontest_default/pmc_result/IMG_5895.JPG" height="200"/> <img src="https://raw.githubusercontent.com/shannon112/IvoryCastle/pmccontest_default/pmc_result/Screen%20Shot%202019-09-22%20at%2010.48.18%20PM.png" height="200"/>  <img src="https://raw.githubusercontent.com/shannon112/IvoryCastle/pmccontest_default/pmc_result/Screen%20Shot%202019-09-22%20at%2010.48.35%20PM.png" height="200"/>  
+Video1: https://youtu.be/yHky6F8iHWY  
+Video2: https://youtu.be/8aJM-JCGF24  
 
 # Getting Started 
 
