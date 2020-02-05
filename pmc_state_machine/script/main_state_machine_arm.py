@@ -201,7 +201,7 @@ class SetDefault(smach.State):
             ps[3].position.x = -0.252; ps[3].position.y = 0.053; ps[3].position.z = 0.530
             ps[1].orientation.x = 0.905; ps[1].orientation.y = -0.425; ps[1].orientation.z = -0.035; ps[1].orientation.w = 0.003
             # place on amir (box) z=0.505
-            ps[4].position.x = -0.288; ps[4].position.y = -0.189; ps[4].position.z = 0.485
+            ps[4].position.x = -0.288; ps[4].position.y = -0.189; ps[4].position.z = 0.455
             ps[4].orientation.x = 1.000; ps[4].orientation.y = 0.002; ps[4].orientation.z = -0.015; ps[4].orientation.w = 0.004
             userdata.placePose = ps[1:]
             return 'attack'
@@ -214,7 +214,7 @@ class SetDefault(smach.State):
             ps[0].orientation.x = 1.000; ps[0].orientation.y = 0.002; ps[0].orientation.z = -0.015; ps[0].orientation.w = 0.004
             userdata.pickPose = [ps[0]]
             # place on B station
-            ps[1].position.x = 0.245; ps[1].position.y = -0.706; ps[1].position.z = 0.853
+            ps[1].position.x = 0.245; ps[1].position.y = -0.706; ps[1].position.z = 0.77
             ps[1].orientation.x = 0.707; ps[1].orientation.y = 0.707; ps[1].orientation.z = -0.027; ps[1].orientation.w = 0.027
             userdata.placePose = [ps[1]]
             return 'pickplace'
@@ -320,9 +320,9 @@ class Estimation(smach.State):
         OffsetPose = Pose()
         OffsetPose.position.x = result.grasp_pose.position.x
         OffsetPose.position.y = result.grasp_pose.position.y
-        OffsetPose.position.z = result.grasp_pose.position.z - 0.055
+        OffsetPose.position.z = result.grasp_pose.position.z
         if id == 3:
-            OffsetPose.position.z = result.grasp_pose.position.z - 0.07 
+            OffsetPose.position.z = result.grasp_pose.position.z
         OffsetPose.orientation = result.grasp_pose.orientation
         userdata.PoseEst = OffsetPose
         """
@@ -369,6 +369,7 @@ class PicknPlace(smach.State):
             req.str_box_ind = 'a'
             #req.pick_pose = userdata.estPose
             req.pick_pose.position = userdata.estPose.position
+            req.pick_pose.position.z = 0.845
             #req.pick_pose.orientation.x = 0.936; req.pick_pose.orientation.y = 0.352; req.pick_pose.orientation.z = 0.002; req.pick_pose.orientation.w = 0.007
             if userdata.ObjectID == 3:
                 req.pick_pose.orientation.x = 0.055; req.pick_pose.orientation.y = 0.998; req.pick_pose.orientation.z = -0.031; req.pick_pose.orientation.w = 0.006
