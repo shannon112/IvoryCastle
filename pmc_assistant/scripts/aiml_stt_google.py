@@ -32,7 +32,7 @@ def listen():
 
 while not rospy.is_shutdown():
 	#keyboard.wait('enter')
-	raw_input()
+	#raw_input()
 	try:
 		rospy.logwarn("<<<<<< you can start to talking >>>>>>>>>")
 		listen()
