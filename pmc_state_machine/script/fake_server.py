@@ -5,6 +5,16 @@ from std_msgs.msg import String
 from std_srvs.srv import Trigger, TriggerResponse
 from pmc_navigation.srv import navigoal, navigoalResponse
 
+def executeAutoCharge(req):
+    '''
+    AutoCharge executing
+    '''
+    rospy.sleep(5.)
+    return TriggerResponse(
+        success=True,
+        message="AutoCharge is executed!"
+    )
+
 def executeCaption(req):
     '''
     caption executing
@@ -77,13 +87,14 @@ def executeNavigating(req):
 
 def main():
     rospy.init_node('fake_server')
-    s1 = rospy.Service('triggerCaption', Trigger, executeCaption)
+    #s1 = rospy.Service('triggerCaption', Trigger, executeCaption)
+    s1 = rospy.Service('triggerAutoCharge', Trigger, executeAutoCharge)
     #s2 = rospy.Service('triggerGrasping', Trigger, executeGrasping)
     #s3 = rospy.Service('triggerPlacing', Trigger, executePlacing)
     #s4 = rospy.Service('triggerFetching', Trigger, executeFetching)
     #s5 = rospy.Service('triggerStacking', Trigger, executeStacking)
     #s6 = rospy.Service('triggerLookforward', Trigger, executeLookforward)
-    #s6 = rospy.Service('triggerNavigating', navigoal, executeNavigating)
+    s6 = rospy.Service('triggerNavigating', navigoal, executeNavigating)
     rospy.spin()
 
 if __name__ == "__main__":

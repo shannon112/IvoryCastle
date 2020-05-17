@@ -14,7 +14,7 @@ from haf_grasping.srv import BBoxCenter, BBoxCenterRequest
 # define state VoiceCommand
 class VoiceCommand(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['what_happened','others','find_material','delivery_product','all_task_clear','aborted'])
+        smach.State.__init__(self, outcomes=['others','find_material','delivery_product','all_task_clear','aborted'])
         rospy.wait_for_service('/triggerVCommand')
         self.triggerVCommand_service = rospy.ServiceProxy('/triggerVCommand', Trigger)
 
@@ -30,8 +30,6 @@ class VoiceCommand(smach.State):
                 return 'find_material'
             elif result.message == 'IntentDelivery':
                 return 'delivery_product'
-            elif result.message == 'IntentWhat':
-                return 'what_happened'
             elif result.message == 'Clear':
                 return 'all_task_clear'
             else:
@@ -39,28 +37,26 @@ class VoiceCommand(smach.State):
         else:
             return 'aborted'
 
-
-# define state ImageCaption
-class ImageCaption(smach.State):
+# define state AutoCharge
+class AutoCharge(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['telling_done','retry','aborted'])
-        rospy.wait_for_service('/triggerCaption')
-        self.triggerCaption_service = rospy.ServiceProxy('/triggerCaption', Trigger)
+        smach.State.__init__(self, outcomes=['charge_done','retry','aborted'])
+        rospy.wait_for_service('/triggerAutoCharge')
+        self.triggerAutoCharge_service = rospy.ServiceProxy('/triggerAutoCharge', Trigger)
         self.error_counter = 0
 
     def execute(self, userdata):
-        rospy.loginfo('Executing state ImageCaption')
-        result = self.triggerCaption_service(TriggerRequest())
+        rospy.loginfo('Executing state AutoCharge')
+        result = self.triggerAutoCharge_service(TriggerRequest())
         rospy.loginfo(result.message)
 
         if result.success:
-            return 'telling_done'
+            return 'charge_done'
         elif error_counter<3:
             error_counter+=1
             return 'retry'
         else:
             return 'aborted'
-
 
 # define state GraspingObject
 class GraspingObject(smach.State):
@@ -131,11 +127,11 @@ class NavigationC(smach.State):
             self.state += 1
             return 'prepare_to_go'
         if self.state == 1:
-            #result = self.triggerNavigating_service(1)
-            #rospy.loginfo(result.message)
-            #if result.success:
-            #    self.state += 1
-            #    return 'reach_goal'
+            result = self.triggerNavigating_service(1)
+            rospy.loginfo(result.message)
+            if result.success:
+                self.state += 1
+                return 'reach_goal'
             self.state += 1
             return 'reach_goal'
         elif self.state == 2:
@@ -154,17 +150,23 @@ class NavigationD(smach.State):
     def execute(self, userdata):
         rospy.loginfo('Executing state NavigationD %d', self.state)
         if self.state == 0:
-            self.state += 1
-            return 'prepare_to_go'
+            result = self.triggerNavigating_service(4)
+            rospy.loginfo(result.message)
+            if result.success:
+                self.state += 1
+                return 'prepare_to_go'
         elif self.state == 1:
-            result = self.triggerNavigating_service(3)
+            result = self.triggerNavigating_service(2)
             rospy.loginfo(result.message)
             if result.success:
                 self.state += 1
                 return 'reach_goal'
         elif self.state == 2:
-            self.state = 0
-            return 'done'
+            result = self.triggerNavigating_service(3)
+            rospy.loginfo(result.message)
+            if result.success:
+                self.state = 0
+                return 'done'
 
 # define state SetDefault
 class SetDefault(smach.State):
@@ -462,15 +464,8 @@ def main():
                                transitions={'others':'VoiceCommand',
                                             'find_material':'COLLECTING',
                                             'delivery_product':'DELIVERING',
-                                            'what_happened':'ImageCaption',
                                             'all_task_clear':'demo_done',
                                             'aborted':'VoiceCommand'})
-
-        smach.StateMachine.add('ImageCaption', ImageCaption(),
-                                transitions={'telling_done':'VoiceCommand',
-                                             'retry':'ImageCaption',
-                                             'aborted':'VoiceCommand'})
-
 
         # ************************************************
         # *********** SM_ROOT/COLLECTING *********************
@@ -496,13 +491,15 @@ def main():
         # ************************************************
         with sm_naviD:
             smach.StateMachine.add('NavigationD', NavigationD(),
-                                   transitions={'prepare_to_go':'NavigationD',
-                                                'reach_goal':'PlacingBasket',
+                                   transitions={'prepare_to_go':'AutoCharge',
+                                                'reach_goal':'NavigationD',
                                                 'done':'delivering_done'
                                                })
-            smach.StateMachine.add('PlacingBasket', FetchingBox(),
-                                   transitions={'fetching_start':'manipulating'},
-                                   remapping={'task':'mani_task'})
+            smach.StateMachine.add('AutoCharge', AutoCharge(),
+                                transitions={'charge_done':'NavigationD',
+                                             'retry':'AutoCharge',
+                                             'aborted':'NavigationD'})
+
             #smach.StateMachine.add('StackingBox', StackingBox(),
             #                       transitions={'stacking_start':'manipulating'},
             #                       remapping={'task':'mani_task'})
