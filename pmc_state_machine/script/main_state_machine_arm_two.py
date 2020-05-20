@@ -14,7 +14,7 @@ from haf_grasping.srv import BBoxCenter, BBoxCenterRequest
 # define state VoiceCommand
 class VoiceCommand(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['others','find_material','delivery_product','all_task_clear','aborted'])
+        smach.State.__init__(self, outcomes=['others','find_material','delivery_product','all_task_clear','ending_charge','aborted'])
         rospy.wait_for_service('/triggerVCommand')
         self.triggerVCommand_service = rospy.ServiceProxy('/triggerVCommand', Trigger)
 
@@ -32,6 +32,8 @@ class VoiceCommand(smach.State):
                 return 'delivery_product'
             elif result.message == 'Clear':
                 return 'all_task_clear'
+            elif result.message == 'IntentEnd':
+                return 'ending_charge'
             else:
                 return 'others'
         else:
@@ -41,8 +43,8 @@ class VoiceCommand(smach.State):
 class AutoCharge(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['charge_done','retry','aborted'])
-        rospy.wait_for_service('/triggerAutoCharge')
-        self.triggerAutoCharge_service = rospy.ServiceProxy('/triggerAutoCharge', Trigger)
+        rospy.wait_for_service('/docking')
+        self.triggerAutoCharge_service = rospy.ServiceProxy('/docking', Trigger)
         self.error_counter = 0
 
     def execute(self, userdata):
@@ -52,11 +54,13 @@ class AutoCharge(smach.State):
 
         if result.success:
             return 'charge_done'
+        else:
+            return 'aborted'
+        """
         elif error_counter<3:
             error_counter+=1
             return 'retry'
-        else:
-            return 'aborted'
+        """
 
 # define state GraspingObject
 class GraspingObject(smach.State):
@@ -150,7 +154,34 @@ class NavigationD(smach.State):
     def execute(self, userdata):
         rospy.loginfo('Executing state NavigationD %d', self.state)
         if self.state == 0:
+            result = self.triggerNavigating_service(5)
+            rospy.loginfo(result.message)
+            if result.success:
+                self.state += 1
+                return 'prepare_to_go'
+        elif self.state == 1:
             result = self.triggerNavigating_service(4)
+            rospy.loginfo(result.message)
+            if result.success:
+                self.state += 1
+                return 'reach_goal'
+        elif self.state == 2:
+            self.state = 0
+            return 'done'
+
+
+# define state NavigationE
+class NavigationE(smach.State):
+    def __init__(self):
+        smach.State.__init__(self,outcomes=['prepare_to_go','reach_goal','done'])
+        rospy.wait_for_service('/triggerNavigating')
+        self.triggerNavigating_service = rospy.ServiceProxy('/triggerNavigating', navigoal)
+        self.state = 0
+
+    def execute(self, userdata):
+        rospy.loginfo('Executing state NavigationE %d', self.state)
+        if self.state == 0:
+            result = self.triggerNavigating_service(10)
             rospy.loginfo(result.message)
             if result.success:
                 self.state += 1
@@ -164,9 +195,9 @@ class NavigationD(smach.State):
         elif self.state == 2:
             result = self.triggerNavigating_service(3)
             rospy.loginfo(result.message)
-            if result.success:
-                self.state = 0
-                return 'done'
+            self.state = 0
+            return 'done'
+
 
 # define state SetDefault
 class SetDefault(smach.State):
@@ -455,6 +486,8 @@ def main():
     sm_naviF = smach.StateMachine(outcomes=['collecting_done', 'manipulating'],
                                   output_keys=['mani_task'])
     sis_naviF = smach_ros.IntrospectionServer('server_pmc', sm_naviF, '/SM_ROOT/COLLECTING')
+    sm_naviE = smach.StateMachine(outcomes=['ending_done'])
+    sis_naviE = smach_ros.IntrospectionServer('server_pmc', sm_naviE, '/SM_ROOT/ENDING')
     sm_arm = smach.StateMachine(outcomes=['grasping_done', 'placing_done', 'task_aborted'],
                                 input_keys=['mani_task'])
     sis_arm = smach_ros.IntrospectionServer('server_pmc', sm_arm, '/SM_ROOT/MANIPULATION')
@@ -465,11 +498,20 @@ def main():
                                             'find_material':'COLLECTING',
                                             'delivery_product':'DELIVERING',
                                             'all_task_clear':'demo_done',
-                                            'aborted':'VoiceCommand'})
+                                            'aborted':'VoiceCommand',
+                                            'ending_charge':'ENDING'})
 
         # ************************************************
         # *********** SM_ROOT/COLLECTING *********************
         # ************************************************
+        with sm_naviE:
+            smach.StateMachine.add('NavigationE', NavigationE(),
+                                   transitions={'prepare_to_go':'NavigationE',
+                                                'reach_goal':'NavigationE',
+                                                'done':'ending_done'})
+        smach.StateMachine.add('ENDING', sm_naviE,
+                               transitions={'ending_done':'VoiceCommand'})
+
         with sm_naviF:
             smach.StateMachine.add('NavigationC', NavigationC(),
                                    transitions={'prepare_to_go':'NavigationC',
@@ -491,8 +533,8 @@ def main():
         # ************************************************
         with sm_naviD:
             smach.StateMachine.add('NavigationD', NavigationD(),
-                                   transitions={'prepare_to_go':'AutoCharge',
-                                                'reach_goal':'NavigationD',
+                                   transitions={'prepare_to_go':'NavigationD',
+                                                'reach_goal':'AutoCharge',
                                                 'done':'delivering_done'
                                                })
             smach.StateMachine.add('AutoCharge', AutoCharge(),
