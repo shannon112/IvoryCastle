@@ -187,7 +187,7 @@ class NavigationE(smach.State):
                 self.state += 1
                 return 'prepare_to_go'
         elif self.state == 1:
-            result = self.triggerNavigating_service(2)
+            result = self.triggerNavigating_service(9)
             rospy.loginfo(result.message)
             if result.success:
                 self.state += 1
