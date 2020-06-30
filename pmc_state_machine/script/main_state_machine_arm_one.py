@@ -10,7 +10,8 @@ from pmc_navigation.srv import navigoal
 from pmc_msgs.srv import detection_PMC_half, GraspPoseEst_direct, PickPlace, PoseSrv
 from pmc_msgs.srv import detection_PMC_halfRequest, GraspPoseEst_directRequest, PickPlaceRequest, PoseSrvRequest
 from haf_grasping.srv import BBoxCenter, BBoxCenterRequest
-
+import time
+t2=None
 # define state VoiceCommand
 class VoiceCommand(smach.State):
     def __init__(self):
@@ -255,8 +256,14 @@ class Detection(smach.State):
         self.DetectionSrv = rospy.ServiceProxy('/object_detection_willie', detection_PMC_half)
 
     def execute(self, userdata):
+        global t1,t2
+        
         rospy.loginfo('Executing state objects Detection')
+        t1=time.time()
+        if t2!=None:
+        	print("<<<<<<<<<<<<retry time>>>>>>>>>>",t1-t2)
         result = self.DetectionSrv(detection_PMC_halfRequest())
+        
         if sum(result.data) == 0:
             return 'retry'
         userdata.BBoxs = result.data
@@ -275,6 +282,7 @@ class Estimation(smach.State):
         #self.PCCenterSrv = rospy.ServiceProxy('/PC_center', BBoxCenter)
 
     def execute(self, userdata):
+        global t1,t2
         rospy.loginfo('Executing state pose Estimation')
         BBox = []
         id = 0
@@ -294,6 +302,8 @@ class Estimation(smach.State):
         req.bbox_corner2.x = BBox[2]
         req.bbox_corner2.y = BBox[3]
         result = self.DetectionSrv(req)
+        t2=time.time()
+        print("<<<<<<<<<<<<<<total_time>>>>>>>>>>>>>>>=",t2-t1)
         if result.grasp_pose.position.x == 0.0 and  result.grasp_pose.position.y == 0.0 and result.grasp_pose.position.z == 0.0:
             return 'retry'
         OffsetPose = Pose()
