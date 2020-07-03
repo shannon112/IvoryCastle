@@ -307,6 +307,10 @@ class Estimation(smach.State):
                     break
         else:
             return 'aborted'
+        ##weird remapping
+        if id == 0: id = 3
+        elif id == 1: id = 0
+
         userdata.ObjectID = id
         rospy.loginfo(BBox)
         req = GraspPoseEst_directRequest()
@@ -339,6 +343,7 @@ class Estimation(smach.State):
             resultPS.position.z = result.centerz
             userdata.PoseEst = resultPS
         """
+        rospy.sleep(5)
         return 'success'
 
 #define state PickPlace
