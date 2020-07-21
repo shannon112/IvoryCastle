@@ -192,7 +192,7 @@ class SetDefault(smach.State):
             userdata.attackPose = ps[0]
 
             # place on amir (camera)
-            ps[1].position.x = -0.252; ps[1].position.y = 0.053; ps[1].position.z = 0.530
+            ps[1].position.x = -0.252; ps[1].position.y = 0.053; ps[1].position.z = 0.510
             ps[1].orientation.x = 0.905; ps[1].orientation.y = -0.425; ps[1].orientation.z = -0.035; ps[1].orientation.w = 0.003
             # place on amir (tripod)
             ps[2].position.x = -0.252; ps[2].position.y = 0.053; ps[2].position.z = 0.530
@@ -214,7 +214,7 @@ class SetDefault(smach.State):
             ps[0].orientation.x = 1.000; ps[0].orientation.y = 0.002; ps[0].orientation.z = -0.015; ps[0].orientation.w = 0.004
             userdata.pickPose = [ps[0]]
             # place on B station
-            ps[1].position.x = 0.245; ps[1].position.y = -0.706; ps[1].position.z = 0.77
+            ps[1].position.x = 0.245; ps[1].position.y = -0.706; ps[1].position.z = 0.74
             ps[1].orientation.x = 0.707; ps[1].orientation.y = 0.707; ps[1].orientation.z = -0.027; ps[1].orientation.w = 0.027
             userdata.placePose = [ps[1]]
             return 'pickplace'
