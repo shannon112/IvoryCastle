@@ -343,7 +343,7 @@ class Estimation(smach.State):
             resultPS.position.z = result.centerz
             userdata.PoseEst = resultPS
         """
-        rospy.sleep(5)
+        #rospy.sleep(5)
         return 'success'
 
 #define state PickPlace
